@@ -4,7 +4,10 @@ export const LoginContext = createContext();
 
 const LoginProvider = ({ children }) => {
 
-    // LoginSelector
+    //App
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+    // LoginUserSelector
     const [user, setUser] = useState('user');
 
     // LoginInputFields
@@ -17,12 +20,16 @@ const LoginProvider = ({ children }) => {
       <LoginContext.Provider
         value={{
             //send all the created variables
+            user,
+            setUser,
             showPassword, 
             setShowPassword, 
             userName, 
             setUserName, 
             password, 
-            setPassword
+            setPassword,
+            isLoggedIn,
+            setIsLoggedIn,
         }}
       >
         {children}

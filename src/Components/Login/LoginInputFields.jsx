@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import {AccountCircle, VisibilityOff, Visibility} from '@mui/icons-material';
 import { useContext } from 'react';
@@ -8,10 +8,13 @@ export const LoginInputFields = () => {
 
     const {showPassword, setShowPassword, userName, setUserName, password, setPassword} = useContext(LoginContext);
 
+    useEffect(()=>{
+        // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
+    },[userName, password]);
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => event.preventDefault();
-    const handleUserNameChange = (event) => {setUserName(event.target.value); console.log(userName)};
+    const handleUserNameChange = (event) => {setUserName(event.target.value); };
     const handlePasswordChange = (event) => {setPassword(event.target.value); console.log(password)};
 
   return (
@@ -19,7 +22,7 @@ export const LoginInputFields = () => {
         <div className='flex flex-col gap-10 w-[300px]'>
         <TextField id="outlined-basic" label="User Name" variant="outlined" 
             InputProps={{
-                startAdornment: <InputAdornment position="start"> <AccountCircle /> </InputAdornment>
+                endAdornment: <InputAdornment position="end"> <AccountCircle /> </InputAdornment>
             }}
             value={userName}
             onChange={handleUserNameChange}
