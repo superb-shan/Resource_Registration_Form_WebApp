@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
 import {AccountCircle, VisibilityOff, Visibility} from '@mui/icons-material';
+import { useContext } from 'react';
+import { LoginContext } from '../../Context/Login.Context';
 
 export const LoginInputFields = () => {
 
-    const [showPassword, setShowPassword] = useState(false);
-    const [userName, setUserName] = useState("");
-    const [password, setPassword] = useState("");
+    const {showPassword, setShowPassword, userName, setUserName, password, setPassword} = useContext(LoginContext);
+
 
     const handleClickShowPassword = () => setShowPassword((show) => !show);
     const handleMouseDownPassword = (event) => event.preventDefault();

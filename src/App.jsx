@@ -7,8 +7,7 @@ export default function App() {
 
   return (
     <div className='font-[Poppins]'>
-      <LoginWrapper>
-      </LoginWrapper>
+      <LoginWrapper/>
     </div>
   );
 }
