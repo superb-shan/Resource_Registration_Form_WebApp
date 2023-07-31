@@ -37,7 +37,7 @@ function UserNavBar() {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="relative">
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <div sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />

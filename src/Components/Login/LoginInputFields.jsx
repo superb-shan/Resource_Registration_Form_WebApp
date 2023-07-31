@@ -31,7 +31,7 @@ export const LoginInputFields = () => {
           {/*Password  */}
         <FormControl sx={{ width: '300px' }} variant="outlined">
             <InputLabel htmlFor="outlined-adornment-password">Password</InputLabel>
-            <OutlinedInput
+            <OutlinedInput            
                 id="outlined-adornment-password"
                 type={showPassword ? 'text' : 'password'}
                 endAdornment={
