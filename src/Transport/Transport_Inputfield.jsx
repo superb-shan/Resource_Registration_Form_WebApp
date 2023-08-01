@@ -138,18 +138,12 @@ function Transport_Inputfield() {
 
          <TextField
           id="outlined-select-username"
-          select
           label="User Name"
           value={userName}
           onChange={handleUserNameChange}
-          placeholder='Select your Name'
-          helperText=""
+          placeholder='Enter your Name'
         >
-          {/* {currencies.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))} */}
+         
         </TextField>
 
   {/* entering phone number */}
@@ -160,7 +154,7 @@ function Transport_Inputfield() {
           type="text"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
-          helperText=""
+          placeholder='Enter your Contact number'
         />
 
  {/* selecting purpose */}
@@ -171,8 +165,9 @@ function Transport_Inputfield() {
           label="Purpose of travel"
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
-          defaultValue="default"
-          helperText=""
+          placeholder='Select the Purpose'
+
+          
         >
           {travel_purpose.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -187,7 +182,7 @@ function Transport_Inputfield() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
         <DatePicker
-        label={'pick up Date'}
+        label={'Pick up Date'}
         views={['year', 'month', 'day']}
         value={selectedDate}
         onChange={handleDateChange}
@@ -203,7 +198,7 @@ function Transport_Inputfield() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
        <TimePicker 
-       label="Pick up time" 
+       label="Pick up Time" 
        value={selectedTime}
         onChange={handleTimeChange}
        />
@@ -217,22 +212,21 @@ function Transport_Inputfield() {
 
         <TextField
           id="pickup-input"
-          label="pick up location"
+          label="Pick up Location"
           type="text"
           value={pickupLocation}
-          onChange={handlePickupLocationChange}
-          helperText=""
+          placeholder='Enter  Pickup location'
         />  
 
 {/* drop location */}
 
         <TextField
           id="drop-input"
-          label="drop location"
+          label="Drop Location"
           type="text"
           value={dropLocation}
           onChange={handleDropLocationChange}
-          helperText=""
+          placeholder='Enter Drop location'
         />  
 
         {/* no of passenger */}
@@ -244,7 +238,7 @@ function Transport_Inputfield() {
           value={noOfPassengers}
           onChange={handleNoOfPassengersChange}
           InputProps={{ inputProps: { min: 1, max: 6 } }}
-          helperText=""
+          placeholder=''
         /> 
 
         {/* special requirement  */}

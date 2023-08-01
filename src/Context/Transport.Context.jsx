@@ -4,7 +4,7 @@ export const TransportContext = createContext();
 
 const TransportProvider = ({ children }) => {
 
-    const [userName, setUserName] = useState('user');
+    const [userName, setUserName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [purposeOfTravel, setPurposeOfTravel] = useState('default');
     const [selectedDate, setSelectedDate] = useState(null);

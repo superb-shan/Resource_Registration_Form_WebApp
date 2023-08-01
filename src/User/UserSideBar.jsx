@@ -6,10 +6,10 @@ import UserNavBar from "./UserNavbar";
 
 
 function UserSideBar() {
-  const [showNavBar, setShowNavBar] = useState(true);
+  const [showNavBar, setShowNavBar] = useState(false);
 
   const handleNavbar = () => {
-    setShowNavBar(!showNavBar);
+    setShowNavBar(true);
   };
 
 
@@ -72,17 +72,17 @@ function UserSideBar() {
       <div className="bg-current ">
       <h1 className="text-slate-50">Hey User !</h1></div>  
       <br />
-      <div className="  bg-slate-100 bg-auto  border-b-[1.4px]  hover:text-red-600 ">
+      <div className="  bg-slate-100 bg-auto  border-b-[1.4px]  cursor-pointer hover:text-purple-600 ">
       <a id="home" className="" onClick={handleNavbar}>  <FaComments className="inline"/> <> &nbsp; Add Bookings</> </a> 
        </div>  
-      <div className="h-50 bg-slate-100 bg-auto border-b-[1.4px]  hover:text-red-600 ">
+      <div className="h-50 bg-slate-100 bg-auto border-b-[1.4px] cursor-pointer hover:text-purple-600 ">
       <a id="home" className="" href="/Signup">
       <FaForward className="inline"/><> &nbsp; My Bookings</>
       </a> 
       </div> 
 
     </Menu>
-    {!showNavBar && <UserNavBar />}
+    {showNavBar && <UserNavBar />}
    
     </div>
   );
