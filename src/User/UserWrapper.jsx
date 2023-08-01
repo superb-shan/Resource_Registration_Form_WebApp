@@ -1,12 +1,12 @@
 import React from 'react'
-import UserSideBar from './UserSideBar'
 import UserContainer from './UserContainer'
+import UserNavBar from './UserNavbar'
 
 function UserWrapper() {
   return (
       
       <div className=' bg-[#eff2f5]'>
-        <UserSideBar />
+        <UserNavBar />
         <UserContainer />
         
         

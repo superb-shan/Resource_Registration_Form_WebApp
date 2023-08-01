@@ -32,7 +32,7 @@ function TransportContainer() {
         console.log('Special Requirement:', specialRequirement);
       };
   return (
-    <div className='bg-white h-[800px] w-[500px] overflow-scroll border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl'>
+    <div className='bg-white h-[750px] w-[500px] overflow-scroll border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl'>
         <Transport_Inputfield/>
         <Button variant={"contained"} sx={{width: "100px"}} onClick={handleSubmit}>Submit</Button>
 
