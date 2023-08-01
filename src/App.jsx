@@ -3,16 +3,25 @@ import { LoginWrapper } from './Components/Login/LoginWrapper';
 
 import UserWrapper from './User/UserWrapper';
 import TransportWrapper from './Transport/TransportWrapper';
-
+import { LoginContext } from './Context/Login.Context';
+import { useContext } from 'react';
 
 
 export default function App() {
 
+  const {user, isLoggedIn} = useContext(LoginContext);
+
   return (
     <div className='font-[Poppins]'>
-      {/* <LoginWrapper/> */}
-      {/* <UserWrapper />  for trail purpose */}
-      <TransportWrapper />
+      
+      {
+      (user === "user" && isLoggedIn) ?
+        <UserWrapper />
+      :
+        <LoginWrapper/>
+      }
+      
+      {/* <TransportWrapper /> */}
     </div>
   );
 }

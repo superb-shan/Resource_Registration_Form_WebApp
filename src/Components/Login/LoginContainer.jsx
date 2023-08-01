@@ -7,10 +7,11 @@ import { LoginContext } from '../../Context/Login.Context';
 
 export const LoginContainer = () => {
 
-  const {userName, password, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
+  const {user, userName, password, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
 
   const handleLogin = async () => {
-    const res = await axios.get('http://localhost:8000/userLogin', { params: { name: userName, password: password  } });
+
+    const res = await axios.get(`http://localhost:8000/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
     if (loginStatus !== true){
       alert("Invalid username or Password");
