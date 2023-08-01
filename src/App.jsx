@@ -2,8 +2,8 @@ import * as React from 'react';
 import { LoginWrapper } from './Components/Login/LoginWrapper';
 
 import UserWrapper from './User/UserWrapper';
-import TransportWrapper from './Transport/TransportWrapper';
 import { LoginContext } from './Context/Login.Context';
+import UserProvider from './Context/User.Context';
 import { useContext } from 'react';
 
 
@@ -16,7 +16,9 @@ export default function App() {
       
       {
       (user === "user" && isLoggedIn) ?
-        <UserWrapper />
+        <UserProvider>
+          <UserWrapper />
+        </UserProvider>
       :
         <LoginWrapper/>
       }

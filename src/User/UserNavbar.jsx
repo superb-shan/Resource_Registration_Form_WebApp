@@ -11,15 +11,18 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
 import { MdMenuBook } from "react-icons/md";
-import { useState } from 'react';
+import { UserContext } from '../Context/User.Context';
 
+import { useState, useEffect, useContext} from 'react';
 
-const pages = ['Seminor Hall', 'Guest House', 'Transport ','Events/poster','Items','Food & Beverages'];
+const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 const view = ['Add Bookings', 'My bookings'];
 
 function UserNavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
   const [anchorElUser, setAnchorElUser] = useState(true);
+  const {selectedForm, setSelectedForm} = useContext(UserContext);
+
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -35,6 +38,10 @@ function UserNavBar() {
   const handleCloseUserMenu = () => {
     setAnchorElUser(false);
   };
+
+  useEffect(()=> {
+    setSelectedForm(selectedForm);
+  }, [selectedForm]);
 
   return (
     <AppBar position="relative">
@@ -55,13 +62,13 @@ function UserNavBar() {
               id="menu-appbar"
               anchorEl={anchorElUser}
               anchorOrigin={{
-                vertical: 'bottom',
+                vertical: 'top',
                 horizontal: 'left',
               }}
               keepMounted
               transformOrigin={{
                 vertical: 'top',
-                horizontal: 'left',
+                horizontal: 'right',
               }}
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
@@ -96,7 +103,7 @@ function UserNavBar() {
             {pages.map((page) => (
               <Button
                 key={page}
-                onClick={handleCloseNavMenu}
+                onClick={()=>{ setSelectedForm(page)}}
                 sx={{ my: 2, color: 'white', display: 'block' }}
               >
                 {page}

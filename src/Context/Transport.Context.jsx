@@ -6,7 +6,7 @@ const TransportProvider = ({ children }) => {
 
     const [userName, setUserName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
-    const [purposeOfTravel, setPurposeOfTravel] = useState('default');
+    const [purposeOfTravel, setPurposeOfTravel] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
     const [selectedTime, setSelectedTime] = useState(null);
     const [pickupLocation, setPickupLocation] = useState('');

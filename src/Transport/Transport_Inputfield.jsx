@@ -2,6 +2,7 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import Textarea from '@mui/joy/Textarea';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -17,7 +18,8 @@ import { useContext } from 'react';
 function Transport_Inputfield() {
 
 
-  const{userName, setUserName,
+  const{
+    userName, setUserName,
     phoneNumber, setPhoneNumber,
     purposeOfTravel, setPurposeOfTravel,
     selectedDate, setSelectedDate,
@@ -25,7 +27,8 @@ function Transport_Inputfield() {
     pickupLocation, setPickupLocation,
     dropLocation, setDropLocation,
     noOfPassengers, setNoOfPassengers,
-    specialRequirement, setSpecialRequirement}=useContext(TransportContext)
+    specialRequirement, setSpecialRequirement
+  }=useContext(TransportContext)
 
 
     // Event handler for UserName TextField
@@ -131,8 +134,7 @@ function Transport_Inputfield() {
 
 
   return (
-    <div>
-         <div className='flex flex-col gap-10 w-[300px] pt-60 pb-10 '>
+         <div className='flex flex-col gap-10 w-[300px] '>
         
  {/* selecting user name */}
 
@@ -166,8 +168,6 @@ function Transport_Inputfield() {
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
           placeholder='Select the Purpose'
-
-          
         >
           {travel_purpose.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -178,36 +178,33 @@ function Transport_Inputfield() {
 
         {/* datepicker */}
 
-    <div>
+
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
-        <DatePicker
-        label={'Pick up Date'}
-        views={['year', 'month', 'day']}
-        value={selectedDate}
-        onChange={handleDateChange}
-        />
-        </DemoContainer>
+          <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+            <DatePicker
+            label={'Pick up Date'}
+            views={['year', 'month', 'day']}
+            value={selectedDate}
+            onChange={handleDateChange}
+            />
+          </DemoContainer>
         </LocalizationProvider> 
- </div>
 
 
      {/* time picker */}
 
-        <div>   
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
-       <TimePicker 
-       label="Pick up Time" 
-       value={selectedTime}
-        onChange={handleTimeChange}
-       />
+          <TimePicker 
+          sx={{width: "500px"}}
+          label="Pick up Time" 
+          value={selectedTime}
+            onChange={handleTimeChange}
+          />
         </DemoContainer>
-       </LocalizationProvider>    
-
-        </div>
-
-
+      </LocalizationProvider>    
+      
 {/* pickup location */}
 
         <TextField
@@ -215,6 +212,7 @@ function Transport_Inputfield() {
           label="Pick up Location"
           type="text"
           value={pickupLocation}
+          onChange={handlePickupLocationChange}
           placeholder='Enter  Pickup location'
         />  
 
@@ -242,22 +240,19 @@ function Transport_Inputfield() {
         /> 
 
         {/* special requirement  */}
-
-        <textarea className='border-2 text-sm'
-
-          id="outlined-purpose_of_travel-input"
-          label="Special Requirement "
+        <Textarea
+          color="neutral"
+          disabled={false}
+          minRows={2}
           value={specialRequirement}
           onChange={handleSpecialRequirementChange}
-          placeholder='Describe the Special Requirement(if any)'
-        /> 
-        
-        
+          placeholder="Mention Special Requirements (if Any)"
+          size="lg"
+          variant="outlined"
+        />
+
         </div>
-       
-      
-    </div>
-  )
+  );
 }
 
 export default Transport_Inputfield

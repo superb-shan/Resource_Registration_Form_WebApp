@@ -8,8 +8,6 @@ function UserWrapper() {
       <div className=' bg-[#eff2f5]'>
         <UserNavBar />
         <UserContainer />
-        
-        
       </div>
 
   )

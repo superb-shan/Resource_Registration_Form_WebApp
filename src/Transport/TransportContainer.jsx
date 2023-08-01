@@ -8,7 +8,8 @@ import Transport_Inputfield from './Transport_Inputfield'
 
 function TransportContainer() {
 
-  const{userName, setUserName,
+  const{
+    userName, setUserName,
     phoneNumber, setPhoneNumber,
     purposeOfTravel, setPurposeOfTravel,
     selectedDate, setSelectedDate,
@@ -16,7 +17,8 @@ function TransportContainer() {
     pickupLocation, setPickupLocation,
     dropLocation, setDropLocation,
     noOfPassengers, setNoOfPassengers,
-    specialRequirement, setSpecialRequirement}=useContext(TransportContext)
+    specialRequirement, setSpecialRequirement
+  } = useContext(TransportContext);
 
     const handleSubmit = () => {
         
@@ -32,10 +34,12 @@ function TransportContainer() {
         console.log('Special Requirement:', specialRequirement);
       };
   return (
-    <div className='bg-white h-[750px] w-[500px] overflow-scroll border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl'>
-        <Transport_Inputfield/>
-        <Button variant={"contained"} sx={{width: "100px"}} onClick={handleSubmit}>Submit</Button>
-
+    <div className='flex justify-center flex-col items-center bg-fixed bg-[#1976d2] pt-10'>
+      <p style={{color: "#ffffff", textAlign:"center", fontSize:"2rem"}}> Transportation Registration Form </p>
+      <div className='bg-white m-auto my-10 p-10 w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
+          <Transport_Inputfield/>
+          <Button variant={"contained"} sx={{width: "100px", marginTop: "2.5rem"}}  onClick={handleSubmit}>Submit</Button>
+      </div>
     </div>
   )
 }
