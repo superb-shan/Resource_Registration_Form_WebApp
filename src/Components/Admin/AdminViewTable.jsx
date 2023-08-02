@@ -16,10 +16,7 @@ import axios from 'axios';
 import { useState, useEffect } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
-
-
-
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 
 
 const theme = createTheme({
@@ -28,7 +25,7 @@ const theme = createTheme({
   },
 });
 
-const VISIBLE_FIELDS = ['type', 'name', 'date', 'actions', 'status'];
+const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions'];
 
 const style = {
   position: 'absolute',
@@ -37,9 +34,10 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #000',
+  border: '2px solid #1976d2',
   boxShadow: 24,
   p: 4,
+  borderRadius: 3
 };
 
 function AdminViewTable() {
@@ -47,15 +45,15 @@ function AdminViewTable() {
 
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
-  const [isLoading, setisloading] = useState(true)
-  const [userData, setuserData] = useState([])
+  const [isLoading, setIsLoading] = useState(true)
+  const [userData, setUserData] = useState([])
 
-  const fetechData = async () => {
+  const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:8000/transport/get')
       console.log(response.data.data)
-      setuserData(response.data.data)
-      setisloading(false)
+      setUserData(response.data.data)
+      setIsLoading(false)
 
     }
     catch (error) {
@@ -64,22 +62,21 @@ function AdminViewTable() {
 
   }
 
-
   const accept = async (id) => {
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'true' })
     console.log(res)
-    fetechData()
+    fetchData()
     handleClose()
   }
   const reject = async (id) => {
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
     console.log(res)
-    fetechData()
+    fetchData()
     handleClose()
   }
   useEffect(() => {
 
-    fetechData()
+    fetchData()
 
   }, [])
 
@@ -95,18 +92,20 @@ function AdminViewTable() {
   };
 
   const columns = VISIBLE_FIELDS.map((field) => {
+
     if (field === 'actions') {
       return {
         field: 'actions',
         headerName: 'Actions',
         width: 150,
         renderCell: (params) => (
-          <Button variant="contained" onClick={() => handleOpen(params.row)}>
+          <Button variant="contained" sx={{width:"100px", fontSize: "12px"}} onClick={() => handleOpen(params.row)}>
             Show more
           </Button>
         ),
       };
     }
+
     if (field === 'status') {
       return {
         field: 'status',
@@ -116,8 +115,8 @@ function AdminViewTable() {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {params.row.isapproved === null && (
               <>
-                <HelpOutlineIcon style={{ marginRight: 4 }} />
-                <Typography variant="body1" color="textSecondary">
+                <PendingOutlinedIcon style={{ marginRight: 4, color: 'orange' }} />
+                <Typography variant="body1" style={{ color: 'orange' }}>
                   Pending
                 </Typography>
               </>
@@ -126,7 +125,7 @@ function AdminViewTable() {
               <>
                 <CheckCircleOutlineIcon style={{ color: 'green', marginRight: 4 }} />
                 <Typography variant="body1" style={{ color: 'green' }}>
-                  Success
+                  Approved
                 </Typography>
               </>
             )}
@@ -145,16 +144,17 @@ function AdminViewTable() {
 
     return {
       field,
-      headerName: field,
+      headerName: field[0].toUpperCase() + field.slice(1),
       width: 200,
     };
   });
+
   if (isLoading) {
     return <div>Loading...</div>
   }
   return (
     <ThemeProvider theme={theme}>
-      <div style={{ height: 400, width: '100%' }}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
         <DataGrid
           rows={userData}
           columns={columns}
@@ -222,7 +222,7 @@ function AdminViewTable() {
                       </Table>
                     </TableContainer>
                   </Typography>
-                  <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '10px' }}>
+                  <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
                     <Button variant="contained" color="success" disabled={selectedRow.isapproved !== null} onClick={() => { accept(selectedRow.id) }}>
                       Accept
                     </Button>
@@ -230,8 +230,6 @@ function AdminViewTable() {
                       Reject
                     </Button>
                   </Stack>
-
-
                 </Box>
               </div>
             )}
