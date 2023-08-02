@@ -4,7 +4,7 @@ import { LoginWrapper } from './Components/Login/LoginWrapper';
 import UserWrapper from './User/UserWrapper';
 import { LoginContext } from './Context/Login.Context';
 import UserProvider from './Context/User.Context';
-import AdminWrapper from './Admin/AdminViewTable';
+import AdminWrapper from './Components/Admin/AdminWrapper';
 import { useContext } from 'react';
 
 
