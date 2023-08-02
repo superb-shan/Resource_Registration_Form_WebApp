@@ -4,6 +4,7 @@ import { LoginWrapper } from './Components/Login/LoginWrapper';
 import UserWrapper from './User/UserWrapper';
 import { LoginContext } from './Context/Login.Context';
 import UserProvider from './Context/User.Context';
+import AdminWrapper from './Admin/AdminViewTable';
 import { useContext } from 'react';
 
 
@@ -14,7 +15,7 @@ export default function App() {
   return (
     <div className='font-[Poppins]'>
       
-      {
+      {/* {
       (user === "user" && isLoggedIn) ?
         <UserProvider>
           <UserWrapper />
@@ -22,8 +23,8 @@ export default function App() {
       :
         <LoginWrapper/>
       }
-      
-      {/* <TransportWrapper /> */}
+       */}
+     <AdminWrapper />
     </div>
   );
 }
