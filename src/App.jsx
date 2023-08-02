@@ -15,16 +15,18 @@ export default function App() {
   return (
     <div className='font-[Poppins]'>
       
-      {/* {
-      (user === "user" && isLoggedIn) ?
-        <UserProvider>
-          <UserWrapper />
-        </UserProvider>
-      :
+      {
+        (user === "user" && isLoggedIn) ?
+          <UserProvider>
+            <UserWrapper />
+          </UserProvider>
+        :
+        (user === "admin" && isLoggedIn) ?
+        <AdminWrapper />
+        :
         <LoginWrapper/>
       }
-       */}
-     <AdminWrapper />
+
     </div>
   );
 }
