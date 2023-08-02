@@ -110,6 +110,9 @@ function UserNavBar() {
               </Button>
             ))}
           </Box>
+
+           {/* for phone  size */}
+           
           <Box sx={{ width: 10 , flexGrow: 1, display: { xs: 'flex', md: 'none' , justifyContent:"end"} }}>
             <IconButton
               size="large"
@@ -140,7 +143,7 @@ function UserNavBar() {
               }}
             >
               {pages.map((page) => (
-                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                <MenuItem key={page} onClick={()=>{ setSelectedForm(page)}}>
                   <Typography textAlign="center">{page}</Typography>
                 </MenuItem>
               ))}
