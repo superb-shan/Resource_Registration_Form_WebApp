@@ -140,7 +140,7 @@ function Transport_Inputfield() {
 
          <TextField
           id="outlined-select-username"
-          label="Name"
+          label="Name *"
           value={name}
           onChange={handleNameChange}
           placeholder='Enter your Name'
@@ -152,7 +152,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="outlined-phone_number-input"
-          label="Contact number"
+          label="Contact number *"
           type="text"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
@@ -164,7 +164,7 @@ function Transport_Inputfield() {
         <TextField
           id="outlined-purpose_of_travel-input"
           select
-          label="Purpose of travel"
+          label="Purpose of travel *"
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
           placeholder='Select the Purpose'
@@ -182,7 +182,7 @@ function Transport_Inputfield() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
             <DatePicker
-            label={'Pick up Date'}
+            label='Pick up Date *'
             views={['year', 'month', 'day']}
             disablePast
             value={selectedDate}
@@ -199,7 +199,7 @@ function Transport_Inputfield() {
         <DemoContainer components={['TimePicker']}>
           <TimePicker 
             sx={{width: "500px"}}
-            label="Pick up Time" 
+            label="Pick up Time *" 
             value={selectedTime}
             onChange={handleTimeChange}
           />
@@ -210,7 +210,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="pickup-input"
-          label="Pick up Location"
+          label="Pick up Location *"
           type="text"
           value={pickupLocation}
           onChange={handlePickupLocationChange}
@@ -221,7 +221,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="drop-input"
-          label="Drop Location"
+          label="Drop Location *"
           type="text"
           value={dropLocation}
           onChange={handleDropLocationChange}
@@ -232,7 +232,7 @@ function Transport_Inputfield() {
 
     <TextField
           id="no_of_pasanger-input"
-          label="No of Passenger"
+          label="No of Passengers *"
           type="number" 
           value={noOfPassengers}
           onChange={handleNoOfPassengersChange}
@@ -241,15 +241,11 @@ function Transport_Inputfield() {
         /> 
 
         {/* special requirement  */}
-        <Textarea
-          color="neutral"
-          disabled={false}
-          minRows={2}
-          value={specialRequirement}
-          onChange={handleSpecialRequirementChange}
-          placeholder="Mention Special Requirements (if Any)"
-          size="lg"
-          variant="outlined"
+        <TextField
+          id="outlined-textarea"
+          label="Special Requirements (optional)"
+          placeholder="Mention all your special requirements"
+          multiline
         />
         </div>
   );

@@ -3,13 +3,18 @@ import { Button } from '@mui/material';
 import { TransportContext } from '../Context/Transport.Context';
 import { LoginContext } from '../Context/Login.Context';
 import { useContext } from 'react';
+import SendIcon from '@mui/icons-material/Send';
+import DoneIcon from '@mui/icons-material/Done';
 import moment from "moment";
 
 
 import Transport_Inputfield from './Transport_Inputfield'
 import axios from 'axios';
+import { useState } from 'react';
 
 function TransportContainer() {
+
+  const [postStatus, setPostStatus] = useState('');
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -61,11 +66,9 @@ function TransportContainer() {
     noOfPassengers.toString(),
   ];
 
-  const formattedDateTime = moment(selectedDate).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
-
-
   const SendTransportData = async () => {
 
+    const formattedDateTime = moment(selectedDate).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`http://localhost:8000/transport/create`, 
     {
       name,
@@ -80,18 +83,15 @@ function TransportContainer() {
      }
     );
 
-    const postStatus = res.data.message;
-    console.log(postStatus);
-
+    setPostStatus(res.data.message);
   }
 
     const handleSubmit = () => {
         
+
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
       if (!allFieldsNotEmpty) alert("Please fill in the required details")
       else{
-        // console.log(true);
-        // console.log(userName, formattedDateTime);
         SendTransportData();
       }
 
@@ -112,10 +112,10 @@ function TransportContainer() {
       <p style={{color: "#ffffff", textAlign:"center", fontSize:"2rem"}}> Transportation Registration Form </p>
       <div className='bg-white m-auto my-10 p-10 w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
           <Transport_Inputfield/>
-          <Button variant={"contained"} sx={{width: "100px", marginTop: "2.5rem"}}  onClick={handleSubmit}>Submit</Button>
+          <Button variant={"contained"} sx={{ marginTop: "2.5rem"}}  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<DoneIcon />:<SendIcon />}>{postStatus?"Submitted":"Submit"}</Button>
       </div>
     </div>
   )
 }
 
-export default TransportContainer
+export default TransportContainer;

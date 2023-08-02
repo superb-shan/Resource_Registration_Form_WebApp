@@ -4,13 +4,19 @@ import { UserContext } from '../Context/User.Context';
 
 function UserContainer() {
 
-  const {selectedForm} = useContext(UserContext);
-  // console.log(selectedForm);
+  const {selectedForm, selectedView} = useContext(UserContext);
+  console.log(selectedView);
 
   return (
     
        <div className='bt-16 '>
-        {( selectedForm === "Transport")? <TransportContainer/> : null  }
+        { selectedView === "Add Bookings" ?
+        
+        ( selectedForm === "Transport") ? <TransportContainer/> : null 
+
+        :
+        null
+      }
        </div>
     
   )
