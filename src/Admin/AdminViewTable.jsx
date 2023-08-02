@@ -14,6 +14,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
+
+
+
 
 
 const theme = createTheme({
@@ -22,7 +28,7 @@ const theme = createTheme({
   },
 });
 
-const VISIBLE_FIELDS = ['type', 'name', 'date', 'actions'];
+const VISIBLE_FIELDS = ['type', 'name', 'date', 'actions', 'status'];
 
 const style = {
   position: 'absolute',
@@ -49,7 +55,7 @@ function AdminViewTable() {
       const response = await axios.get('http://localhost:8000/transport/get')
       console.log(response.data.data)
       setuserData(response.data.data)
-      setTimeout(() => setisloading(false), 2000)
+      setisloading(false)
 
     }
     catch (error) {
@@ -98,6 +104,41 @@ function AdminViewTable() {
           <Button variant="contained" onClick={() => handleOpen(params.row)}>
             Show more
           </Button>
+        ),
+      };
+    }
+    if (field === 'status') {
+      return {
+        field: 'status',
+        headerName: 'Status',
+        width: 150,
+        renderCell: (params) => (
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            {params.row.isapproved === null && (
+              <>
+                <HelpOutlineIcon style={{ marginRight: 4 }} />
+                <Typography variant="body1" color="textSecondary">
+                  Pending
+                </Typography>
+              </>
+            )}
+            {params.row.isapproved === true && (
+              <>
+                <CheckCircleOutlineIcon style={{ color: 'green', marginRight: 4 }} />
+                <Typography variant="body1" style={{ color: 'green' }}>
+                  Success
+                </Typography>
+              </>
+            )}
+            {params.row.isapproved === false && (
+              <>
+                <HighlightOffIcon style={{ color: 'red', marginRight: 4 }} />
+                <Typography variant="body1" style={{ color: 'red' }}>
+                  Rejected
+                </Typography>
+              </>
+            )}
+          </div>
         ),
       };
     }
