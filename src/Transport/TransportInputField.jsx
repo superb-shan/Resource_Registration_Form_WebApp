@@ -2,7 +2,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import Textarea from '@mui/joy/Textarea';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,10 +11,7 @@ import { TransportContext } from '../Context/Transport.Context';
 import { useContext } from 'react';
 
 
-
-
-
-function Transport_Inputfield() {
+function TransportInputField() {
 
   const{
     name, setName,
@@ -105,32 +101,32 @@ function Transport_Inputfield() {
         }
     ];
 
-    const No_of_pass =[
-      {
-      value:1,
-      label :1
-    },
-    {
-      value:2,
-      label :2
-    },
-    {
-      value:3,
-      label :3
-    },
-    {
-      value:4,
-      label :4
-    },
-    {
-      value:5,
-      label :5
-    },
-    {
-      value:6,
-      label :6
-    },
-  ]
+  //   const No_of_pass =[
+  //     {
+  //     value:1,
+  //     label :1
+  //   },
+  //   {
+  //     value:2,
+  //     label :2
+  //   },
+  //   {
+  //     value:3,
+  //     label :3
+  //   },
+  //   {
+  //     value:4,
+  //     label :4
+  //   },
+  //   {
+  //     value:5,
+  //     label :5
+  //   },
+  //   {
+  //     value:6,
+  //     label :6
+  //   },
+  // ]
 
 
   return (
@@ -246,9 +242,11 @@ function Transport_Inputfield() {
           label="Special Requirements (optional)"
           placeholder="Mention all your special requirements"
           multiline
+          onChange={handleSpecialRequirementChange}
+          value={specialRequirement}
         />
         </div>
   );
 }
 
-export default Transport_Inputfield
+export default TransportInputField;

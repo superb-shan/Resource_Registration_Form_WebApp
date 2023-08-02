@@ -10,14 +10,13 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
-import { MdMenuBook } from "react-icons/md";
 import { UserContext } from '../Context/User.Context';
 import ViewSelector from './ViewSelector';
 
 import { useState, useEffect, useContext} from 'react';
 
 const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
-const views = ['Add Bookings', 'My Bookings'];
+
 
 function UserNavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
@@ -34,7 +33,7 @@ function UserNavBar() {
 
   useEffect(()=> {
     setSelectedForm(selectedForm);
-  }, [selectedForm]);
+  }, [selectedForm, setSelectedForm]);
 
   return (
     <AppBar position="relative">

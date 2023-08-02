@@ -6,9 +6,7 @@ import { useContext } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import DoneIcon from '@mui/icons-material/Done';
 import moment from "moment";
-
-
-import Transport_Inputfield from './Transport_Inputfield'
+import TransportInputField from './TransportInputField';
 import axios from 'axios';
 import { useState } from 'react';
 
@@ -111,7 +109,7 @@ function TransportContainer() {
     <div className='flex justify-center flex-col items-center bg-fixed bg-[#1976d2] pt-10'>
       <p style={{color: "#ffffff", textAlign:"center", fontSize:"2rem"}}> Transportation Registration Form </p>
       <div className='bg-white m-auto my-10 p-10 w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
-          <Transport_Inputfield/>
+          <TransportInputField />
           <Button variant={"contained"} sx={{ marginTop: "2.5rem"}}  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<DoneIcon />:<SendIcon />}>{postStatus?"Submitted":"Submit"}</Button>
       </div>
     </div>
