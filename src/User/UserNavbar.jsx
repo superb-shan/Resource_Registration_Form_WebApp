@@ -10,76 +10,37 @@ import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
-import { MdMenuBook } from "react-icons/md";
 import { UserContext } from '../Context/User.Context';
+import ViewSelector from './ViewSelector';
 
 import { useState, useEffect, useContext} from 'react';
 
 const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
-const view = ['Add Bookings', 'My bookings'];
+
 
 function UserNavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const [anchorElUser, setAnchorElUser] = useState(true);
-  const {selectedForm, setSelectedForm} = useContext(UserContext);
+  const { selectedForm, setSelectedForm} = useContext(UserContext);
 
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
-  };
-  const handleOpenUserMenu = (event) => {
-    setAnchorElUser(true);
   };
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
 
-  const handleCloseUserMenu = () => {
-    setAnchorElUser(false);
-  };
-
   useEffect(()=> {
     setSelectedForm(selectedForm);
-  }, [selectedForm]);
+  }, [selectedForm, setSelectedForm]);
 
   return (
     <AppBar position="relative">
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{justifyContent:'end'}}>
-        <Box sx={{ width: 10 , flexGrow: 1,  }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenUserMenu}
-              color="inherit"
-            >
-             <MdMenuBook />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={anchorElUser}
-              anchorOrigin={{
-                vertical: 'top',
-                horizontal: 'left',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElUser)}
-              onClose={handleCloseUserMenu}
-            >
-              {view.map((page) => (
-                <MenuItem key={page} onClick={handleCloseUserMenu}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
-          </Box>
+          <ViewSelector/>
+
           <Typography
             variant="h5"
             noWrap
@@ -105,7 +66,7 @@ function UserNavBar() {
                 key={page}
                 onClick={()=>{ setSelectedForm(page)}}
                 sx={{ my: 2, color: 'white', display: 'block' }}
-              >
+          >
                 {page}
               </Button>
             ))}
@@ -126,7 +87,7 @@ function UserNavBar() {
             </IconButton>
             <Menu
               id="menu-appbar"
-              anchorEl={anchorElNav}
+              anchorEl={()=>anchorElNav}
               anchorOrigin={{
                 vertical: 'bottom',
                 horizontal: 'right',

@@ -4,7 +4,7 @@ export const TransportContext = createContext();
 
 const TransportProvider = ({ children }) => {
 
-    const [userName, setUserName] = useState('');
+    const [name, setName] = useState('');
     const [phoneNumber, setPhoneNumber] = useState('');
     const [purposeOfTravel, setPurposeOfTravel] = useState('');
     const [selectedDate, setSelectedDate] = useState(null);
@@ -19,7 +19,7 @@ const TransportProvider = ({ children }) => {
       <TransportContext.Provider
         value={{
             //send all the created variables
-            userName, setUserName,
+            name, setName,
             phoneNumber, setPhoneNumber,
             purposeOfTravel, setPurposeOfTravel,
             selectedDate, setSelectedDate,

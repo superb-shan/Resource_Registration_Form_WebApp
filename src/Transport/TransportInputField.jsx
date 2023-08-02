@@ -2,7 +2,6 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
-import Textarea from '@mui/joy/Textarea';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -12,14 +11,10 @@ import { TransportContext } from '../Context/Transport.Context';
 import { useContext } from 'react';
 
 
-
-
-
-function Transport_Inputfield() {
-
+function TransportInputField() {
 
   const{
-    userName, setUserName,
+    name, setName,
     phoneNumber, setPhoneNumber,
     purposeOfTravel, setPurposeOfTravel,
     selectedDate, setSelectedDate,
@@ -28,12 +23,13 @@ function Transport_Inputfield() {
     dropLocation, setDropLocation,
     noOfPassengers, setNoOfPassengers,
     specialRequirement, setSpecialRequirement
-  }=useContext(TransportContext)
+  }
+  = useContext(TransportContext)
 
 
     // Event handler for UserName TextField
-    const handleUserNameChange = (event) => {
-        setUserName(event.target.value);
+    const handleNameChange = (event) => {
+        setName(event.target.value);
       };
     
       // Event handler for PhoneNumber TextField
@@ -85,8 +81,8 @@ function Transport_Inputfield() {
             label: 'Events'
         },
         {
-            value:'Seminor',
-            label: 'Seminor'
+            value:'Seminar',
+            label: 'Seminar'
         },
         {
             value:'Chief Guest',
@@ -105,32 +101,32 @@ function Transport_Inputfield() {
         }
     ];
 
-    const No_of_pass =[
-      {
-      value:1,
-      label :1
-    },
-    {
-      value:2,
-      label :2
-    },
-    {
-      value:3,
-      label :3
-    },
-    {
-      value:4,
-      label :4
-    },
-    {
-      value:5,
-      label :5
-    },
-    {
-      value:6,
-      label :6
-    },
-  ]
+  //   const No_of_pass =[
+  //     {
+  //     value:1,
+  //     label :1
+  //   },
+  //   {
+  //     value:2,
+  //     label :2
+  //   },
+  //   {
+  //     value:3,
+  //     label :3
+  //   },
+  //   {
+  //     value:4,
+  //     label :4
+  //   },
+  //   {
+  //     value:5,
+  //     label :5
+  //   },
+  //   {
+  //     value:6,
+  //     label :6
+  //   },
+  // ]
 
 
   return (
@@ -140,9 +136,9 @@ function Transport_Inputfield() {
 
          <TextField
           id="outlined-select-username"
-          label="User Name"
-          value={userName}
-          onChange={handleUserNameChange}
+          label="Name *"
+          value={name}
+          onChange={handleNameChange}
           placeholder='Enter your Name'
         >
          
@@ -152,7 +148,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="outlined-phone_number-input"
-          label="Contact number"
+          label="Contact number *"
           type="text"
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
@@ -164,7 +160,7 @@ function Transport_Inputfield() {
         <TextField
           id="outlined-purpose_of_travel-input"
           select
-          label="Purpose of travel"
+          label="Purpose of travel *"
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
           placeholder='Select the Purpose'
@@ -182,8 +178,9 @@ function Transport_Inputfield() {
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
             <DatePicker
-            label={'Pick up Date'}
+            label='Pick up Date *'
             views={['year', 'month', 'day']}
+            disablePast
             value={selectedDate}
             onChange={handleDateChange}
             />
@@ -193,13 +190,13 @@ function Transport_Inputfield() {
 
      {/* time picker */}
 
-
+      
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker 
-          sx={{width: "500px"}}
-          label="Pick up Time" 
-          value={selectedTime}
+            sx={{width: "500px"}}
+            label="Pick up Time *" 
+            value={selectedTime}
             onChange={handleTimeChange}
           />
         </DemoContainer>
@@ -209,7 +206,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="pickup-input"
-          label="Pick up Location"
+          label="Pick up Location *"
           type="text"
           value={pickupLocation}
           onChange={handlePickupLocationChange}
@@ -220,7 +217,7 @@ function Transport_Inputfield() {
 
         <TextField
           id="drop-input"
-          label="Drop Location"
+          label="Drop Location *"
           type="text"
           value={dropLocation}
           onChange={handleDropLocationChange}
@@ -231,7 +228,7 @@ function Transport_Inputfield() {
 
     <TextField
           id="no_of_pasanger-input"
-          label="No of Passenger"
+          label="No of Passengers *"
           type="number" 
           value={noOfPassengers}
           onChange={handleNoOfPassengersChange}
@@ -240,19 +237,16 @@ function Transport_Inputfield() {
         /> 
 
         {/* special requirement  */}
-        <Textarea
-          color="neutral"
-          disabled={false}
-          minRows={2}
-          value={specialRequirement}
+        <TextField
+          id="outlined-textarea"
+          label="Special Requirements (optional)"
+          placeholder="Mention all your special requirements"
+          multiline
           onChange={handleSpecialRequirementChange}
-          placeholder="Mention Special Requirements (if Any)"
-          size="lg"
-          variant="outlined"
+          value={specialRequirement}
         />
-
         </div>
   );
 }
 
-export default Transport_Inputfield
+export default TransportInputField;
