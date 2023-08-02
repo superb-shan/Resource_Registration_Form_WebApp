@@ -73,8 +73,8 @@ function Transport_Inputfield() {
   };
 
   // Event handler for Special Requirement TextField
-  const handleSpecialRequirementChange = (event) => {
-    setSpecialRequirement(event.target.value);
+    const handleSpecialRequirementChange = (event) => {
+      setSpecialRequirement(event.target.value);
   };
 
     
