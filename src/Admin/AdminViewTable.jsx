@@ -49,7 +49,8 @@ function AdminViewTable() {
       const response = await axios.get('http://localhost:8000/transport/get')
       console.log(response.data.data)
       setuserData(response.data.data)
-      setisloading(false)
+      setTimeout(() => setisloading(false), 2000)
+
     }
     catch (error) {
       console.log("Error", error)
