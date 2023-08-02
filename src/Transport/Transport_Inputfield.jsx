@@ -17,9 +17,8 @@ import { useContext } from 'react';
 
 function Transport_Inputfield() {
 
-
   const{
-    userName, setUserName,
+    name, setName,
     phoneNumber, setPhoneNumber,
     purposeOfTravel, setPurposeOfTravel,
     selectedDate, setSelectedDate,
@@ -28,12 +27,13 @@ function Transport_Inputfield() {
     dropLocation, setDropLocation,
     noOfPassengers, setNoOfPassengers,
     specialRequirement, setSpecialRequirement
-  }=useContext(TransportContext)
+  }
+  = useContext(TransportContext)
 
 
     // Event handler for UserName TextField
-    const handleUserNameChange = (event) => {
-        setUserName(event.target.value);
+    const handleNameChange = (event) => {
+        setName(event.target.value);
       };
     
       // Event handler for PhoneNumber TextField
@@ -85,8 +85,8 @@ function Transport_Inputfield() {
             label: 'Events'
         },
         {
-            value:'Seminor',
-            label: 'Seminor'
+            value:'Seminar',
+            label: 'Seminar'
         },
         {
             value:'Chief Guest',
@@ -140,9 +140,9 @@ function Transport_Inputfield() {
 
          <TextField
           id="outlined-select-username"
-          label="User Name"
-          value={userName}
-          onChange={handleUserNameChange}
+          label="Name"
+          value={name}
+          onChange={handleNameChange}
           placeholder='Enter your Name'
         >
          
@@ -184,6 +184,7 @@ function Transport_Inputfield() {
             <DatePicker
             label={'Pick up Date'}
             views={['year', 'month', 'day']}
+            disablePast
             value={selectedDate}
             onChange={handleDateChange}
             />
@@ -193,13 +194,13 @@ function Transport_Inputfield() {
 
      {/* time picker */}
 
-
+      
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker 
-          sx={{width: "500px"}}
-          label="Pick up Time" 
-          value={selectedTime}
+            sx={{width: "500px"}}
+            label="Pick up Time" 
+            value={selectedTime}
             onChange={handleTimeChange}
           />
         </DemoContainer>
@@ -250,7 +251,6 @@ function Transport_Inputfield() {
           size="lg"
           variant="outlined"
         />
-
         </div>
   );
 }
