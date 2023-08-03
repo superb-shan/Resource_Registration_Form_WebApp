@@ -5,6 +5,8 @@ import { LoginInputFields } from './LoginInputFields';
 import axios from 'axios';
 import { LoginContext } from '../../Context/Login.Context';
 import { Navigate } from 'react-router-dom';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 export const LoginContainer = () => {
 
@@ -30,7 +32,9 @@ export const LoginContainer = () => {
     const res = await axios.get(`http://localhost:8000/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
     if (loginStatus !== true){
-      alert("Invalid username or Password");
+      // alert("Invalid username or Password");
+      toast.error("Username/Password is Incorrect");
+
       setIsLoggedIn(false);
     }
     else{
