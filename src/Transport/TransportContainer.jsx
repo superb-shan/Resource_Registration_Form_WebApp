@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button } from '@mui/material';
 import { TransportContext } from '../Context/Transport.Context';
 import { LoginContext } from '../Context/Login.Context';
@@ -17,6 +17,8 @@ function TransportContainer() {
 
   const [postStatus, setPostStatus] = useState('');
   const {setSelectedView} = useContext(UserContext)
+
+  useEffect(()=> {console.log(postStatus, "useEffect")}, [postStatus, setPostStatus])
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -84,18 +86,26 @@ function TransportContainer() {
       specialRequirement,
      }
     );
-
-    setPostStatus(res.data.message);
+    console.log("Response:", res);
+    setPostStatus(res);
     setSelectedView('My Bookings')
   }
 
-    const handleSubmit = () => {
+    const handleSubmit = async() => {
         
 
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
       if (!allFieldsNotEmpty) toast.warning('Fill all the Required fields')
       else{
-        SendTransportData();
+        await SendTransportData();
+        console.log(postStatus,"hai")
+        if(postStatus=='true'){
+          toast.success("Submitted");
+        }else{
+          console.log(postStatus)
+          toast.error(postStatus)
+        }
+        
       }
 
       // console.log('Form data submitted:');

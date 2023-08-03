@@ -23,6 +23,8 @@ import { Empty } from 'antd';
 import { UserContext } from '../Context/User.Context';
 import UserWrapper from './UserWrapper';
 import ReactLoading from 'react-loading';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 const theme = createTheme({
   typography: {
@@ -60,7 +62,7 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
       const response = await axios.get('http://localhost:8000/transport/get',{params:{name:userName}})
       console.log(response.data.data)
       setUserData(response.data.data)
-      setIsLoading(false)
+      setTimeout(()=>setIsLoading(false),1000)
 
     }
     catch (error) {
@@ -74,6 +76,7 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
     console.log(res)
     fetchData()
     handleClose()
+    toast.error(res.data.message)
   }
   const edit = async (id) => {
     // const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
@@ -167,13 +170,20 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
   
   }
 
-  if (isLoading) {
-    return <div>Loading...</div>
-  }
+//   if (isLoading) {
+//     return(
+//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: "red" }}>
+//       {/* <ReactLoading type={"spin"} height={'10%'} width={'10%'} /> */}
+//     </div>)
+//   }
   return (
     <ThemeProvider theme={theme}>
 
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
+        {isLoading ? 
+            <ReactLoading type={"spin"} color='#0D6EFD' height={'10%'} width={'10%'} />
+            :
+            <>
         <DataGrid
           rows={userData}
           columns={columns}
@@ -185,7 +195,7 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
           <div>
             {/* Render the detailed information from selectedRow */}
             {selectedRow && (
-              <div>
+              <div >
                 <Box sx={style}>
                   <div style={{ textAlign: 'right' }}>
                     <Button onClick={handleClose}  ><IoCloseCircleOutline /></Button>
@@ -254,6 +264,8 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
             )}
           </div>
         </Modal>
+        </>
+    }
       </div>
     </ThemeProvider>
   );

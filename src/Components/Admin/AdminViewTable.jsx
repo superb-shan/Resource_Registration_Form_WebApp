@@ -17,6 +17,8 @@ import { useState, useEffect } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const theme = createTheme({
@@ -67,12 +69,15 @@ function AdminViewTable() {
     console.log(res)
     fetchData()
     handleClose()
+    toast.success('Accepted')
+
   }
   const reject = async (id) => {
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
     console.log(res)
     fetchData()
     handleClose()
+    toast.error('Rejected')
   }
   useEffect(() => {
 
