@@ -9,10 +9,11 @@ import moment from "moment";
 import TransportInputField from './TransportInputField';
 import axios from 'axios';
 import { useState } from 'react';
-
+import { UserContext } from '../Context/User.Context';
 function TransportContainer() {
 
   const [postStatus, setPostStatus] = useState('');
+  const {setSelectedView} = useContext(UserContext)
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -82,6 +83,7 @@ function TransportContainer() {
     );
 
     setPostStatus(res.data.message);
+    setSelectedView('My Bookings')
   }
 
     const handleSubmit = () => {

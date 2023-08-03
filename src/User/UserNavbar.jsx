@@ -20,7 +20,7 @@ const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items
 
 function UserNavBar() {
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const { selectedForm, setSelectedForm} = useContext(UserContext);
+  const { selectedForm, setSelectedForm,selectedView} = useContext(UserContext);
 
 
   const handleOpenNavMenu = (event) => {
@@ -61,7 +61,7 @@ function UserNavBar() {
             SECE
           </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
-            {pages.map((page) => (
+            {selectedView==="Add Bookings" && pages.map((page) => (
               <Button
                 key={page}
                 onClick={()=>{ setSelectedForm(page)}}

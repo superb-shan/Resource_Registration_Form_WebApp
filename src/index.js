@@ -4,6 +4,7 @@ import './index.css';
 import App from './App';
 import LoginProvider from './Context/Login.Context';
 import TransportProvider from './Context/Transport.Context';
+import UserProvider from './Context/User.Context';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
