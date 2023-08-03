@@ -10,6 +10,9 @@ import TransportInputField from './TransportInputField';
 import axios from 'axios';
 import { useState } from 'react';
 import { UserContext } from '../Context/User.Context';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+
 function TransportContainer() {
 
   const [postStatus, setPostStatus] = useState('');
@@ -90,7 +93,7 @@ function TransportContainer() {
         
 
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-      if (!allFieldsNotEmpty) alert("Please fill in the required details")
+      if (!allFieldsNotEmpty) toast.warning('Fill all the Required fields')
       else{
         SendTransportData();
       }

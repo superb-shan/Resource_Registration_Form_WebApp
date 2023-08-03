@@ -4,8 +4,8 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   
-  const [selectedView, setSelectedView] = useState('Add Bookings');
-  const [selectedForm, setSelectedForm] = useState('');
+  const [selectedView, setSelectedView] = useState('My Bookings');
+  const [selectedForm, setSelectedForm] = useState('Transport');
 
     return (
       <UserContext.Provider

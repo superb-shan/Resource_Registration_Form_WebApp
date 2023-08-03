@@ -22,7 +22,7 @@ import { LoginContext } from '../Context/Login.Context';
 import { Empty } from 'antd';
 import { UserContext } from '../Context/User.Context';
 import UserWrapper from './UserWrapper';
-
+import ReactLoading from 'react-loading';
 
 const theme = createTheme({
   typography: {
@@ -156,10 +156,10 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
     };
   });
   if(!userData){
-    return<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh' }}>
+    return<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%',minWidth:'100%',backgroundColor:'white' }}>
     <Empty
       image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      description={<span>No data found.... Click here</span>}
+      description={<span>No data found.... Click to generate</span>}
     >
       <Button type="primary" variant='contained' onClick={()=> {}}>Create Now</Button>
     </Empty>
@@ -172,6 +172,7 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
   }
   return (
     <ThemeProvider theme={theme}>
+
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
         <DataGrid
           rows={userData}
