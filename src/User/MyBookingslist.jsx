@@ -49,7 +49,7 @@ const style = {
 
 function MyBookingslist() {
 
-const {setSelectedView,setSelectedForm} = useContext(UserContext)
+// const {setSelectedView,setSelectedForm} = useContext(UserContext)
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
@@ -78,17 +78,17 @@ const {setSelectedView,setSelectedForm} = useContext(UserContext)
     handleClose()
     toast.error(res.data.message)
   }
-  const edit = async (id) => {
+  // const edit = async (id) => {
     // const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
     // console.log(res)
     // fetchData()
     // handleClose()
-  }
+  // }
   useEffect(() => {
 
     fetchData()
 
-  }, [])
+  }, [fetchData]);
 
 
   const handleOpen = (rowData) => {
