@@ -1,15 +1,14 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext } from 'react'
 import LoginSelector from './LoginUserSelector'
 import { Button } from '@mui/material';
 import { LoginInputFields } from './LoginInputFields';
 import axios from 'axios';
 import { LoginContext } from '../../Context/Login.Context';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Navigate } from 'react-router-dom';
 
 export const LoginContainer = () => {
 
   const {user, userName, password, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
-  const navigate = useNavigate();
 
   // useEffect(()=> {
   //   if (user === 'user' && isLoggedIn){
