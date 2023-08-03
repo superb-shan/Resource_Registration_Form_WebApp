@@ -49,20 +49,20 @@ const style = {
 
 function MyBookingslist() {
 
-// const {setSelectedView,setSelectedForm} = useContext(UserContext)
+  // const {setSelectedView,setSelectedForm} = useContext(UserContext)
   const [isOpen, setIsOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState([])
-  const{userName} = useContext(LoginContext)
+  const { userName } = useContext(LoginContext)
 
   const fetchData = async () => {
     try {
-        console.log(userName)
-      const response = await axios.get('http://localhost:8000/transport/get',{params:{name:userName}})
+      console.log(userName)
+      const response = await axios.get('http://localhost:8000/transport/get', { params: { name: userName } })
       console.log(response.data.data)
       setUserData(response.data.data)
-      setTimeout(()=>setIsLoading(false),1000)
+      setTimeout(() => setIsLoading(false), 1000)
 
     }
     catch (error) {
@@ -72,23 +72,23 @@ function MyBookingslist() {
   }
 
   const deleted = async (id) => {
-    const res = await axios.delete('http://localhost:8000/transport/delete', { params:{id}})
+    const res = await axios.delete('http://localhost:8000/transport/delete', { params: { id } })
     console.log(res)
     fetchData()
     handleClose()
     toast.error(res.data.message)
   }
   // const edit = async (id) => {
-    // const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
-    // console.log(res)
-    // fetchData()
-    // handleClose()
+  // const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
+  // console.log(res)
+  // fetchData()
+  // handleClose()
   // }
   useEffect(() => {
 
     fetchData()
 
-  }, [fetchData]);
+  }, []);
 
 
   const handleOpen = (rowData) => {
@@ -109,7 +109,7 @@ function MyBookingslist() {
         headerName: 'Actions',
         width: 150,
         renderCell: (params) => (
-          <Button variant="contained" sx={{width:"100px", fontSize: "12px"}} onClick={() => handleOpen(params.row)}>
+          <Button variant="contained" sx={{ width: "100px", fontSize: "12px" }} onClick={() => handleOpen(params.row)}>
             Show more
           </Button>
         ),
@@ -158,114 +158,114 @@ function MyBookingslist() {
       width: 200,
     };
   });
-  if(!userData){
-    return<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%',minWidth:'100%',backgroundColor:'white' }}>
-    <Empty
-      image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-      description={<span>No data found.... Click to generate</span>}
-    >
-      <Button type="primary" variant='contained' onClick={()=> {}}>Create Now</Button>
-    </Empty>
-  </div>
-  
+  if (!userData) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
+      <Empty
+        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+        description={<span>No data found.... Click to generate</span>}
+      >
+        <Button type="primary" variant='contained' onClick={() => { }}>Create Now</Button>
+      </Empty>
+    </div>
+
   }
 
-//   if (isLoading) {
-//     return(
-//     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: "red" }}>
-//       {/* <ReactLoading type={"spin"} height={'10%'} width={'10%'} /> */}
-//     </div>)
-//   }
+  //   if (isLoading) {
+  //     return(
+  //     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: "red" }}>
+  //       {/* <ReactLoading type={"spin"} height={'10%'} width={'10%'} /> */}
+  //     </div>)
+  //   }
   return (
     <ThemeProvider theme={theme}>
 
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
-        {isLoading ? 
-            <ReactLoading type={"spin"} color='#0D6EFD' height={'10%'} width={'10%'} />
-            :
-            <>
-        <DataGrid
-          rows={userData}
-          columns={columns}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-        />
-        <Modal open={isOpen} onClose={handleClose}>
-          <div>
-            {/* Render the detailed information from selectedRow */}
-            {selectedRow && (
-              <div >
-                <Box sx={style}>
-                  <div style={{ textAlign: 'right' }}>
-                    <Button onClick={handleClose}  ><IoCloseCircleOutline /></Button>
-                  </div>
-                  <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
-                    Details
-                  </Typography>
-                  <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    <TableContainer>
-                      <Table>
-                        <TableBody>
-                          <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>{selectedRow.type}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>{selectedRow.name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Phone Number</TableCell>
-                            <TableCell>{selectedRow.number}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Purpose</TableCell>
-                            <TableCell>{selectedRow.purpose}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>{selectedRow.date}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Time</TableCell>
-                            <TableCell>{selectedRow.time}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>PickUp Location</TableCell>
-                            <TableCell>{selectedRow.pickUp}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Drop Location</TableCell>
-                            <TableCell>{selectedRow.drop}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>No of Passengers</TableCell>
-                            <TableCell>{selectedRow.passengerCount}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Special Requirement</TableCell>
-                            <TableCell>{selectedRow.specialRequirements}</TableCell>
-                          </TableRow>
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </Typography>
-                  <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                    {/* <Button variant="contained" color='warning' style={{width:"90px"}} disabled={selectedRow.isapproved !== null} onClick={() => { edit(selectedRow.id) }}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
+        {isLoading ?
+          <ReactLoading type={"spin"} color='#0D6EFD' height={'10%'} width={'10%'} />
+          :
+          <>
+            <DataGrid
+              rows={userData}
+              columns={columns}
+              components={{
+                Toolbar: GridToolbar,
+              }}
+            />
+            <Modal open={isOpen} onClose={handleClose}>
+              <div>
+                {/* Render the detailed information from selectedRow */}
+                {selectedRow && (
+                  <div >
+                    <Box sx={style}>
+                      <div style={{ textAlign: 'right' }}>
+                        <Button onClick={handleClose}  ><IoCloseCircleOutline /></Button>
+                      </div>
+                      <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+                        Details
+                      </Typography>
+                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                        <TableContainer>
+                          <Table>
+                            <TableBody>
+                              <TableRow>
+                                <TableCell>Type</TableCell>
+                                <TableCell>{selectedRow.type}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Name</TableCell>
+                                <TableCell>{selectedRow.name}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Phone Number</TableCell>
+                                <TableCell>{selectedRow.number}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Purpose</TableCell>
+                                <TableCell>{selectedRow.purpose}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Date</TableCell>
+                                <TableCell>{selectedRow.date}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Time</TableCell>
+                                <TableCell>{selectedRow.time}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>PickUp Location</TableCell>
+                                <TableCell>{selectedRow.pickUp}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Drop Location</TableCell>
+                                <TableCell>{selectedRow.drop}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>No of Passengers</TableCell>
+                                <TableCell>{selectedRow.passengerCount}</TableCell>
+                              </TableRow>
+                              <TableRow>
+                                <TableCell>Special Requirement</TableCell>
+                                <TableCell>{selectedRow.specialRequirements}</TableCell>
+                              </TableRow>
+                            </TableBody>
+                          </Table>
+                        </TableContainer>
+                      </Typography>
+                      <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
+                        {/* <Button variant="contained" color='warning' style={{width:"90px"}} disabled={selectedRow.isapproved !== null} onClick={() => { edit(selectedRow.id) }}>
                       Edit
                     </Button> */}
-                    <Button variant="contained" color="error" style={{width:"90px"}} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
-                      Cancel
-                    </Button>
-                  </Stack>
-                </Box>
+                        <Button variant="contained" color="error" style={{ width: "90px" }} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
+                          Cancel
+                        </Button>
+                      </Stack>
+                    </Box>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-        </Modal>
-        </>
-    }
+            </Modal>
+          </>
+        }
       </div>
     </ThemeProvider>
   );
