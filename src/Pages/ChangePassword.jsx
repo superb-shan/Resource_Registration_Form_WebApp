@@ -10,7 +10,7 @@ import {AccountCircle, VisibilityOff, Visibility} from '@mui/icons-material';
 
 export const ChangePassword = () => {
 
-    const {user, userName, password, setPassword, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
+    const {userName, setPassword, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
     const [isUpdated, setIsUpdated] = useState(false);
     const [newPassword, setNewPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
@@ -23,6 +23,16 @@ export const ChangePassword = () => {
         // Redirect to login page if not logged in
         return <Navigate to="/" />;
       } 
+
+      const isValidPassword = (password) => {
+        const requirements = [];
+        if (password.length < 8) requirements.push("Password must be at least 8 characters long.");
+        if (!/[a-z]/.test(password)) requirements.push("Include at least one lowercase letter.");
+        if (!/[A-Z]/.test(password)) requirements.push("Include at least one uppercase letter.");
+        if (!/\d/.test(password)) requirements.push("Include at least one digit.");
+        if (!/[!@#$%^&*()_+[\]{};':"\\|,.<>/?]+/.test(password)) requirements.push("Include at least one special character.");
+        return requirements;
+      };
       
       const handleClickShowNewPassword = () => setShowNewPassword((show) => !show);
       const handleMouseDownPassword = (event) => event.preventDefault();
@@ -37,26 +47,36 @@ export const ChangePassword = () => {
         event.preventDefault();
         console.log(newPassword, confirmPassword);
         if (newPassword !== confirmPassword){
-            toast.error('Please enter the same password');
+            toast.info('Please enter the same password');
             return;
         }
         if (newPassword === "" || confirmPassword === ""){
-            toast.error('Password cannot be empty!');
+            toast.info('Password cannot be empty!');
             return;
         }
 
+        //! Strong Password Check
+        // const passwordRequirements = isValidPassword(newPassword);
+        // if (passwordRequirements.length > 0) {
+        //     toast.info(passwordRequirements.join(" "));
+        //     return;
+        // }
+
         const res = await axios.patch(`http://localhost:8000/user/update`, { name: userName, password: newPassword  } );
         const loginStatus = res.data.message;
-        if (loginStatus === true){   
+        if (loginStatus === "success"){   
            toast.success("Password Updated!");
-          setIsLoggedIn(false);
+           setPassword(newPassword);
+           setIsUpdated(true);
+           setIsLoggedIn(false);
+        }else{
+            console.log("not updated", loginStatus);
         }
-    
       }
 
   return (
     <div className='flex justify-center items-center h-screen bg-[#1976d2]'>
-        <div className='bg-white h-[500px] w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl'>
+        <div className='bg-white w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl gap-10 p-10'>
             <p className='text-4xl'>Change Password</p>
             <div className='flex flex-col gap-10 items-center w-[300px]'>
 

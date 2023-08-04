@@ -41,7 +41,7 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-  // transform: 'translate(-50%, -50%)',
+  transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
@@ -54,8 +54,6 @@ const Calstyle = {
   position: 'absolute',
   // top: '50%',
   // left: '50%',
-  
-
   // transform: 'translate(-50%, -50%)',
   width: '100%',
   backgroundColor:'transparent',
@@ -144,9 +142,7 @@ function AdminViewTable() {
   }
 
   const handleCalender =()=>{
-      
     setIsCalOpen(true)
-    
   }
 
 
@@ -216,18 +212,18 @@ function AdminViewTable() {
     <ThemeProvider theme={theme}>
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-     <div style={{display:"flex",justifyContent:"end"}}>
-       <Button onClick={handleCalender} >
-        <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
-        </Button>
-        </div>
+      <div style={{display:"flex",justifyContent:"end"}}>
+        <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+          </Button>
+      </div>
         <DataGrid
           rows={userData}
           columns={columns}
           components={{
             Toolbar: GridToolbar,
-           
           }}
+          style={{maxHeight: "90%"}}
         />
 
           {isCalOpen && (
