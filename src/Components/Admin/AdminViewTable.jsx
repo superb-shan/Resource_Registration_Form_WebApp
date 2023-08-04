@@ -17,6 +17,16 @@ import { useState, useEffect } from 'react';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
+import { toast } from "react-toastify";
+import 'react-toastify/dist/ReactToastify.css';
+import { BsCalendarCheck } from "react-icons/bs";
+import AdminCalender from './AdminCalender';
+import { useContext } from 'react';
+import { AdminContext } from '../../Context/Admin.Context';
+import moment from 'momnet';
+import { Empty } from 'antd';
+
+
 
 
 const theme = createTheme({
@@ -31,10 +41,25 @@ const style = {
   position: 'absolute',
   top: '50%',
   left: '50%',
-  transform: 'translate(-50%, -50%)',
+  // transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 3
+};
+
+const Calstyle = {
+  position: 'absolute',
+  // top: '50%',
+  // left: '50%',
+  
+
+  // transform: 'translate(-50%, -50%)',
+  width: '100%',
+  backgroundColor:'transparent',
+   border: '2px solid white',
   boxShadow: 24,
   p: 4,
   borderRadius: 3
@@ -44,16 +69,23 @@ function AdminViewTable() {
 
 
   const [isOpen, setIsOpen] = React.useState(false);
+  const [isCalOpen, setIsCalOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
-  const [userData, setUserData] = useState([])
+  const {userData, setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
 
   const fetchData = async () => {
+    const param = {}
+    if(selectedDate){
+      console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
+     param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+    }
     try {
-      const response = await axios.get('http://localhost:8000/transport/get')
+      const response = await axios.get('http://localhost:8000/transport/get',{params:param})
       console.log(response.data.data)
       setUserData(response.data.data)
       setIsLoading(false)
+      console.log("hh")
 
     }
     catch (error) {
@@ -67,29 +99,56 @@ function AdminViewTable() {
     console.log(res)
     fetchData()
     handleClose()
+    toast.success('Accepted')
+
   }
   const reject = async (id) => {
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
     console.log(res)
     fetchData()
     handleClose()
+    toast.error('Rejected')
   }
   useEffect(() => {
 
     fetchData()
+    console.log("hai")
 
-  }, [])
+  }, [setSelectedDate])
 
 
   const handleOpen = (rowData) => {
     setSelectedRow(rowData);
     setIsOpen(true);
+    // setIsCalOpen(true)
   };
 
   const handleClose = () => {
     setSelectedRow(null);
     setIsOpen(false);
+    setIsCalOpen(false)
+    fetchData()
+
   };
+
+  if (!userData) {
+    return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
+      <Empty
+        image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
+        description={<span style={{marginLeft:'-30px'}}> No forms found on that particular Date</span>}
+        style={{display: 'flex', justifyContent: 'center',  flexDirection: "column", }}
+      >
+      </Empty>
+    </div>
+
+  }
+
+  const handleCalender =()=>{
+      
+    setIsCalOpen(true)
+    
+  }
+
 
   const columns = VISIBLE_FIELDS.map((field) => {
 
@@ -153,15 +212,32 @@ function AdminViewTable() {
     return <div>Loading...</div>
   }
   return (
+    
     <ThemeProvider theme={theme}>
+      
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
+     <div style={{display:"flex",justifyContent:"end"}}>
+       <Button onClick={handleCalender} >
+        <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+        </Button>
+        </div>
         <DataGrid
           rows={userData}
           columns={columns}
           components={{
             Toolbar: GridToolbar,
+           
           }}
         />
+
+          {isCalOpen && (
+        <Modal open={true} onClose={handleClose} sx={Calstyle}>
+          <div>
+          <AdminCalender />
+          </div>
+        </Modal>
+      )}
+
         <Modal open={isOpen} onClose={handleClose}>
           <div>
             {/* Render the detailed information from selectedRow */}
