@@ -16,6 +16,7 @@ const SeminorProvider = ({ children }) => {
   const [noOfAttendees, setNoOfAttendees] = useState('');
   const [equipmentNeeded, setEquipmentNeeded] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState('');
+  const[hall,setHall]=useState('')
   
   
     return (
@@ -33,6 +34,7 @@ const SeminorProvider = ({ children }) => {
             noOfAttendees,
             equipmentNeeded,
             specialRequirements,
+            hall,
             setPurpose,
             setStartDate,
             setEndDate,
@@ -41,6 +43,7 @@ const SeminorProvider = ({ children }) => {
             setNoOfAttendees,
            setEquipmentNeeded,
             setSpecialRequirements,
+            setHall,
 
         }}
       >

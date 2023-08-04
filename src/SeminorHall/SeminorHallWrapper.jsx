@@ -54,6 +54,7 @@ function SeminorHallWrapper() {
             name,
             contactNumber, 
             purpose,
+            // requiredhall
             designation, 
             department,  
             startDate,
@@ -84,6 +85,7 @@ function SeminorHallWrapper() {
     const res = await axios.post(`http://localhost:8000/seminar/create`, 
     {
       name,
+      userName,
       contactNumber, 
       purpose,
      // designation, 

@@ -18,7 +18,7 @@ function SeminorHallForm() {
     name, setName,
     contactNumber, setContactNumber,
     designation, setDesignation,
-    department, setDepartment, purpose,
+    department, setDepartment, hall,
     startDate,
     endDate,
     startTime,
@@ -26,7 +26,7 @@ function SeminorHallForm() {
     noOfAttendees,
     equipmentNeeded,
     specialRequirements,
-    setPurpose,
+    setHall,
     setStartDate,
     setEndDate,
     setStartTime,
@@ -34,6 +34,8 @@ function SeminorHallForm() {
     setNoOfAttendees,
    setEquipmentNeeded,
     setSpecialRequirements,
+    setPurpose,
+    purpose
   }=useContext(SeminorContext)
 
 
@@ -54,8 +56,8 @@ function SeminorHallForm() {
     setDepartment(event.target.value);
   };
 
-  const handlePurposeChange = (event) => {
-    setPurpose(event.target.value);
+  const handlehallChange = (event) => {
+    setHall(event.target.value);
   };
 
   const handleStartDateChange = (date) => {
@@ -86,6 +88,10 @@ function SeminorHallForm() {
     setSpecialRequirements(event.target.value);
   };
 
+  const handlepurposeChange=(event)=>{
+    setPurpose(event.target.value);
+  }
+
   
       const eventEquipment=[{
         value:"Audio", 
@@ -110,7 +116,7 @@ function SeminorHallForm() {
     ]
     
 
-      const eventPurpose=[
+      const eventHall=[
         {
             value:'Board Room',
             label: 'Board Room'
@@ -185,19 +191,27 @@ function SeminorHallForm() {
       />
 
       <TextField
-        id="outlined-purpose_of_travel-input"
+        id="outlined-hall-required-input"
         select
-        label="Purpose of Event *"
-        placeholder='Select the Purpose'
-        value={purpose}
-        onChange={handlePurposeChange}
+        label="Required Hall*"
+        placeholder='Select the Hall Requried'
+        value={hall}
+        onChange={handlehallChange}
       >
-          {eventPurpose.map((option) => (
+          {eventHall.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
+
+        <TextField
+        id="outlined-select-purpose"
+        label="Purpose of Event *"
+        placeholder='Enter your Purpose'
+        value={purpose}
+        onChange={handlepurposeChange}
+      />
 
         {/* start datepicker*/}
 
