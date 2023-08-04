@@ -40,21 +40,17 @@ export const ChangePassword = () => {
             toast.error('Please enter the same password');
             return;
         }
+        if (newPassword === "" || confirmPassword === ""){
+            toast.error('Password cannot be empty!');
+            return;
+        }
 
-        
-        // const res = await axios.get(`http://localhost:8000/${user}/Login`, { params: { name: userName, password: password  } });
-        // const loginStatus = res.data.message;
-        // if (loginStatus !== true){
-        //   // alert("Invalid username or Password");
-        //   toast.error("Username/Password is Incorrect");
-    
-        //   setIsLoggedIn(false);
-        // }
-        // else{
-        //   setIsLoggedIn(true);
-        //   console.log(user);
-        //   console.log(isLoggedIn);
-        // }
+        const res = await axios.patch(`http://localhost:8000/user/update`, { name: userName, password: newPassword  } );
+        const loginStatus = res.data.message;
+        if (loginStatus === true){   
+           toast.success("Password Updated!");
+          setIsLoggedIn(false);
+        }
     
       }
 
