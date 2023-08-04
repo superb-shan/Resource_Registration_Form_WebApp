@@ -3,11 +3,13 @@ import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, Tex
 import {AccountCircle, VisibilityOff, Visibility} from '@mui/icons-material';
 import { useContext } from 'react';
 import { LoginContext } from '../../Context/Login.Context';
+import { useState } from 'react';
 
 export const LoginInputFields = () => {
 
-    const {showPassword, setShowPassword, userName, setUserName, password, setPassword} = useContext(LoginContext);
+    const {userName, setUserName, password, setPassword} = useContext(LoginContext);
 
+    const [showPassword, setShowPassword] = useState(false);
     useEffect(()=>{
         // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
     },[userName, password]);

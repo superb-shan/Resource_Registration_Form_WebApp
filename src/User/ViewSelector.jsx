@@ -16,8 +16,8 @@ const options = ['Add Bookings', 'My Bookings'];
 export default function ViewSelector() {
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
-  const [selectedIndex, setSelectedIndex] = useState(0);
-  const {setSelectedView} = useContext(UserContext);
+  const {selectedView, setSelectedView} = useContext(UserContext);
+  const [selectedIndex, setSelectedIndex] = useState(options.indexOf(selectedView));
 
 
   const handleMenuItemClick = (event, index) => {

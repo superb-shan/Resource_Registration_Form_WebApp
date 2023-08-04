@@ -12,19 +12,9 @@ export const LoginContainer = () => {
 
   const {user, userName, password, setIsLoggedIn, isLoggedIn} = useContext(LoginContext);
 
-  // useEffect(()=> {
-  //   if (user === 'user' && isLoggedIn){
-  //     navigate('/user');
-  //    }
-  // }, [isLoggedIn, user])
   if (isLoggedIn){
     return (<Navigate to={ user==="user"? "/user": "/admin"} />);
   }
-
-  // if (user === 'user' && isLoggedIn){
-  //   // navigate('/user');
-  //   return <Navigate to='/user' />
-  //  }
 
   const handleLogin = async (event) => {
 
@@ -51,7 +41,7 @@ export const LoginContainer = () => {
         <LoginSelector />
         <LoginInputFields />
         <div>
-            <Button variant={"contained"} sx={{width: "100px"}} onClick={handleLogin} color={isLoggedIn? "success": "primary"}>Login</Button>
+          <Button variant={"contained"} sx={{width: "100px"}} onClick={handleLogin} color={isLoggedIn? "success": "primary"}>Login</Button>
         </div>
     </div>
   )

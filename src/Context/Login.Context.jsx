@@ -11,7 +11,6 @@ const LoginProvider = ({ children }) => {
     const [user, setUser] = useState('user');
 
     // LoginInputFields
-    const [showPassword, setShowPassword] = useState(false);
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
   
@@ -22,8 +21,6 @@ const LoginProvider = ({ children }) => {
             //send all the created variables
             user,
             setUser,
-            showPassword, 
-            setShowPassword, 
             userName, 
             setUserName, 
             password, 

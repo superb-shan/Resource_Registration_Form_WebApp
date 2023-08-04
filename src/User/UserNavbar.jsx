@@ -1,5 +1,6 @@
 
 import * as React from 'react';
+import {useNavigate} from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -11,17 +12,48 @@ import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
 import { UserContext } from '../Context/User.Context';
+import { LoginContext } from '../Context/Login.Context';
 import ViewSelector from './ViewSelector';
+import AccountCircle from '@mui/icons-material/AccountCircle';
+import LogoutIcon from '@mui/icons-material/Logout';
 
 import { useState, useEffect, useContext} from 'react';
+
 
 const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
 
 function UserNavBar() {
+
+  const navigate = useNavigate();
+
   const [anchorElNav, setAnchorElNav] = useState(null);
   const { selectedForm, setSelectedForm,selectedView} = useContext(UserContext);
+  const { userName, setIsLoggedIn } = useContext(LoginContext);
 
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  // const handleChange = (event) => {
+  //   setAuth(event.target.checked);
+  // };
+
+  const handleMenu = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const handleChangePassword = () => {
+     navigate('/change-password');
+  }
+
+  const handleLogOut = () => {
+    setIsLoggedIn(false);
+    navigate('/');
+  }
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -109,6 +141,38 @@ function UserNavBar() {
                 </MenuItem>
               ))}
             </Menu>
+          </Box>
+
+          <Box sx={{marginLeft: "20px"}}>
+          <div>
+              <IconButton
+                size="large"
+                onClick={handleMenu}
+                color="inherit"
+                sx={{borderRadius: "5px", border: "1px white solid", padding: 1}}
+              >
+                <AccountCircle />
+                <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>{userName[0].toUpperCase() + userName.slice(1)}</Typography>
+              </IconButton>
+              <Menu
+                id="menu-appbar"
+                anchorEl={anchorEl}
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                keepMounted
+                transformOrigin={{
+                  vertical: 'top',
+                  horizontal: 'right',
+                }}
+                open={Boolean(anchorEl)}
+                onClose={handleClose}
+              >
+                <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
+                <MenuItem onClick={handleLogOut} sx={{diaplay: "flex", justifyContent: "space-between"}}> <span>Log Out</span> <LogoutIcon/></MenuItem>
+              </Menu>
+            </div>
           </Box>
         </Toolbar>
       </Container>

@@ -85,7 +85,7 @@ function MyBookingslist() {
 
     fetchData()
 
-  }, [fetchData]);
+  }, []);
 
 
   const handleOpen = (rowData) => {
