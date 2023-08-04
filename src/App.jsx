@@ -15,6 +15,8 @@ export default function App() {
           <Route path="/" element={<LoginPage/>} />
           <Route path="/user" element={<UserPage/>} />
           <Route path="/admin" element={<AdminPage/>} />
+          <Route path="/change-password" element={<ChangePassword/>} />
+          <Route path="/create-user" element={<CreateUserPage/>} />
         </Routes>
       </Router>
     </div>

@@ -23,7 +23,7 @@ import { BsCalendarCheck } from "react-icons/bs";
 import AdminCalender from './AdminCalender';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Admin.Context';
-import moment from 'momnet';
+import moment from 'moment';
 import { Empty } from 'antd';
 
 
