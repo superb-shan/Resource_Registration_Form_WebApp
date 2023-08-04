@@ -2,18 +2,18 @@ import React, { useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '@mui/material';
 import SeminorHallForm from './SeminorHallForm'
-import { UserContext } from '../Context/User.Context';
+import { UserContext } from '../../Context/User.Context';
 import { useContext } from 'react';
 import { useState } from 'react';
-import moment from 'momnet';
+import moment from 'moment';
 import axios from 'axios';
-import { TransportContext } from '../Context/Transport.Context';
-import { LoginContext } from '../Context/Login.Context';
+import { TransportContext } from '../../Context/Transport.Context';
+import { LoginContext } from '../../Context/Login.Context';
 import SendIcon from '@mui/icons-material/Send';
 import DoneIcon from '@mui/icons-material/Done';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { SeminorContext } from '../Context/Seminor.Context';
+import { SeminorContext } from '../../Context/Seminor.Context';
 
 
 function SeminorHallWrapper() {

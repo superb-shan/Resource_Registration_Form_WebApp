@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { Button } from '@mui/material';
-import { TransportContext } from '../Context/Transport.Context';
-import { LoginContext } from '../Context/Login.Context';
+import { TransportContext } from '../../Context/Transport.Context';
+import { LoginContext } from '../../Context/Login.Context';
 import { useContext } from 'react';
 import SendIcon from '@mui/icons-material/Send';
 import DoneIcon from '@mui/icons-material/Done';
@@ -9,7 +9,7 @@ import moment from "moment";
 import TransportInputField from './TransportInputField';
 import axios from 'axios';
 import { useState } from 'react';
-import { UserContext } from '../Context/User.Context';
+import { UserContext } from '../../Context/User.Context';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 
