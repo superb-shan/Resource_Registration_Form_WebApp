@@ -5,6 +5,7 @@ import App from './App';
 import LoginProvider from './Context/Login.Context';
 import TransportProvider from './Context/Transport.Context';
 import { ToastContainer } from "react-toastify";
+import AdminProvider from './Context/Admin.Context';
 import SeminorHallWrapper from './SeminorHall/SeminorHallWrapper';
 
 
@@ -13,9 +14,11 @@ root.render(
   <>
     <LoginProvider>
       <TransportProvider>
-        {/* <App /> */}
-         <SeminorHallWrapper/>
+        <AdminProvider>
+        <App />
+         {/* <SeminorHallWrapper/> */}
         <ToastContainer /> 
+        </AdminProvider>
       </TransportProvider>
     </LoginProvider>
   </>

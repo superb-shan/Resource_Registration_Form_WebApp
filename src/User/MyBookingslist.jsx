@@ -58,8 +58,11 @@ function MyBookingslist() {
 
   const fetchData = async () => {
     try {
+      const param = {}
+      param["name"] =userName
+      
       console.log(userName)
-      const response = await axios.get('http://localhost:8000/transport/get', { params: { name: userName } })
+      const response = await axios.get('http://localhost:8000/transport/get', { params: { param} })
       console.log(response.data.data)
       setUserData(response.data.data)
       setTimeout(() => setIsLoading(false), 1000)
@@ -162,7 +165,7 @@ function MyBookingslist() {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        description={<span>No data found.... Click to generate</span>}
+        description={<span style={{marginLeft:'-30px'}}>No data found.... Click to generate</span>}
       >
         <Button type="primary" variant='contained' onClick={() => { }}>Create Now</Button>
       </Empty>

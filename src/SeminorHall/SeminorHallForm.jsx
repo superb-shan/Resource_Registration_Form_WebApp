@@ -11,6 +11,7 @@ import { TransportContext } from '../Context/Transport.Context';
 import { useContext } from 'react';
 
 
+
 function SeminorHallForm() {
 
   const{
@@ -72,32 +73,59 @@ function SeminorHallForm() {
     const handleSpecialRequirementChange = (event) => {
       setSpecialRequirement(event.target.value);
   };
+      const eventEquipment=[{
+        value:"Audio", 
+        label: "Audio"
 
+      },{
+        value:"Video",
+        label: "Video"
+        
+      },
+      {
+        value:"Reception items",
+        label:"Reception items"
+      },
+      {
+        value:"Power Back up",
+        label:"Power Back up"
+      },{
+        value:"Others",
+        label :"Others"
+      }
+    ]
     
 
-      const travel_purpose=[
+      const eventPurpose=[
         {
-            value:'Events',
-            label: 'Events'
+            value:'Board Room',
+            label: 'Board Room'
         },
         {
-            value:'Seminar',
-            label: 'Seminar'
+            value:'Ignite Room',
+            label: 'Ignite Room'
         },
         {
-            value:'Chief Guest',
-            label: 'Chief Guest'
+            value:'GF-07',
+            label: 'GF-07'
         },
         {
-            value:'placement',
-            label: 'placement'
+            value:'placement Lab',
+            label: 'placement Lab'
         },
         {
-            value:'Session/Lectures',
-            label: 'Session/Lectures'
+            value:'IT center',
+            label: 'IT center'
         },{
+          value:'Seminor Hall 1st Floor',
+          label: 'Seminor Hall 1st Floor'
+        },{
+          value:'Seminor Hall 2nd Floor',
+          label: 'Seminor Hall 2nd Floor'
+        },
+        {
           value:'Others',
-            label: 'Others'
+          label: 'Others'
         }
     ];
 
@@ -108,7 +136,7 @@ function SeminorHallForm() {
  {/* selecting user name */}
 
          <TextField
-          id="outlined-select-username"
+          id="outlined-select-name"
           label="Name *"
           value={name}
           onChange={handleNameChange}
@@ -128,30 +156,53 @@ function SeminorHallForm() {
           placeholder='Enter your Contact number'
         />
 
+        {/* designation */}
+
+        <TextField
+          id="Designation-input"
+          label="Designation *"
+          type="text"
+          value={pickupLocation}
+          onChange={handlePickupLocationChange}
+          placeholder='Enter your Designation'
+        />  
+
+{/* deparment */}
+
+        <TextField
+          id="Department-input"
+          label="Department *"
+          type="text"
+          value={dropLocation}
+          onChange={handleDropLocationChange}
+          placeholder='Enter your Department'
+        />  
+
+
  {/* selecting purpose */}
 
         <TextField
           id="outlined-purpose_of_travel-input"
           select
-          label="Purpose of travel *"
+          label="Purpose of Event *"
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
           placeholder='Select the Purpose'
         >
-          {travel_purpose.map((option) => (
+          {eventPurpose.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
 
-        {/* datepicker */}
+        {/* start datepicker*/}
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
             <DatePicker
-            label='Pick up Date *'
+            label='Start Date *'
             views={['year', 'month', 'day']}
             disablePast
             value={selectedDate}
@@ -160,54 +211,77 @@ function SeminorHallForm() {
           </DemoContainer>
         </LocalizationProvider> 
 
+ {/* end datepicker*/}
 
-     {/* time picker */}
+
+ <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+            <DatePicker
+            label='End Date *'
+            views={['year', 'month', 'day']}
+            disablePast
+            value={selectedDate}
+            onChange={handleDateChange}
+            />
+          </DemoContainer>
+        </LocalizationProvider> 
+
+     {/* time picker start*/}
 
       
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker 
             sx={{width: "500px"}}
-            label="Pick up Time *" 
+            label="Start Time *" 
             value={selectedTime}
             onChange={handleTimeChange}
           />
         </DemoContainer>
       </LocalizationProvider>    
+
+       {/* time picker end*/}
+
       
-{/* pickup location */}
+       <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={['TimePicker']}>
+          <TimePicker 
+            sx={{width: "500px"}}
+            label="End Time *" 
+            value={selectedTime}
+            onChange={handleTimeChange}
+          />
+        </DemoContainer>
+      </LocalizationProvider>  
+      
 
-        <TextField
-          id="pickup-input"
-          label="Pick up Location *"
-          type="text"
-          value={pickupLocation}
-          onChange={handlePickupLocationChange}
-          placeholder='Enter  Pickup location'
-        />  
-
-{/* drop location */}
-
-        <TextField
-          id="drop-input"
-          label="Drop Location *"
-          type="text"
-          value={dropLocation}
-          onChange={handleDropLocationChange}
-          placeholder='Enter Drop location'
-        />  
-
-        {/* no of passenger */}
+        {/* no of attendees */}
 
     <TextField
-          id="no_of_pasanger-input"
-          label="No of Passengers *"
+          id="no_of_attendees-input"
+          label="No of Attendees *"
           type="number" 
           value={noOfPassengers}
           onChange={handleNoOfPassengersChange}
-          InputProps={{ inputProps: { min: 1, max: 6 } }}
-          placeholder=''
         /> 
+
+           {/* Equipments needed */}
+
+
+    <TextField
+          id="outlined-purpose_of_travel-input"
+          select
+          label="Equipments needed *"
+          value={purposeOfTravel}
+          onChange={handlePurposeOfTravelChange}
+          placeholder='Equipments needed'
+        >
+          {eventEquipment.map((option) => (
+            <MenuItem key={option.value} value={option.value}>
+              {option.label}
+            </MenuItem>
+          ))}
+        </TextField>
 
         {/* special requirement  */}
         <TextField
