@@ -7,8 +7,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
-import { TransportContext } from '../Context/Transport.Context';
 import { useContext } from 'react';
+import { SeminorContext } from '../Context/Seminor.Context';
 
 
 
@@ -16,63 +16,83 @@ function SeminorHallForm() {
 
   const{
     name, setName,
-    phoneNumber, setPhoneNumber,
-    purposeOfTravel, setPurposeOfTravel,
-    selectedDate, setSelectedDate,
-    selectedTime, setSelectedTime,
-    pickupLocation, setPickupLocation,
-    dropLocation, setDropLocation,
-    noOfPassengers, setNoOfPassengers,
-    specialRequirement, setSpecialRequirement
+    contactNumber, setContactNumber,
+    designation, setDesignation,
+    department, setDepartment, hall,
+    startDate,
+    endDate,
+    startTime,
+    endTime,
+    noOfAttendees,
+    equipmentNeeded,
+    specialRequirements,
+    setHall,
+    setStartDate,
+    setEndDate,
+    setStartTime,
+    setEndTime,
+    setNoOfAttendees,
+   setEquipmentNeeded,
+    setSpecialRequirements,
+    setPurpose,
+    purpose
+  }=useContext(SeminorContext)
+
+
+  
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handleContactNumberChange = (event) => {
+    setContactNumber(event.target.value);
+  };
+
+  const handleDesignationChange = (event) => {
+    setDesignation(event.target.value);
+  };
+
+  const handleDepartmentChange = (event) => {
+    setDepartment(event.target.value);
+  };
+
+  const handlehallChange = (event) => {
+    setHall(event.target.value);
+  };
+
+  const handleStartDateChange = (date) => {
+    setStartDate(date);
+  };
+
+  const handleEndDateChange = (date) => {
+    setEndDate(date);
+  };
+
+  const handleStartTimeChange = (time) => {
+    setStartTime(time);
+  };
+
+  const handleEndTimeChange = (time) => {
+    setEndTime(time);
+  };
+
+  const handleNoOfAttendeesChange = (event) => {
+    setNoOfAttendees(event.target.value);
+  };
+
+  const handleEquipmentNeededChange = (event) => {
+    setEquipmentNeeded(event.target.value);
+  };
+
+  const handleSpecialRequirementsChange = (event) => {
+    setSpecialRequirements(event.target.value);
+  };
+
+  const handlepurposeChange=(event)=>{
+    setPurpose(event.target.value);
   }
-  = useContext(TransportContext)
 
-
-    // Event handler for UserName TextField
-    const handleNameChange = (event) => {
-        setName(event.target.value);
-      };
-    
-      // Event handler for PhoneNumber TextField
-      const handlePhoneNumberChange = (event) => {
-        setPhoneNumber(event.target.value);
-      };
-    
-      // Event handler for PurposeOfTravel TextField
-      const handlePurposeOfTravelChange = (event) => {
-        setPurposeOfTravel(event.target.value);
-      };
-
-       // Event handler for Date Picker
-      const handleDateChange = (date) => {
-     setSelectedDate(date);
-     };
-
-     // Event handler for Time Picker
-     const handleTimeChange = (time) => {
-    setSelectedTime(time);
-     };
-
-       // Event handler for Pick up location TextField
-  const handlePickupLocationChange = (event) => {
-    setPickupLocation(event.target.value);
-  };
-
-  // Event handler for Drop location TextField
-  const handleDropLocationChange = (event) => {
-    setDropLocation(event.target.value);
-  };
-
-  // Event handler for No. of Passengers TextField
-  const handleNoOfPassengersChange = (event) => {
-    const newValue = parseInt(event.target.value, 10);
-    setNoOfPassengers(isNaN(newValue) ? 1 : newValue);
-  };
-
-  // Event handler for Special Requirement TextField
-    const handleSpecialRequirementChange = (event) => {
-      setSpecialRequirement(event.target.value);
-  };
+  
       const eventEquipment=[{
         value:"Audio", 
         label: "Audio"
@@ -96,7 +116,7 @@ function SeminorHallForm() {
     ]
     
 
-      const eventPurpose=[
+      const eventHall=[
         {
             value:'Board Room',
             label: 'Board Room'
@@ -135,79 +155,76 @@ function SeminorHallForm() {
         
  {/* selecting user name */}
 
-         <TextField
-          id="outlined-select-name"
-          label="Name *"
-          value={name}
-          onChange={handleNameChange}
-          placeholder='Enter your Name'
-        >
-         
-        </TextField>
+ <TextField
+        id="outlined-select-name"
+        label="Name *"
+        placeholder='Enter your Name'
+        value={name}
+        onChange={handleNameChange}
+      />
 
-  {/* entering phone number */}
+      <TextField
+        id="outlined-phone_number-input"
+        label="Contact number *"
+        type="text"
+        placeholder='Enter your Contact number'
+        value={contactNumber}
+        onChange={handleContactNumberChange}
+      />
 
-        <TextField
-          id="outlined-phone_number-input"
-          label="Contact number *"
-          type="text"
-          value={phoneNumber}
-          onChange={handlePhoneNumberChange}
-          placeholder='Enter your Contact number'
-        />
+      <TextField
+        id="Designation-input"
+        label="Designation *"
+        type="text"
+        placeholder='Enter your Designation'
+        value={designation}
+        onChange={handleDesignationChange}
+      />
 
-        {/* designation */}
+      <TextField
+        id="Department-input"
+        label="Department *"
+        type="text"
+        placeholder='Enter your Department'
+        value={department}
+        onChange={handleDepartmentChange}
+      />
 
-        <TextField
-          id="Designation-input"
-          label="Designation *"
-          type="text"
-          value={pickupLocation}
-          onChange={handlePickupLocationChange}
-          placeholder='Enter your Designation'
-        />  
-
-{/* deparment */}
-
-        <TextField
-          id="Department-input"
-          label="Department *"
-          type="text"
-          value={dropLocation}
-          onChange={handleDropLocationChange}
-          placeholder='Enter your Department'
-        />  
-
-
- {/* selecting purpose */}
-
-        <TextField
-          id="outlined-purpose_of_travel-input"
-          select
-          label="Purpose of Event *"
-          value={purposeOfTravel}
-          onChange={handlePurposeOfTravelChange}
-          placeholder='Select the Purpose'
-        >
-          {eventPurpose.map((option) => (
+      <TextField
+        id="outlined-hall-required-input"
+        select
+        label="Required Hall*"
+        placeholder='Select the Hall Requried'
+        value={hall}
+        onChange={handlehallChange}
+      >
+          {eventHall.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
             </MenuItem>
           ))}
         </TextField>
 
+        <TextField
+        id="outlined-select-purpose"
+        label="Purpose of Event *"
+        placeholder='Enter your Purpose'
+        value={purpose}
+        onChange={handlepurposeChange}
+      />
+
         {/* start datepicker*/}
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
-            <DatePicker
-            label='Start Date *'
-            views={['year', 'month', 'day']}
-            disablePast
-            value={selectedDate}
-            onChange={handleDateChange}
-            />
+          <DatePicker
+          label='Start Date *'
+          views={['year', 'month', 'day']}
+          disablePast
+          value={startDate}
+          onChange={handleStartDateChange}
+        />
           </DemoContainer>
         </LocalizationProvider> 
 
@@ -216,13 +233,13 @@ function SeminorHallForm() {
 
  <LocalizationProvider dateAdapter={AdapterDayjs}>
           <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
-            <DatePicker
-            label='End Date *'
-            views={['year', 'month', 'day']}
-            disablePast
-            value={selectedDate}
-            onChange={handleDateChange}
-            />
+          <DatePicker
+          label='End Date *'
+          views={['year', 'month', 'day']}
+          disablePast
+          value={endDate}
+          onChange={handleEndDateChange}
+        />
           </DemoContainer>
         </LocalizationProvider> 
 
@@ -231,12 +248,12 @@ function SeminorHallForm() {
       
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
-          <TimePicker 
-            sx={{width: "500px"}}
-            label="Start Time *" 
-            value={selectedTime}
-            onChange={handleTimeChange}
-          />
+        <TimePicker
+          sx={{ width: "500px" }}
+          label="Start Time *"
+          value={startTime}
+          onChange={handleStartTimeChange}
+        />
         </DemoContainer>
       </LocalizationProvider>    
 
@@ -245,37 +262,37 @@ function SeminorHallForm() {
       
        <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
-          <TimePicker 
-            sx={{width: "500px"}}
-            label="End Time *" 
-            value={selectedTime}
-            onChange={handleTimeChange}
-          />
+        <TimePicker
+          sx={{ width: "500px" }}
+          label="End Time *"
+          value={endTime}
+          onChange={handleEndTimeChange}
+        />
         </DemoContainer>
       </LocalizationProvider>  
       
 
         {/* no of attendees */}
 
-    <TextField
-          id="no_of_attendees-input"
-          label="No of Attendees *"
-          type="number" 
-          value={noOfPassengers}
-          onChange={handleNoOfPassengersChange}
-        /> 
+        <TextField
+        id="no_of_attendees-input"
+        label="No of Attendees *"
+        type="number"
+        value={noOfAttendees}
+        onChange={handleNoOfAttendeesChange}
+      />
 
            {/* Equipments needed */}
 
 
     <TextField
-          id="outlined-purpose_of_travel-input"
-          select
-          label="Equipments needed *"
-          value={purposeOfTravel}
-          onChange={handlePurposeOfTravelChange}
-          placeholder='Equipments needed'
-        >
+        id="outlined-equipment-required-input"
+        select
+        label="Equipments needed *"
+        placeholder='Equipments needed'
+        value={equipmentNeeded}
+        onChange={handleEquipmentNeededChange}
+      >
           {eventEquipment.map((option) => (
             <MenuItem key={option.value} value={option.value}>
               {option.label}
@@ -285,13 +302,13 @@ function SeminorHallForm() {
 
         {/* special requirement  */}
         <TextField
-          id="outlined-textarea"
-          label="Special Requirements (optional)"
-          placeholder="Mention all your special requirements"
-          multiline
-          onChange={handleSpecialRequirementChange}
-          value={specialRequirement}
-        />
+        id="outlined-Specialrequirement-textarea"
+        label="Special Requirements (optional)"
+        placeholder="Mention all your special requirements"
+        multiline
+        value={specialRequirements}
+        onChange={handleSpecialRequirementsChange}
+      />
         </div>
   );
 }

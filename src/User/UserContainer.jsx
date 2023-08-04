@@ -1,5 +1,6 @@
 import React, {useContext} from 'react';
 import TransportContainer from '../Transport/TransportContainer';
+import SeminorHallWrapper from '../SeminorHall/SeminorHallWrapper';
 import { UserContext } from '../Context/User.Context';
 import MyBookingsWrapper from './MyBookingsWrapper';
 
@@ -13,7 +14,8 @@ function UserContainer() {
        <div className='bt-16 '>
         { selectedView === "Add Bookings" ?
         
-        ( selectedForm === "Transport") ? <TransportContainer/> : null
+        ( selectedForm === "Transport") ? <TransportContainer/> 
+         :  ( selectedForm === "Seminar Hall") ? <SeminorHallWrapper/> : null
 
         :
         <MyBookingsWrapper />
