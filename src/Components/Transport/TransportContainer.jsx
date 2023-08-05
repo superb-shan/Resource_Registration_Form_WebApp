@@ -70,44 +70,40 @@ function TransportContainer() {
     noOfPassengers.toString(),
   ];
 
-  const SendTransportData = async () => {
-
-    const formattedDateTime = moment(selectedDate).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`http://localhost:8000/transport/create`, 
-    {
-      name,
-      userName,
-      phoneNumber, 
-      purposeOfTravel, 
-      formattedDateTime, 
-      pickupLocation, 
-      dropLocation, 
-      noOfPassengers, 
-      specialRequirement,
-     }
-    );
-    console.log("Response:", res);
-    setPostStatus(res);
-    setSelectedView('My Bookings')
-  }
 
     const handleSubmit = async() => {
         
 
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-      if (!allFieldsNotEmpty) toast.warning('Fill all the Required fields')
-      else{
-        await SendTransportData();
-        console.log(postStatus,"hai")
-        if(postStatus=='true'){
-          toast.success("Submitted");
-        }else{
-          console.log(postStatus)
-          toast.error(postStatus)
+      if (!allFieldsNotEmpty){
+         toast.warning('Fill all the Required fields');
+         return;
         }
-        
+
+      const formattedDateTime = moment(selectedDate.toString()).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
+      const res = await axios.post(`http://localhost:8000/transport/create`, 
+      {
+        name,
+        userName,
+        phoneNumber, 
+        purposeOfTravel, 
+        formattedDateTime, 
+        pickupLocation, 
+        dropLocation, 
+        noOfPassengers, 
+        specialRequirement,
       }
-      };
+      );
+      console.log("Response:", res);
+      setPostStatus(res.data.message);
+      setSelectedView('My Bookings');
+      if(res.data.message===true){
+        toast.success("Submitted");
+        console.log("date", selectedDate, formattedDateTime);
+      }else{
+        toast.error(postStatus)
+      }
+    };
 
   return (
     <div className='flex justify-center flex-col items-center bg-fixed bg-[#1976d2] pt-10'>
