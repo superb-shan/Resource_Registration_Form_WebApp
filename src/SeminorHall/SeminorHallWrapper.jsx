@@ -56,7 +56,6 @@ function SeminorHallWrapper() {
             purpose,
             // requiredhall
             designation, 
-            department,  
             startDate,
             endDate,
             startTime,
@@ -69,9 +68,9 @@ function SeminorHallWrapper() {
   const fieldsToCheckForValidation = [
             name,
            contactNumber, 
+           //requiredhall
             purpose,
-            designation, 
-            department,  
+            designation,  
             startDate,
             endDate,
             startTime,
@@ -87,9 +86,9 @@ function SeminorHallWrapper() {
       name,
       userName,
       contactNumber, 
+      //requiredhall
       purpose,
-     // designation, 
-      //department,  
+      designation,  
       startDate,
       endDate,
       startTime,

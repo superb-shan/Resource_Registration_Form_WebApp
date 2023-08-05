@@ -52,9 +52,6 @@ function SeminorHallForm() {
     setDesignation(event.target.value);
   };
 
-  const handleDepartmentChange = (event) => {
-    setDepartment(event.target.value);
-  };
 
   const handlehallChange = (event) => {
     setHall(event.target.value);
@@ -174,21 +171,21 @@ function SeminorHallForm() {
 
       <TextField
         id="Designation-input"
-        label="Designation *"
+        label="Designation & Department *"
         type="text"
-        placeholder='Enter your Designation'
+        placeholder='Example:(AP/CSE)'
         value={designation}
         onChange={handleDesignationChange}
       />
 
-      <TextField
+      {/* <TextField
         id="Department-input"
         label="Department *"
         type="text"
         placeholder='Enter your Department'
         value={department}
         onChange={handleDepartmentChange}
-      />
+      /> */}
 
       <TextField
         id="outlined-hall-required-input"
