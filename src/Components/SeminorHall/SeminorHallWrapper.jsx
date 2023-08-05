@@ -86,13 +86,13 @@ function SeminorHallWrapper() {
         contactNumber,
         //requiredhall
         purpose,
-        designation,
+        designation,//DesignationDepartment
         startDate,
         endDate,
         startTime,
         endTime,
         noOfAttendees,
-        equipmentNeeded,
+        equipmentNeeded,//EquipmentRequired
         specialRequirements,
       }
     );

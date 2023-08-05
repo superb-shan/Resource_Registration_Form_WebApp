@@ -97,8 +97,6 @@ function MyBookingslist() {
     const param = {}
     param["name"] =userName
     if(selectedDate){
-      console.log("hai")
-      console.log(selectedDate)
       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
@@ -106,7 +104,7 @@ function MyBookingslist() {
       const response = await axios.get('http://localhost:8000/transport/get',{params:param})
       console.log(response.data.data)
       setUserData(response.data.data)
-      setIsLoading(false)
+      setTimeout(() => setIsLoading(false), 500)
       console.log("hh")
 
     }
@@ -225,12 +223,6 @@ function MyBookingslist() {
 
   }
 
-  //   if (isLoading) {
-  //     return(
-  //     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100vh', backgroundColor: "red" }}>
-  //       {/* <ReactLoading type={"spin"} height={'10%'} width={'10%'} /> */}
-  //     </div>)
-  //   }
   return (
     <ThemeProvider theme={theme}>
 

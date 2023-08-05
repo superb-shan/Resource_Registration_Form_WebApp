@@ -107,17 +107,6 @@ function TransportContainer() {
         }
         
       }
-
-      // console.log('Form data submitted:');
-      // console.log('Name:', name);
-      // console.log('Contact Number:', phoneNumber);
-      // console.log('Purpose of Travel:', purposeOfTravel);
-      // console.log('Selected Date:', selectedDate);
-      // console.log('Selected Time:', selectedTime);
-      // console.log('Pickup Location:', pickupLocation);
-      // console.log('Drop Location:', dropLocation);
-      // console.log('No. of Passengers:', noOfPassengers);
-      // console.log('Special Requirement:', specialRequirement);
       };
 
   return (
