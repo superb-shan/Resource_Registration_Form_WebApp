@@ -17,14 +17,14 @@ function SeminorHallForm() {
   const{
     name, setName,
     contactNumber, setContactNumber,
-    designation, setDesignation,
-     hall,
+    DesignationDepartment, setDesignation,
+    requiredHall,
     startDate,
     endDate,
     startTime,
     endTime,
     noOfAttendees,
-    equipmentNeeded,
+    EquipmentRequired,
     specialRequirements,
     setHall,
     setStartDate,
@@ -174,7 +174,7 @@ function SeminorHallForm() {
         label="Designation & Department *"
         type="text"
         placeholder='Example:(AP/CSE)'
-        value={designation}
+        value={DesignationDepartment}
         onChange={handleDesignationChange}
       />
 
@@ -192,7 +192,7 @@ function SeminorHallForm() {
         select
         label="Required Hall*"
         placeholder='Select the Hall Requried'
-        value={hall}
+        value={requiredHall}
         onChange={handlehallChange}
       >
           {eventHall.map((option) => (
@@ -287,7 +287,7 @@ function SeminorHallForm() {
         select
         label="Equipments needed *"
         placeholder='Equipments needed'
-        value={equipmentNeeded}
+        value={EquipmentRequired}
         onChange={handleEquipmentNeededChange}
       >
           {eventEquipment.map((option) => (

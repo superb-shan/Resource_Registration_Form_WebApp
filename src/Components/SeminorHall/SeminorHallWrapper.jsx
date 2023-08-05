@@ -52,23 +52,23 @@ function SeminorHallWrapper() {
     name,
     contactNumber,
     purpose,
-    // requiredhall
-    designation,
+    requiredHall,
+    DesignationDepartment,
     startDate,
     endDate,
     startTime,
     endTime,
     noOfAttendees,
-    equipmentNeeded,
+    EquipmentRequired,
     specialRequirements,
   } = useContext(SeminorContext);
 
   const fieldsToCheckForValidation = [
     name,
     contactNumber,
-    //requiredhall
+    requiredHall,
     purpose,
-    designation,
+    DesignationDepartment,
     startDate,
     endDate,
     startTime,
@@ -84,15 +84,15 @@ function SeminorHallWrapper() {
         name,
         userName,
         contactNumber,
-        //requiredhall
+        requiredHall,
         purpose,
-        designation,//DesignationDepartment
+        DesignationDepartment,
         startDate,
         endDate,
         startTime,
         endTime,
         noOfAttendees,
-        equipmentNeeded,//EquipmentRequired
+        EquipmentRequired,//EquipmentRequired
         specialRequirements,
       }
     );

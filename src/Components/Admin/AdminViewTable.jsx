@@ -25,7 +25,7 @@ import { useContext } from 'react';
 import { AdminContext } from '../../Context/Admin.Context';
 import moment from 'moment';
 import { Empty } from 'antd';
-import Textarea from '@mui/material/TextField';
+import Text from '@mui/material/TextField';
 
 
 
@@ -110,6 +110,7 @@ function AdminViewTable() {
   
 
   const accept = async (id) => {
+    handleRemarkButtonClick(selectedRow.id)
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'true' })
     console.log(res)
     fetchData()
@@ -118,6 +119,7 @@ function AdminViewTable() {
 
   }
   const reject = async (id) => {
+    handleRemarkButtonClick(selectedRow.id)
     const res = await axios.patch('http://localhost:8000/transport/update', {
       id,
       isapproved: 'false'
@@ -344,19 +346,19 @@ function AdminViewTable() {
                             <TableCell>Remarks</TableCell>
                             <TableCell>
 
-                            <Textarea
-                              style={{minHeight:'30px',maxHeight:'30px'}}
+                            <Text
+                              style={{minHeight:'30px',maxHeight:'30px',marginTop:'-19px'}}
                               value={remarks} 
                               onChange={(e) => setRemarks(e.target.value)} 
                             />
-                            <Button
+                            {/* <Button
                             style={{minHeight:'30px',maxHeight:'10px',marginTop:'30px'}}
                               variant="contained"
                               color="primary"
                               onClick={() => handleRemarkButtonClick(selectedRow.id)} 
                             >
                               SEND
-                            </Button>
+                            </Button> */}
         
                             </TableCell>
                           </TableRow>

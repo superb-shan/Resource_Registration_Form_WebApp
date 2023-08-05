@@ -6,7 +6,7 @@ const SeminorProvider = ({ children }) => {
 
     const [name, setName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
-  const [designation, setDesignation] = useState('');
+  const [DesignationDepartment, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
   const [purpose, setPurpose] = useState('');
   const [startDate, setStartDate] = useState(null);
@@ -14,9 +14,9 @@ const SeminorProvider = ({ children }) => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [noOfAttendees, setNoOfAttendees] = useState('');
-  const [equipmentNeeded, setEquipmentNeeded] = useState('');
+  const [EquipmentRequired, setEquipmentNeeded] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState('');
-  const[hall,setHall]=useState('')
+  const[requiredHall,setHall]=useState('')
   
   
     return (
@@ -25,16 +25,16 @@ const SeminorProvider = ({ children }) => {
             //send all the created variables
             name, setName,
             contactNumber, setContactNumber,
-            designation, setDesignation,
+            DesignationDepartment, setDesignation,
             department, setDepartment, purpose,
             startDate,
             endDate,
             startTime,
             endTime,
             noOfAttendees,
-            equipmentNeeded,
+            EquipmentRequired,
             specialRequirements,
-            hall,
+            requiredHall,
             setPurpose,
             setStartDate,
             setEndDate,
