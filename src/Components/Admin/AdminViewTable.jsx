@@ -70,6 +70,7 @@ function AdminViewTable() {
   const [isCalOpen, setIsCalOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
+  const[isAdd,setIsAdd]=useState(false)
   const {userData, setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
 
   const fetchData = async () => {
@@ -107,12 +108,21 @@ function AdminViewTable() {
     handleClose()
     toast.error('Rejected')
   }
+
   useEffect(() => {
 
     fetchData()
-    console.log("hai")
+    console.log('hai')
+    if (selectedDate === null && isAdd) {
+      fetchData();
+      setIsAdd(false);
+    }
+  }, [setSelectedDate,isAdd]);
 
-  }, [setSelectedDate])
+  const handleallbutton = () => {
+    setSelectedDate(null);
+    setIsAdd(true); 
+  };
 
 
   const handleOpen = (rowData) => {
@@ -132,6 +142,7 @@ function AdminViewTable() {
   const handleCalender =()=>{
     setIsCalOpen(true)
   }
+ 
 
   if (!userData) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
@@ -141,9 +152,14 @@ function AdminViewTable() {
         description={<span style={{marginLeft:'-20px'}}>No data found on the selected date </span>}
       >
         
-        <Button onClick={handleCalender} >
-          <BsCalendarCheck   style={{maxWidth: '40px', maxHeight: '40px', minWidth: '40px', minHeight: '40px',marginRight:"40px"}}/>
-          </Button>
+        <Button 
+      variant="contained"
+       color="warning" size="small" 
+       sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'50px' }}
+       onClick={handleallbutton}
+       >
+          RETURN
+        </Button>
       </Empty>
     </div>
 
@@ -219,6 +235,15 @@ function AdminViewTable() {
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
       <div style={{display:"flex",justifyContent:"end"}}>
+      <Button 
+      variant="contained"
+       color="warning" size="small" 
+       sx={{ width: '50px', height: '30px',marginTop:"5px" }}
+       onClick={handleallbutton}
+       >
+          ALL
+        </Button>
+
         <Button onClick={handleCalender} >
           <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
           </Button>
