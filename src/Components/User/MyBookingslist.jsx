@@ -18,13 +18,14 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import { useContext } from 'react';
-import { LoginContext } from '../../Context/Login.Context';
 import { Empty } from 'antd';
-import { UserContext } from '../../Context/User.Context';
-import UserWrapper from './UserWrapper';
 import ReactLoading from 'react-loading';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import { BsCalendarCheck } from "react-icons/bs";
+import UserCalender from './MyBookingCalender';
+import moment from 'momnet';
+import { UserContext } from '../../Context/User.Context';
 
 const theme = createTheme({
   typography: {
@@ -46,6 +47,18 @@ const style = {
   p: 4,
   borderRadius: 3
 };
+const Calstyle = {
+  position: 'absolute',
+  // top: '50%',
+  // left: '50%',
+  // transform: 'translate(-50%, -50%)',
+  width: '100%',
+  backgroundColor:'transparent',
+   border: '2px solid white',
+  boxShadow: 24,
+  p: 4,
+  borderRadius: 3
+};
 
 function MyBookingslist() {
 
@@ -54,18 +67,47 @@ function MyBookingslist() {
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const [userData, setUserData] = useState([])
-  const { userName } = useContext(LoginContext)
+  const [isCalOpen, setIsCalOpen] = React.useState(false);
+  const { userName ,selectedDate, setSelectedDate} = useContext(UserContext)
+
+  // const fetchData = async () => {
+  //   console.log(selectedDate)
+  //   try {
+  //     const param = {}
+  //     param["name"] =userName
+  //     if(selectedDate){
+  //       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
+  //      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+  //     }
+      
+  //     console.log(userName)
+  //     const response = await axios.get('http://localhost:8000/transport/get', { params: { param} })
+  //     console.log(response.data.data)
+  //     setUserData(response.data.data)
+  //     setTimeout(() => setIsLoading(false), 1000)
+
+  //   }
+  //   catch (error) {
+  //     console.log("Error", error)
+  //   };
+
+  // }
 
   const fetchData = async () => {
+    const param = {}
+    param["name"] =userName
+    if(selectedDate){
+      console.log("hai")
+      console.log(selectedDate)
+      console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
+     param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+    }
     try {
-      const param = {}
-      param["name"] =userName
-      
-      console.log(userName)
-      const response = await axios.get('http://localhost:8000/transport/get', { params: { param} })
+      const response = await axios.get('http://localhost:8000/transport/get',{params:param})
       console.log(response.data.data)
       setUserData(response.data.data)
-      setTimeout(() => setIsLoading(false), 1000)
+      setIsLoading(false)
+      console.log("hh")
 
     }
     catch (error) {
@@ -90,8 +132,9 @@ function MyBookingslist() {
   useEffect(() => {
 
     fetchData()
+    console.log('hai')
 
-  }, []);
+  }, [setSelectedDate]);
 
 
   const handleOpen = (rowData) => {
@@ -102,7 +145,12 @@ function MyBookingslist() {
   const handleClose = () => {
     setSelectedRow(null);
     setIsOpen(false);
+    setIsCalOpen(false)
+    fetchData()
   };
+  const handleCalender =()=>{
+    setIsCalOpen(true)
+  }
 
   const columns = VISIBLE_FIELDS.map((field) => {
 
@@ -163,11 +211,15 @@ function MyBookingslist() {
   });
   if (!userData) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
+       
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        description={<span style={{marginLeft:'-30px'}}>No data found.... Click to generate</span>}
+        description={<span style={{marginLeft:'-20px'}}>No data found on the selected date </span>}
       >
-        <Button type="primary" variant='contained' onClick={() => { }}>Create Now</Button>
+        
+        <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '40px', maxHeight: '40px', minWidth: '40px', minHeight: '40px',marginRight:"40px"}}/>
+          </Button>
       </Empty>
     </div>
 
@@ -183,10 +235,16 @@ function MyBookingslist() {
     <ThemeProvider theme={theme}>
 
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
+     
         {isLoading ?
           <ReactLoading type={"spin"} color='#0D6EFD' height={'10%'} width={'10%'} />
           :
-          <>
+          <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
+      <div style={{display:"flex",justifyContent:"end"}}>
+        <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+          </Button>
+      </div>
             <DataGrid
               rows={userData}
               columns={columns}
@@ -194,7 +252,16 @@ function MyBookingslist() {
                 Toolbar: GridToolbar,
               }}
             />
-            <Modal open={isOpen} onClose={handleClose}>
+
+            {isCalOpen && (
+              <Modal open={true} onClose={handleClose} sx={Calstyle}>
+                <div>
+                <UserCalender />
+                </div>
+              </Modal>
+            )}
+
+                  <Modal open={isOpen} onClose={handleClose}>
               <div>
                 {/* Render the detailed information from selectedRow */}
                 {selectedRow && (
@@ -267,9 +334,10 @@ function MyBookingslist() {
                 )}
               </div>
             </Modal>
-          </>
+          </div>
         }
       </div>
+      
     </ThemeProvider>
   );
 }

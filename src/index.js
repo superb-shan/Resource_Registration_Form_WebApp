@@ -7,6 +7,7 @@ import TransportProvider from './Context/Transport.Context';
 import { ToastContainer } from "react-toastify";
 import AdminProvider from './Context/Admin.Context';
 import SeminorProvider from './Context/Seminor.Context';
+import UserProvider from './Context/User.Context';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,8 +17,10 @@ root.render(
       <TransportProvider>
         <AdminProvider>
           <SeminorProvider>
+          <UserProvider>
         <App />
         <ToastContainer /> 
+        </UserProvider>
         </SeminorProvider>
         </AdminProvider>
       </TransportProvider>

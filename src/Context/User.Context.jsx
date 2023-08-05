@@ -6,6 +6,7 @@ const UserProvider = ({ children }) => {
   
   const [selectedView, setSelectedView] = useState('My Bookings');
   const [selectedForm, setSelectedForm] = useState('Transport');
+  const [selectedDate, setSelectedDate] = useState(null)
 
     return (
       <UserContext.Provider
@@ -13,7 +14,9 @@ const UserProvider = ({ children }) => {
           selectedForm,
           setSelectedForm,
           selectedView,
-          setSelectedView
+          setSelectedView,
+          selectedDate,
+           setSelectedDate
         }}
       >
         {children}

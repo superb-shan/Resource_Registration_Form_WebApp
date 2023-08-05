@@ -129,21 +129,27 @@ function AdminViewTable() {
 
   };
 
+  const handleCalender =()=>{
+    setIsCalOpen(true)
+  }
+
   if (!userData) {
     return <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', minHeight: '100%', minWidth: '100%', backgroundColor: 'white' }}>
+       
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        description={<span style={{marginLeft:'-30px'}}> No forms found on that particular Date</span>}
-        style={{display: 'flex', justifyContent: 'center',  flexDirection: "column", }}
+        description={<span style={{marginLeft:'-20px'}}>No data found on the selected date </span>}
       >
+        
+        <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '40px', maxHeight: '40px', minWidth: '40px', minHeight: '40px',marginRight:"40px"}}/>
+          </Button>
       </Empty>
     </div>
 
   }
 
-  const handleCalender =()=>{
-    setIsCalOpen(true)
-  }
+ 
 
 
   const columns = VISIBLE_FIELDS.map((field) => {
