@@ -25,6 +25,7 @@ import { useContext } from 'react';
 import { AdminContext } from '../../Context/Admin.Context';
 import moment from 'moment';
 import { Empty } from 'antd';
+import Textarea from '@mui/material/TextField';
 
 
 
@@ -35,7 +36,7 @@ const theme = createTheme({
   },
 });
 
-const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions'];
+const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions','remarks'];
 
 const style = {
   position: 'absolute',
@@ -71,6 +72,7 @@ function AdminViewTable() {
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
   const[isAdd,setIsAdd]=useState(false)
+  const [remarks, setRemarks] = useState('');
   const {userData, setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
 
   const fetchData = async () => {
@@ -84,14 +86,28 @@ function AdminViewTable() {
       console.log(response.data.data)
       setUserData(response.data.data)
       setIsLoading(false)
-      console.log("hh")
-
     }
     catch (error) {
       console.log("Error", error)
     };
 
   }
+  const handleRemarkButtonClick = async (id) => {
+    try {
+      const response = await axios.patch('http://localhost:8000/transport/update', {
+        id,
+        remarks: remarks, 
+      });
+      console.log(response);
+      fetchData();
+      handleClose();
+      toast.success('Remarks sent successfully');
+    } catch (error) {
+      console.error('Error sending remarks:', error);
+      toast.error('Error sending remarks');
+    }
+  };
+  
 
   const accept = async (id) => {
     const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'true' })
@@ -102,12 +118,15 @@ function AdminViewTable() {
 
   }
   const reject = async (id) => {
-    const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
-    console.log(res)
-    fetchData()
-    handleClose()
-    toast.error('Rejected')
-  }
+    const res = await axios.patch('http://localhost:8000/transport/update', {
+      id,
+      isapproved: 'false'
+    });
+    console.log(res);
+    fetchData();
+    handleClose();
+    toast.error('Rejected');
+  };
 
   useEffect(() => {
 
@@ -128,7 +147,6 @@ function AdminViewTable() {
   const handleOpen = (rowData) => {
     setSelectedRow(rowData);
     setIsOpen(true);
-    // setIsCalOpen(true)
   };
 
   const handleClose = () => {
@@ -149,13 +167,13 @@ function AdminViewTable() {
        
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        description={<span style={{marginLeft:'-20px'}}>No data found on the selected date </span>}
+        description={<span style={{marginLeft:'-20px'}}>No data found to show</span>}
       >
         
         <Button 
       variant="contained"
        color="warning" size="small" 
-       sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'50px' }}
+       sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'20px' }}
        onClick={handleallbutton}
        >
           RETURN
@@ -169,6 +187,7 @@ function AdminViewTable() {
 
 
   const columns = VISIBLE_FIELDS.map((field) => {
+
 
     if (field === 'actions') {
       return {
@@ -320,6 +339,26 @@ function AdminViewTable() {
                           <TableRow>
                             <TableCell>Special Requirement</TableCell>
                             <TableCell>{selectedRow.specialRequirements}</TableCell>
+                          </TableRow>
+                          <TableRow>
+                            <TableCell>Remarks</TableCell>
+                            <TableCell>
+
+                            <Textarea
+                              style={{minHeight:'30px',maxHeight:'30px'}}
+                              value={remarks} 
+                              onChange={(e) => setRemarks(e.target.value)} 
+                            />
+                            <Button
+                            style={{minHeight:'30px',maxHeight:'10px',marginTop:'30px'}}
+                              variant="contained"
+                              color="primary"
+                              onClick={() => handleRemarkButtonClick(selectedRow.id)} 
+                            >
+                              SEND
+                            </Button>
+        
+                            </TableCell>
                           </TableRow>
                         </TableBody>
                       </Table>
