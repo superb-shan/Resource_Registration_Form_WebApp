@@ -102,10 +102,10 @@ function AdminViewTable() {
       console.log(response);
       fetchData();
       handleClose();
-      toast.success('Remarks sent successfully');
+      // toast.success('Remarks sent successfully');
     } catch (error) {
       console.error('Error sending remarks:', error);
-      toast.error('Error sending remarks');
+      // toast.error('Error sending remarks');
     }
   };
   
