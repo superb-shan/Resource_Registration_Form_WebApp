@@ -172,7 +172,7 @@ function AdminViewTable() {
         
         <Button 
       variant="contained"
-       color="warning" size="small" 
+      size="small" 
        sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'20px' }}
        onClick={handleallbutton}
        >

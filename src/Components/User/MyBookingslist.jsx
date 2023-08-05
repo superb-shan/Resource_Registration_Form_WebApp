@@ -203,7 +203,7 @@ function MyBookingslist() {
         
         <Button 
       variant="contained"
-       color="warning" size="small" 
+      size="small" 
        sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'20px' }}
        onClick={handleallbutton}
        >
@@ -225,8 +225,7 @@ function MyBookingslist() {
           <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
       <div style={{display:"flex",justifyContent:"end"}}>
       <Button 
-      variant="contained" 
-      color="warning" 
+      variant="contained"  
       size="small" 
       sx={{ width: '50px', height: '30px',marginTop:"5px" }}
       onClick={handleallbutton}

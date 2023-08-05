@@ -64,7 +64,7 @@ export const ChangePassword = () => {
 
         const res = await axios.patch(`http://localhost:8000/user/update`, { name: userName, password: newPassword  } );
         const loginStatus = res.data.message;
-        if (loginStatus === "success"){   
+        if (loginStatus === true){   
            toast.success("Password Updated!");
            setPassword(newPassword);
            setIsUpdated(true);
