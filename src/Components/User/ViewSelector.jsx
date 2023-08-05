@@ -19,6 +19,7 @@ export default function ViewSelector() {
   const {selectedView, setSelectedView} = useContext(UserContext);
   const [selectedIndex, setSelectedIndex] = useState(options.indexOf(selectedView));
 
+  React.useEffect(()=> {}, [selectedView, selectedIndex]);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -79,7 +80,7 @@ export default function ViewSelector() {
                   {options.map((option, index) => (
                     <MenuItem
                       key={option}
-                      disabled={index === 2}
+                      // disabled={index === 2}
                       selected={index === selectedIndex}
                       onClick={(event) => handleMenuItemClick(event, index)}
                     >

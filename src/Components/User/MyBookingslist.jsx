@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { BsCalendarCheck } from "react-icons/bs";
 import UserCalender from './MyBookingCalender';
-import moment from 'momnet';
+import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
 
 const theme = createTheme({
@@ -233,7 +233,6 @@ function MyBookingslist() {
        >
           RETURN
         </Button>
-        
       </Empty>
     </div>
 
