@@ -33,7 +33,7 @@ const theme = createTheme({
   },
 });
 
-const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions'];
+const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions','remarks'];
 
 const style = {
   position: 'absolute',
@@ -71,28 +71,6 @@ function MyBookingslist() {
   const[isAdd,setIsAdd]=useState(false)
   const { userName ,selectedDate, setSelectedDate} = useContext(UserContext)
 
-  // const fetchData = async () => {
-  //   console.log(selectedDate)
-  //   try {
-  //     const param = {}
-  //     param["name"] =userName
-  //     if(selectedDate){
-  //       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
-  //      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
-  //     }
-      
-  //     console.log(userName)
-  //     const response = await axios.get('http://localhost:8000/transport/get', { params: { param} })
-  //     console.log(response.data.data)
-  //     setUserData(response.data.data)
-  //     setTimeout(() => setIsLoading(false), 1000)
-
-  //   }
-  //   catch (error) {
-  //     console.log("Error", error)
-  //   };
-
-  // }
 
   const fetchData = async () => {
     const param = {}
@@ -106,8 +84,6 @@ function MyBookingslist() {
       console.log(response.data.data)
       setUserData(response.data.data)
       setTimeout(() => setIsLoading(false), 500)
-      console.log("hh")
-
     }
     catch (error) {
       console.log("Error", error)
@@ -222,13 +198,13 @@ function MyBookingslist() {
        
       <Empty
         image="https://gw.alipayobjects.com/zos/antfincdn/ZHrcdLPrvN/empty.svg"
-        description={<span style={{marginLeft:'-20px'}}>No data found on the selected date </span>}
+        description={<span style={{marginLeft:'-20px'}}>No data found to show </span>}
       >
         
         <Button 
       variant="contained"
        color="warning" size="small" 
-       sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'50px' }}
+       sx={{ width: '50px', height: '30px',marginTop:"5px",marginRight:'20px' }}
        onClick={handleallbutton}
        >
           RETURN
@@ -267,6 +243,7 @@ function MyBookingslist() {
               components={{
                 Toolbar: GridToolbar,
               }}
+              style={{maxHeight: "90%"}}
             />
 
             {isCalOpen && (
@@ -333,14 +310,15 @@ function MyBookingslist() {
                                 <TableCell>Special Requirement</TableCell>
                                 <TableCell>{selectedRow.specialRequirements}</TableCell>
                               </TableRow>
+                              <TableRow>
+                                <TableCell>Remarks</TableCell>
+                                <TableCell>{selectedRow.remarks}</TableCell>
+                              </TableRow>
                             </TableBody>
                           </Table>
                         </TableContainer>
                       </Typography>
                       <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                        {/* <Button variant="contained" color='warning' style={{width:"90px"}} disabled={selectedRow.isapproved !== null} onClick={() => { edit(selectedRow.id) }}>
-                      Edit
-                    </Button> */}
                         <Button variant="contained" color="error" style={{ width: "90px" }} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
                           Cancel
                         </Button>
