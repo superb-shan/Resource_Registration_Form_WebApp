@@ -5,9 +5,7 @@ import SeminorHallForm from './SeminorHallForm'
 import { UserContext } from '../../Context/User.Context';
 import { useContext } from 'react';
 import { useState } from 'react';
-import moment from 'moment';
 import axios from 'axios';
-import { TransportContext } from '../../Context/Transport.Context';
 import { LoginContext } from '../../Context/Login.Context';
 import SendIcon from '@mui/icons-material/Send';
 import DoneIcon from '@mui/icons-material/Done';
@@ -81,7 +79,7 @@ function SeminorHallWrapper() {
   const SendSeminorData = async () => {
 
    // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`http://localhost:8000/seminar/create`, 
+    const res = await axios.post(`http://localhost:8000/Seminar/create`, 
     {
       name,
       userName,

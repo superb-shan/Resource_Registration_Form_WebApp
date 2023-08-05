@@ -18,7 +18,7 @@ function SeminorHallForm() {
     name, setName,
     contactNumber, setContactNumber,
     designation, setDesignation,
-    department, setDepartment, hall,
+     hall,
     startDate,
     endDate,
     startTime,
