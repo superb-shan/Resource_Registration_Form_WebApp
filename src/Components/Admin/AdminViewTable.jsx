@@ -255,14 +255,16 @@ function AdminViewTable() {
     <ThemeProvider theme={theme}>
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-      <div style={{display:"flex",justifyContent:"end"}}>
+      <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
       <Button 
       variant="contained"
-       color="warning" size="small" 
-       sx={{ width: '50px', height: '30px',marginTop:"5px" }}
+      size="small" 
+       sx={{ height: '30px',marginTop:"5px", display:"flex", gap: 1, fontSize: "14px" }}
        onClick={handleallbutton}
        >
-          ALL
+          <span>ALL</span>
+        <SettingsBackupRestore sx={{width:"18px"}} />
+
         </Button>
 
         <Button onClick={handleCalender} >
@@ -275,7 +277,7 @@ function AdminViewTable() {
           components={{
             Toolbar: GridToolbar,
           }}
-          style={{maxHeight: "90%"}}
+          style={{maxHeight: "94%"}}
         />
 
           {isCalOpen && (

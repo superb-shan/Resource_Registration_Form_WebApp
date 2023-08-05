@@ -14,9 +14,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { IoCloseCircleOutline } from "react-icons/io5";
 import axios from 'axios';
 import { useState, useEffect } from 'react';
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import HighlightOffIcon from '@mui/icons-material/HighlightOff';
-import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
+import {CheckCircleOutline, HighlightOff, PendingOutlined, SettingsBackupRestore } from '@mui/icons-material';
 import { useContext } from 'react';
 import { Empty } from 'antd';
 import ReactLoading from 'react-loading';
@@ -160,7 +158,7 @@ function MyBookingslist() {
           <div style={{ display: 'flex', alignItems: 'center' }}>
             {params.row.isapproved === null && (
               <>
-                <PendingOutlinedIcon style={{ marginRight: 4, color: 'orange' }} />
+                <PendingOutlined style={{ marginRight: 4, color: 'orange' }} />
                 <Typography variant="body1" style={{ color: 'orange' }}>
                   Pending
                 </Typography>
@@ -168,7 +166,7 @@ function MyBookingslist() {
             )}
             {params.row.isapproved === true && (
               <>
-                <CheckCircleOutlineIcon style={{ color: 'green', marginRight: 4 }} />
+                <CheckCircleOutline style={{ color: 'green', marginRight: 4 }} />
                 <Typography variant="body1" style={{ color: 'green' }}>
                   success
                 </Typography>
@@ -176,7 +174,7 @@ function MyBookingslist() {
             )}
             {params.row.isapproved === false && (
               <>
-                <HighlightOffIcon style={{ color: 'red', marginRight: 4 }} />
+                <HighlightOff style={{ color: 'red', marginRight: 4 }} />
                 <Typography variant="body1" style={{ color: 'red' }}>
                   Rejected
                 </Typography>
@@ -220,29 +218,30 @@ function MyBookingslist() {
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
      
         {isLoading ?
-          <ReactLoading type={"spin"} color='#0D6EFD' height={'10%'} width={'10%'} />
+          <ReactLoading type={"spin"} color='#1976d2' height={'10%'} width={'10%'} />
           :
           <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-      <div style={{display:"flex",justifyContent:"end"}}>
-      <Button 
-      variant="contained"  
-      size="small" 
-      sx={{ width: '50px', height: '30px',marginTop:"5px" }}
-      onClick={handleallbutton}
-      >
-          ALL
-        </Button>
-        <Button onClick={handleCalender} >
-          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
-          </Button>
-      </div>
+            <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
+              <Button 
+                variant="contained"  
+                size="small" 
+                sx={{ height: '30px',marginTop:"5px", display:"flex", gap: 1, fontSize: "14px" }}
+                onClick={handleallbutton}
+              >
+                <span>ALL</span>
+                <SettingsBackupRestore sx={{width:"18px"}} />
+              </Button>
+              <Button onClick={handleCalender} >
+                <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+              </Button>
+            </div>
             <DataGrid
               rows={userData}
               columns={columns}
               components={{
                 Toolbar: GridToolbar,
               }}
-              style={{maxHeight: "90%"}}
+              style={{maxHeight: "94%"}}
             />
 
             {isCalOpen && (
@@ -253,79 +252,79 @@ function MyBookingslist() {
               </Modal>
             )}
 
-                  <Modal open={isOpen} onClose={handleClose}>
-              <div>
-                {/* Render the detailed information from selectedRow */}
-                {selectedRow && (
-                  <div >
-                    <Box sx={style}>
-                      <div style={{ textAlign: 'right' }}>
-                        <Button onClick={handleClose}  ><IoCloseCircleOutline /></Button>
-                      </div>
-                      <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
-                        Details
-                      </Typography>
-                      <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        <TableContainer>
-                          <Table>
-                            <TableBody>
-                              <TableRow>
-                                <TableCell>Type</TableCell>
-                                <TableCell>{selectedRow.type}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Name</TableCell>
-                                <TableCell>{selectedRow.name}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Phone Number</TableCell>
-                                <TableCell>{selectedRow.number}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Purpose</TableCell>
-                                <TableCell>{selectedRow.purpose}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Date</TableCell>
-                                <TableCell>{selectedRow.date}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Time</TableCell>
-                                <TableCell>{selectedRow.time}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>PickUp Location</TableCell>
-                                <TableCell>{selectedRow.pickUp}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Drop Location</TableCell>
-                                <TableCell>{selectedRow.drop}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>No of Passengers</TableCell>
-                                <TableCell>{selectedRow.passengerCount}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Special Requirement</TableCell>
-                                <TableCell>{selectedRow.specialRequirements}</TableCell>
-                              </TableRow>
-                              <TableRow>
-                                <TableCell>Remarks</TableCell>
-                                <TableCell>{selectedRow.remarks}</TableCell>
-                              </TableRow>
-                            </TableBody>
-                          </Table>
-                        </TableContainer>
-                      </Typography>
-                      <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                        <Button variant="contained" color="error" style={{ width: "90px" }} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
-                          Cancel
-                        </Button>
-                      </Stack>
-                    </Box>
-                  </div>
-                )}
-              </div>
+            <Modal open={isOpen} onClose={handleClose}>
+                <div>
+                  {/* Render the detailed information from selectedRow */}
+                  {selectedRow && (
+                    <div >
+                      <Box sx={style}>
+                        <div style={{ textAlign: 'right' }}>
+                          <Button onClick={handleClose}  ><IoCloseCircleOutline /></Button>
+                        </div>
+                        <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+                          Details
+                        </Typography>
+                        <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                          <TableContainer>
+                            <Table>
+                              <TableBody>
+                                <TableRow>
+                                  <TableCell>Type</TableCell>
+                                  <TableCell>{selectedRow.type}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Name</TableCell>
+                                  <TableCell>{selectedRow.name}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Phone Number</TableCell>
+                                  <TableCell>{selectedRow.number}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Purpose</TableCell>
+                                  <TableCell>{selectedRow.purpose}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Date</TableCell>
+                                  <TableCell>{selectedRow.date}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Time</TableCell>
+                                  <TableCell>{selectedRow.time}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>PickUp Location</TableCell>
+                                  <TableCell>{selectedRow.pickUp}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Drop Location</TableCell>
+                                  <TableCell>{selectedRow.drop}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>No of Passengers</TableCell>
+                                  <TableCell>{selectedRow.passengerCount}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Special Requirement</TableCell>
+                                  <TableCell>{selectedRow.specialRequirements}</TableCell>
+                                </TableRow>
+                                <TableRow>
+                                  <TableCell>Remarks</TableCell>
+                                  <TableCell>{selectedRow.remarks}</TableCell>
+                                </TableRow>
+                              </TableBody>
+                            </Table>
+                          </TableContainer>
+                        </Typography>
+                        <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
+                          <Button variant="contained" color="error" style={{ width: "90px" }} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
+                            Cancel
+                          </Button>
+                        </Stack>
+                      </Box>
+                    </div>
+                  )}
+                </div>
             </Modal>
           </div>
         }

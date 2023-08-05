@@ -20,7 +20,7 @@ export default function ViewSelector() {
   const [selectedIndex, setSelectedIndex] = useState(options.indexOf(selectedView));
 
   console.log(selectedIndex, selectedView);
-  React.useEffect(()=> {}, [selectedView, selectedIndex]);
+  React.useEffect(()=> {setSelectedIndex(options.indexOf(selectedView))}, [selectedView, selectedIndex]);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
