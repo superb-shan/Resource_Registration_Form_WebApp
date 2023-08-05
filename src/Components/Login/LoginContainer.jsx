@@ -36,7 +36,7 @@ export const LoginContainer = () => {
   }
 
   return (
-    <div className='bg-white h-[500px] w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl'>
+    <div className='bg-white w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl gap-10 p-10'>
         <p className='text-4xl'>Login</p>
         <LoginSelector />
         <LoginInputFields />

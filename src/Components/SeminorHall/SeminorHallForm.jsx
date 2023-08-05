@@ -8,7 +8,7 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
-import { SeminorContext } from '../Context/Seminor.Context';
+import { SeminorContext } from '../../Context/Seminor.Context';
 
 
 

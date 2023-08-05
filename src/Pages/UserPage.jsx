@@ -1,6 +1,6 @@
 import React from 'react'
 import UserProvider from '../Context/User.Context'
-import UserWrapper from '../User/UserWrapper'
+import UserWrapper from '../Components/User/UserWrapper'
 import { LoginContext } from '../Context/Login.Context'
 import { useContext } from 'react'
 import { Navigate } from 'react-router-dom';
