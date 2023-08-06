@@ -86,7 +86,7 @@ function TransportContainer() {
         }
 
       const formattedDateTime = moment(selectedDate.toString()).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
-      const res = await axios.post(`http://localhost:8000/transport/create`, 
+      const res = await axios.post(`/transport/create`, 
       {
         name,
         userName,

@@ -78,7 +78,7 @@ function MyBookingslist() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-      const response = await axios.get('http://localhost:8000/transport/get',{params:param})
+      const response = await axios.get('/transport/get',{params:param})
       console.log(response.data.data)
       setUserData(response.data.data)
       setTimeout(() => setIsLoading(false), 500)
@@ -90,7 +90,7 @@ function MyBookingslist() {
   }
 
   const deleted = async (id) => {
-    const res = await axios.delete('http://localhost:8000/transport/delete', { params: { id } })
+    const res = await axios.delete('/transport/delete', { params: { id } })
     console.log(res)
     fetchData()
     handleClose()
@@ -98,7 +98,7 @@ function MyBookingslist() {
   }
 
   // const edit = async (id) => {
-  // const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'false' })
+  // const res = await axios.patch('/transport/update', { id, isapproved: 'false' })
   // console.log(res)
   // fetchData()
   // handleClose()

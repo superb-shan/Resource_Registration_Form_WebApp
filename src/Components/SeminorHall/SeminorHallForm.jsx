@@ -9,10 +9,17 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
 import { SeminorContext } from '../../Context/Seminor.Context';
+import { Button } from '@mui/material';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import moment from 'moment';
+import { useState } from 'react';
 
 
 
 function SeminorHallForm() {
+
+  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
 
   const {
     name, setName,
@@ -37,8 +44,6 @@ function SeminorHallForm() {
     setPurpose,
     purpose
   } = useContext(SeminorContext);
-
-
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -88,6 +93,23 @@ function SeminorHallForm() {
   const handlepurposeChange = (event) => {
     setPurpose(event.target.value);
   };
+
+  const handleCheckAvailability = async() => {
+    if (!startTime || !endTime){
+      toast.warn("Please select a start and end time");
+      return;
+    }
+    if (!startDate || !endDate){
+      toast.warn("Please select a start and end time");
+      return;
+    }
+    const res = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
+    console.log(res);
+    if (res.data.message === true){
+      setIsAvailabilityChecked(true);
+    }
+
+  }
 
 
   const eventEquipment = [{
@@ -170,37 +192,13 @@ function SeminorHallForm() {
       />
 
       <TextField
-        id="Designation-input"
+        id="Designation-Department-input"
         label="Designation & Department *"
         type="text"
         placeholder='Example:(AP/CSE)'
         value={DesignationDepartment}
         onChange={handleDesignationChange}
       />
-
-      {/* <TextField
-        id="Department-input"
-        label="Department *"
-        type="text"
-        placeholder='Enter your Department'
-        value={department}
-        onChange={handleDepartmentChange}
-      /> */}
-
-      <TextField
-        id="outlined-hall-required-input"
-        select
-        label="Required Hall*"
-        placeholder='Select the Hall Requried'
-        value={requiredHall}
-        onChange={handlehallChange}
-      >
-        {eventHall.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
 
       <TextField
         id="outlined-select-purpose"
@@ -213,7 +211,7 @@ function SeminorHallForm() {
       {/* start datepicker*/}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DatePicker']} sx={{ p: 0 }}>
+        <DemoContainer components={['DatePicker']} >
           <DatePicker
             label='Start Date *'
             views={['year', 'month', 'day']}
@@ -228,7 +226,7 @@ function SeminorHallForm() {
 
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['DatePicker']} sx={{ p: 0 }}>
+        <DemoContainer components={['DatePicker']}>
           <DatePicker
             label='End Date *'
             views={['year', 'month', 'day']}
@@ -243,7 +241,7 @@ function SeminorHallForm() {
 
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']} sx={{ p: 0 }}>
+        <DemoContainer components={['TimePicker']}>
           <TimePicker
             sx={{ width: { xs: "300px", md: "500px" } }}
             label="Start Time *"
@@ -257,7 +255,7 @@ function SeminorHallForm() {
 
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']} sx={{ p: 0 }}>
+        <DemoContainer components={['TimePicker']}>
           <TimePicker
             sx={{ width: { xs: "300px", md: "500px" } }}
             label="End Time *"
@@ -267,6 +265,23 @@ function SeminorHallForm() {
         </DemoContainer>
       </LocalizationProvider>
 
+
+      <Button variant="contained" onClick={handleCheckAvailability}>Check Availability</Button>
+      {/* hall required */}
+      <TextField
+        id="outlined-hall-required-input"
+        select
+        label="Required Hall*"
+        placeholder='Select the Hall Requried'
+        value={requiredHall}
+        onChange={handlehallChange}
+      >
+        {eventHall.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
 
       {/* no of attendees */}
 

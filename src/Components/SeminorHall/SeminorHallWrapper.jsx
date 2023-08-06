@@ -79,7 +79,7 @@ function SeminorHallWrapper() {
   const SendSeminorData = async () => {
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`http://localhost:8000/Seminar/create`,
+    const res = await axios.post(`/Seminar/create`,
       {
         name,
         userName,

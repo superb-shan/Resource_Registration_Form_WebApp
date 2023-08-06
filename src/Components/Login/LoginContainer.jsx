@@ -19,7 +19,7 @@ export const LoginContainer = () => {
   const handleLogin = async (event) => {
 
     event.preventDefault();
-    const res = await axios.get(`http://localhost:8000/${user}/Login`, { params: { name: userName, password: password  } });
+    const res = await axios.get(`/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
     if (loginStatus !== true){
       // alert("Invalid username or Password");

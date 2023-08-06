@@ -78,7 +78,7 @@ export const CreateUserPage = () => {
     }
 
 
-    const res = await axios.post("http://localhost:8000/user/create", { name: newUserName, email: newEmail,  password: newPassword  } );
+    const res = await axios.post("/user/create", { name: newUserName, email: newEmail,  password: newPassword  } );
     const loginStatus = res.data.message;
     if (loginStatus === "success"){
       setIsCreated(true);

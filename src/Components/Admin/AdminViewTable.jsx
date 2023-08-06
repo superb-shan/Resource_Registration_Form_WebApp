@@ -83,7 +83,7 @@ function AdminViewTable() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-      const response = await axios.get('http://localhost:8000/transport/get',{params:param})
+      const response = await axios.get('/transport/get',{params:param})
       console.log(response.data.data)
       setUserData(response.data.data)
       setIsLoading(false)
@@ -95,7 +95,7 @@ function AdminViewTable() {
   }
   const handleRemarkButtonClick = async (id) => {
     try {
-      const response = await axios.patch('http://localhost:8000/transport/update', {
+      const response = await axios.patch('/transport/update', {
         id,
         remarks: remarks, 
       });
@@ -113,7 +113,7 @@ function AdminViewTable() {
 
   const accept = async (id) => {
     handleRemarkButtonClick(selectedRow.id)
-    const res = await axios.patch('http://localhost:8000/transport/update', { id, isapproved: 'true' })
+    const res = await axios.patch('/transport/update', { id, isapproved: 'true' })
     console.log(res)
     fetchData()
     handleClose()
@@ -125,7 +125,7 @@ function AdminViewTable() {
       toast.error("Enter the Reason to Reject in Remarks Field")
     }else{
     handleRemarkButtonClick(selectedRow.id)
-    const res = await axios.patch('http://localhost:8000/transport/update', {
+    const res = await axios.patch('/transport/update', {
       id,
       isapproved: 'false'
     });
