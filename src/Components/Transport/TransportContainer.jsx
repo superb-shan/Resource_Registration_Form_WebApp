@@ -44,6 +44,7 @@ function TransportContainer() {
     }
     return true;
   }
+
   
   const {userName} = useContext(LoginContext);
 
@@ -71,9 +72,13 @@ function TransportContainer() {
   ];
 
 
-    const handleSubmit = async() => {
-        
 
+    const handleSubmit = async() => {
+
+      if(phoneNumber.length!='10'){
+        toast.error("Enter 10 digit Phone Number")
+      }
+        
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
       if (!allFieldsNotEmpty){
          toast.warning('Fill all the Required fields');
@@ -101,7 +106,7 @@ function TransportContainer() {
         toast.success("Submitted");
         console.log("date", selectedDate, formattedDateTime);
       }else{
-        toast.error(postStatus)
+        toast.error("plz fill the form correctly")
       }
     };
 
