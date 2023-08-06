@@ -176,7 +176,7 @@ function TransportInputField() {
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+          <DemoContainer components={['DatePicker']} sx={{p:0}}>
             <DatePicker
             label='Pick up Date *'
             views={['year', 'month', 'day']}
@@ -192,7 +192,7 @@ function TransportInputField() {
 
       
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']}>
+        <DemoContainer components={['TimePicker']} sx={{p:0}}>
           <TimePicker 
             sx={{width: {xs:"300px", md:"500px"}}}
             label="Pick up Time *" 

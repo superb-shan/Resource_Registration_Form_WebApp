@@ -14,7 +14,7 @@ import { SeminorContext } from '../../Context/Seminor.Context';
 
 function SeminorHallForm() {
 
-  const{
+  const {
     name, setName,
     contactNumber, setContactNumber,
     DesignationDepartment, setDesignation,
@@ -32,14 +32,14 @@ function SeminorHallForm() {
     setStartTime,
     setEndTime,
     setNoOfAttendees,
-   setEquipmentNeeded,
+    setEquipmentNeeded,
     setSpecialRequirements,
     setPurpose,
     purpose
-  }=useContext(SeminorContext)
+  } = useContext(SeminorContext);
 
 
-  
+
   const handleNameChange = (event) => {
     setName(event.target.value);
   };
@@ -85,74 +85,74 @@ function SeminorHallForm() {
     setSpecialRequirements(event.target.value);
   };
 
-  const handlepurposeChange=(event)=>{
+  const handlepurposeChange = (event) => {
     setPurpose(event.target.value);
+  };
+
+
+  const eventEquipment = [{
+    value: "Audio",
+    label: "Audio"
+
+  }, {
+    value: "Video",
+    label: "Video"
+
+  },
+  {
+    value: "Reception items",
+    label: "Reception items"
+  },
+  {
+    value: "Power Back up",
+    label: "Power Back up"
+  }, {
+    value: "Others",
+    label: "Others"
   }
+  ];
 
-  
-      const eventEquipment=[{
-        value:"Audio", 
-        label: "Audio"
 
-      },{
-        value:"Video",
-        label: "Video"
-        
-      },
-      {
-        value:"Reception items",
-        label:"Reception items"
-      },
-      {
-        value:"Power Back up",
-        label:"Power Back up"
-      },{
-        value:"Others",
-        label :"Others"
-      }
-    ]
-    
-
-      const eventHall=[
-        {
-            value:'Board Room',
-            label: 'Board Room'
-        },
-        {
-            value:'Ignite Room',
-            label: 'Ignite Room'
-        },
-        {
-            value:'GF-07',
-            label: 'GF-07'
-        },
-        {
-            value:'placement Lab',
-            label: 'placement Lab'
-        },
-        {
-            value:'IT center',
-            label: 'IT center'
-        },{
-          value:'Seminor Hall 1st Floor',
-          label: 'Seminor Hall 1st Floor'
-        },{
-          value:'Seminor Hall 2nd Floor',
-          label: 'Seminor Hall 2nd Floor'
-        },
-        {
-          value:'Others',
-          label: 'Others'
-        }
-    ];
+  const eventHall = [
+    {
+      value: 'Board Room',
+      label: 'Board Room'
+    },
+    {
+      value: 'Ignite Room',
+      label: 'Ignite Room'
+    },
+    {
+      value: 'GF-07',
+      label: 'GF-07'
+    },
+    {
+      value: 'placement Lab',
+      label: 'placement Lab'
+    },
+    {
+      value: 'IT center',
+      label: 'IT center'
+    }, {
+      value: 'Seminor Hall 1st Floor',
+      label: 'Seminor Hall 1st Floor'
+    }, {
+      value: 'Seminor Hall 2nd Floor',
+      label: 'Seminor Hall 2nd Floor'
+    },
+    {
+      value: 'Others',
+      label: 'Others'
+    }
+  ];
 
 
   return (
-         <div className='flex flex-col gap-10 w-[300px] '>
-        
- {/* selecting user name */}
+    <div className='flex flex-col gap-10 w-[300px] '>
 
- <TextField
+      {/* selecting user name */}
+
+      <TextField
         id="outlined-select-name"
         label="Name *"
         placeholder='Enter your Name'
@@ -195,14 +195,14 @@ function SeminorHallForm() {
         value={requiredHall}
         onChange={handlehallChange}
       >
-          {eventHall.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+        {eventHall.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
 
-        <TextField
+      <TextField
         id="outlined-select-purpose"
         label="Purpose of Event *"
         placeholder='Enter your Purpose'
@@ -210,68 +210,67 @@ function SeminorHallForm() {
         onChange={handlepurposeChange}
       />
 
-        {/* start datepicker*/}
+      {/* start datepicker*/}
 
-
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker']} sx={{p:0}}>
-          <DatePicker
-          label='Start Date *'
-          views={['year', 'month', 'day']}
-          disablePast
-          value={startDate}
-          onChange={handleStartDateChange}
-        />
-          </DemoContainer>
-        </LocalizationProvider> 
-
- {/* end datepicker*/}
-
-
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker']} sx={{p:0}}>
-          <DatePicker
-          label='End Date *'
-          views={['year', 'month', 'day']}
-          disablePast
-          value={endDate}
-          onChange={handleEndDateChange}
-        />
-          </DemoContainer>
-        </LocalizationProvider> 
-
-     {/* time picker start*/}
-
-      
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']} sx={{p:0}}>
-        <TimePicker
-          sx={{width: {xs:"300px", md:"500px"}}}
-          label="Start Time *"
-          value={startTime}
-          onChange={handleStartTimeChange}
-        />
+        <DemoContainer components={['DatePicker']} sx={{ p: 0 }}>
+          <DatePicker
+            label='Start Date *'
+            views={['year', 'month', 'day']}
+            disablePast
+            value={startDate}
+            onChange={handleStartDateChange}
+          />
         </DemoContainer>
-      </LocalizationProvider>    
+      </LocalizationProvider>
 
-       {/* time picker end*/}
+      {/* end datepicker*/}
 
-      
-       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']} sx={{p:0}}>
-        <TimePicker
-          sx={{width: {xs:"300px", md:"500px"}}}
-          label="End Time *"
-          value={endTime}
-          onChange={handleEndTimeChange}
-        />
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={['DatePicker']} sx={{ p: 0 }}>
+          <DatePicker
+            label='End Date *'
+            views={['year', 'month', 'day']}
+            disablePast
+            value={endDate}
+            onChange={handleEndDateChange}
+          />
         </DemoContainer>
-      </LocalizationProvider>  
-      
+      </LocalizationProvider>
 
-        {/* no of attendees */}
+      {/* time picker start*/}
 
-        <TextField
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={['TimePicker']} sx={{ p: 0 }}>
+          <TimePicker
+            sx={{ width: { xs: "300px", md: "500px" } }}
+            label="Start Time *"
+            value={startTime}
+            onChange={handleStartTimeChange}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
+      {/* time picker end*/}
+
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DemoContainer components={['TimePicker']} sx={{ p: 0 }}>
+          <TimePicker
+            sx={{ width: { xs: "300px", md: "500px" } }}
+            label="End Time *"
+            value={endTime}
+            onChange={handleEndTimeChange}
+          />
+        </DemoContainer>
+      </LocalizationProvider>
+
+
+      {/* no of attendees */}
+
+      <TextField
         id="no_of_attendees-input"
         label="No of Attendees *"
         type="number"
@@ -279,10 +278,10 @@ function SeminorHallForm() {
         onChange={handleNoOfAttendeesChange}
       />
 
-           {/* Equipments needed */}
+      {/* Equipments needed */}
 
 
-    <TextField
+      <TextField
         id="outlined-equipment-required-input"
         select
         label="Equipments needed *"
@@ -290,15 +289,15 @@ function SeminorHallForm() {
         value={EquipmentRequired}
         onChange={handleEquipmentNeededChange}
       >
-          {eventEquipment.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </TextField>
+        {eventEquipment.map((option) => (
+          <MenuItem key={option.value} value={option.value}>
+            {option.label}
+          </MenuItem>
+        ))}
+      </TextField>
 
-        {/* special requirement  */}
-        <TextField
+      {/* special requirement  */}
+      <TextField
         id="outlined-Specialrequirement-textarea"
         label="Special Requirements (optional)"
         placeholder="Mention all your special requirements"
@@ -306,7 +305,7 @@ function SeminorHallForm() {
         value={specialRequirements}
         onChange={handleSpecialRequirementsChange}
       />
-        </div>
+    </div>
   );
 }
 
