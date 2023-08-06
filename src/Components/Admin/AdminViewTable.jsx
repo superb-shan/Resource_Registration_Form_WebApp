@@ -310,65 +310,28 @@ function AdminViewTable() {
                     <TableContainer>
                       <Table>
                         <TableBody>
-                          <TableRow>
-                            <TableCell>Type</TableCell>
-                            <TableCell>{selectedRow.type}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Name</TableCell>
-                            <TableCell>{selectedRow.name}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Phone Number</TableCell>
-                            <TableCell>{selectedRow.number}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Purpose</TableCell>
-                            <TableCell>{selectedRow.purpose}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Date</TableCell>
-                            <TableCell>{selectedRow.date}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Time</TableCell>
-                            <TableCell>{selectedRow.time}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>PickUp Location</TableCell>
-                            <TableCell>{selectedRow.pickUp}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Drop Location</TableCell>
-                            <TableCell>{selectedRow.drop}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>No of Passengers</TableCell>
-                            <TableCell>{selectedRow.passengerCount}</TableCell>
-                          </TableRow>
-                          <TableRow>
-                            <TableCell>Special Requirement</TableCell>
-                            <TableCell>{selectedRow.specialRequirements}</TableCell>
-                          </TableRow>
-                          <TableRow>
+                        {Object.keys(selectedRow).map((key) => {
+                                  // List of keys to exclude
+                                  const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'remarks'];
+                                  if (excludedKeys.includes(key)) {
+                                    return null; // Skip rendering this key
+                                  }
+                                  return (
+                                    <TableRow key={key}>
+                                      <TableCell>{key[0].toUpperCase() + key.slice(1)}</TableCell>
+                                      <TableCell>{selectedRow[key]}</TableCell>
+                                    </TableRow>
+                                  );
+                          })}
+                          {selectedRow.isapproved=== null && <TableRow>
                             <TableCell>Remarks</TableCell>
                             <TableCell style={{height: "100px"}}>
-
-                            <Text
-                              value={remarks} 
-                              onChange={(e) => setRemarks(e.target.value)} 
-                            />
-                            {/* <Button
-                            style={{minHeight:'30px',maxHeight:'10px',marginTop:'30px'}}
-                              variant="contained"
-                              color="primary"
-                              onClick={() => handleRemarkButtonClick(selectedRow.id)} 
-                            >
-                              SEND
-                            </Button> */}
-        
+                              <Text
+                                value={remarks} 
+                                onChange={(e) => setRemarks(e.target.value)} 
+                              />
                             </TableCell>
-                          </TableRow>
+                          </TableRow>}
                         </TableBody>
                       </Table>
                     </TableContainer>
