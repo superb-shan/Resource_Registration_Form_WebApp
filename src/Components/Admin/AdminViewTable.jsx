@@ -102,6 +102,7 @@ function AdminViewTable() {
       console.log(response);
       fetchData();
       handleClose();
+      setRemarks('')
       // toast.success('Remarks sent successfully');
     } catch (error) {
       console.error('Error sending remarks:', error);
@@ -120,6 +121,9 @@ function AdminViewTable() {
 
   }
   const reject = async (id) => {
+    if(remarks==''){
+      toast.error("Enter the Reason to Reject in Remarks Field")
+    }else{
     handleRemarkButtonClick(selectedRow.id)
     const res = await axios.patch('http://localhost:8000/transport/update', {
       id,
@@ -129,6 +133,7 @@ function AdminViewTable() {
     fetchData();
     handleClose();
     toast.error('Rejected');
+    }
   };
 
   useEffect(() => {
