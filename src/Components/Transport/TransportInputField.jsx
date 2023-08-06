@@ -194,7 +194,7 @@ function TransportInputField() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker 
-            sx={{width: "500px"}}
+            sx={{width: {xs:"300px", md:"500px"}}}
             label="Pick up Time *" 
             value={selectedTime}
             onChange={handleTimeChange}

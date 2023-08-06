@@ -107,40 +107,44 @@ function UserNavBar() {
            {/* for phone  size */}
            
           <Box sx={{ width: 10 , flexGrow: 1, display: { xs: 'flex', md: 'none' , justifyContent:"end"} }}>
-            <IconButton
-              size="large"
-              aria-label="account of current user"
-              aria-controls="menu-appbar"
-              aria-haspopup="true"
-              onClick={handleOpenNavMenu}
-              color="inherit"
-            >
-             <BsMenuButtonFill />
-            </IconButton>
-            <Menu
-              id="menu-appbar"
-              anchorEl={()=>anchorElNav}
-              anchorOrigin={{
-                vertical: 'bottom',
-                horizontal: 'right',
-              }}
-              keepMounted
-              transformOrigin={{
-                vertical: 'top',
-                horizontal: 'right',
-              }}
-              open={Boolean(anchorElNav)}
-              onClose={handleCloseNavMenu}
-              sx={{
-                display: { xs: 'block', md: 'none' },
-              }}
-            >
-              {pages.map((page) => (
-                <MenuItem key={page} onClick={()=>{ setSelectedForm(page)}}>
-                  <Typography textAlign="center">{page}</Typography>
-                </MenuItem>
-              ))}
-            </Menu>
+            {selectedView === "Add Bookings" && 
+              <div>
+                <IconButton
+                  size="large"
+                  aria-label="account of current user"
+                  aria-controls="menu-appbar"
+                  aria-haspopup="true"
+                  onClick={handleOpenNavMenu}
+                  color="inherit"
+                >
+                <BsMenuButtonFill />
+                </IconButton>
+                <Menu
+                  id="menu-appbar"
+                  anchorEl={()=>anchorElNav}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                  }}
+                  keepMounted
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                  }}
+                  open={Boolean(anchorElNav)}
+                  onClose={handleCloseNavMenu}
+                  sx={{
+                    display: { xs: 'block', md: 'none' },
+                  }}
+                >
+                  {pages.map((page) => (
+                    <MenuItem key={page} onClick={()=>{ setSelectedForm(page) }}>
+                      <Typography textAlign="center">{page}</Typography>
+                    </MenuItem>
+                  ))}
+                </Menu>
+              </div>
+            }
           </Box>
 
           <Box sx={{marginLeft: "20px"}}>

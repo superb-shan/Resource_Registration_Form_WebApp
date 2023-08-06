@@ -218,10 +218,10 @@ function MyBookingslist() {
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
      
         {isLoading ?
-          <ReactLoading type={"spin"} color='#1976d2' height={'10%'} width={'10%'} />
+          <ReactLoading type={"spin"} color='#1976d2' height={'5%'} width={'5%'} />
           :
           <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-            <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
+            <Box style={{display:"flex",justifyContent:"end"}}>
               <Button 
                 variant="contained"  
                 size="small" 
@@ -234,14 +234,14 @@ function MyBookingslist() {
               <Button onClick={handleCalender} >
                 <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
               </Button>
-            </div>
+            </Box>
             <DataGrid
               rows={userData}
               columns={columns}
               components={{
                 Toolbar: GridToolbar,
               }}
-              style={{maxHeight: "94%"}}
+              sx={{maxHeight: {xs: "90%", md: "94%"}}}
             />
 
             {isCalOpen && (

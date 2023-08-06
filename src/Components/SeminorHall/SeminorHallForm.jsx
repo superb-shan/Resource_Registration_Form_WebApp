@@ -214,7 +214,7 @@ function SeminorHallForm() {
 
 
         <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+          <DemoContainer components={['DatePicker']} sx={{p:0}}>
           <DatePicker
           label='Start Date *'
           views={['year', 'month', 'day']}
@@ -228,8 +228,8 @@ function SeminorHallForm() {
  {/* end datepicker*/}
 
 
- <LocalizationProvider dateAdapter={AdapterDayjs}>
-          <DemoContainer components={['DatePicker', 'DatePicker', 'DatePicker']}>
+        <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DemoContainer components={['DatePicker']} sx={{p:0}}>
           <DatePicker
           label='End Date *'
           views={['year', 'month', 'day']}
@@ -244,9 +244,9 @@ function SeminorHallForm() {
 
       
       <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']}>
+        <DemoContainer components={['TimePicker']} sx={{p:0}}>
         <TimePicker
-          sx={{ width: "500px" }}
+          sx={{width: {xs:"300px", md:"500px"}}}
           label="Start Time *"
           value={startTime}
           onChange={handleStartTimeChange}
@@ -258,9 +258,9 @@ function SeminorHallForm() {
 
       
        <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DemoContainer components={['TimePicker']}>
+        <DemoContainer components={['TimePicker']} sx={{p:0}}>
         <TimePicker
-          sx={{ width: "500px" }}
+          sx={{width: {xs:"300px", md:"500px"}}}
           label="End Time *"
           value={endTime}
           onChange={handleEndTimeChange}
