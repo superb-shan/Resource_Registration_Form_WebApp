@@ -48,8 +48,8 @@ const style = {
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
   boxShadow: 24,
-  p: 4,
-  borderRadius: 3
+  p: "1rem 2rem",
+  borderRadius: 3,
 };
 
 const Calstyle = {
@@ -348,10 +348,9 @@ function AdminViewTable() {
                           </TableRow>
                           <TableRow>
                             <TableCell>Remarks</TableCell>
-                            <TableCell>
+                            <TableCell style={{height: "100px"}}>
 
                             <Text
-                              style={{minHeight:'30px',maxHeight:'30px',marginTop:'-19px'}}
                               value={remarks} 
                               onChange={(e) => setRemarks(e.target.value)} 
                             />
