@@ -75,15 +75,15 @@ function TransportContainer() {
 
     const handleSubmit = async() => {
 
-      if(phoneNumber.length!='10'){
-        toast.error("Enter 10 digit Phone Number")
-      }
-        
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
       if (!allFieldsNotEmpty){
          toast.warning('Fill all the Required fields');
          return;
-        }
+      }
+      if(phoneNumber.length!='10'){
+        toast.error("Enter 10 digit Phone Number");
+        return;
+      }
 
       const formattedDateTime = moment(selectedDate.toString()).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
       const res = await axios.post(`/transport/create`, 

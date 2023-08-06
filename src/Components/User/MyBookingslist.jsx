@@ -86,7 +86,6 @@ function MyBookingslist() {
     catch (error) {
       console.log("Error", error)
     };
-
   }
 
   const deleted = async (id) => {

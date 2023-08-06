@@ -9,17 +9,39 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
 import { SeminorContext } from '../../Context/Seminor.Context';
-import { Button } from '@mui/material';
+import { Box, Button, Chip, FormControl, InputLabel, OutlinedInput, Select, useTheme } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import moment from 'moment';
 import { useState } from 'react';
+import ReactLoading from 'react-loading';
+import { Done } from '@mui/icons-material';
 
+const ITEM_HEIGHT = 48;
+const ITEM_PADDING_TOP = 8;
+const MenuProps = {
+  PaperProps: {
+    style: {
+      maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+      width: 250,
+    },
+  },
+};
+function getStyles(name, personName, theme) {
+  return {
+    fontWeight:
+      personName.indexOf(name) === -1
+        ? theme.typography.fontWeightRegular
+        : theme.typography.fontWeightMedium,
+  };
+}
 
 
 function SeminorHallForm() {
 
-  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
+  const theme = useTheme();
+
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
 
   const {
     name, setName,
@@ -42,7 +64,11 @@ function SeminorHallForm() {
     setEquipmentNeeded,
     setSpecialRequirements,
     setPurpose,
-    purpose
+    purpose,
+    isAvailabilityChecked, 
+    setIsAvailabilityChecked,
+    unavailableHalls, 
+    setUnavailableHalls
   } = useContext(SeminorContext);
 
   const handleNameChange = (event) => {
@@ -63,18 +89,26 @@ function SeminorHallForm() {
   };
 
   const handleStartDateChange = (date) => {
+    setHall('');
+    setIsAvailabilityChecked(false);
     setStartDate(date);
   };
 
   const handleEndDateChange = (date) => {
+    setHall('');
+    setIsAvailabilityChecked(false);
     setEndDate(date);
   };
 
   const handleStartTimeChange = (time) => {
+    setHall('');
+    setIsAvailabilityChecked(false);
     setStartTime(time);
   };
 
   const handleEndTimeChange = (time) => {
+    setHall('');
+    setIsAvailabilityChecked(false);
     setEndTime(time);
   };
 
@@ -82,8 +116,15 @@ function SeminorHallForm() {
     setNoOfAttendees(event.target.value);
   };
 
+
   const handleEquipmentNeededChange = (event) => {
-    setEquipmentNeeded(event.target.value);
+    const {
+      target: { value },
+    } = event;
+    setEquipmentNeeded(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
   };
 
   const handleSpecialRequirementsChange = (event) => {
@@ -103,14 +144,14 @@ function SeminorHallForm() {
       toast.warn("Please select a start and end time");
       return;
     }
+    setIsAvailabilityLoading(true);
     const res = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
     console.log(res);
-    if (res.data.message === true){
-      setIsAvailabilityChecked(true);
-    }
-
+    setIsAvailabilityLoading(false);
+    setIsAvailabilityChecked(true);
+    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
+    // console.log(unavailableHalls);
   }
-
 
   const eventEquipment = [{
     value: "Audio",
@@ -141,8 +182,8 @@ function SeminorHallForm() {
       label: 'Board Room'
     },
     {
-      value: 'Ignite Room',
-      label: 'Ignite Room'
+      value: 'Ignite',
+      label: 'Ignite'
     },
     {
       value: 'GF-07',
@@ -266,22 +307,25 @@ function SeminorHallForm() {
       </LocalizationProvider>
 
 
-      <Button variant="contained" onClick={handleCheckAvailability}>Check Availability</Button>
+      <Button variant="contained" onClick={handleCheckAvailability} color={isAvailabilityChecked? "success" : "primary"} >{isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done/> : <>Check Availability</>  }</Button>
       {/* hall required */}
       <TextField
         id="outlined-hall-required-input"
         select
         label="Required Hall*"
-        placeholder='Select the Hall Requried'
+        placeholder='Select a Hall from available for the selected slot'
         value={requiredHall}
         onChange={handlehallChange}
+        disabled={!isAvailabilityChecked}
+        title={isAvailabilityChecked? "" : "Check Availability to Enable"}
       >
         {eventHall.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
+          <MenuItem key={option.value} value={option.value} disabled={unavailableHalls.includes(option.value)}>
             {option.label}
           </MenuItem>
         ))}
       </TextField>
+      
 
       {/* no of attendees */}
 
@@ -295,21 +339,36 @@ function SeminorHallForm() {
 
       {/* Equipments needed */}
 
-
-      <TextField
-        id="outlined-equipment-required-input"
-        select
-        label="Equipments needed *"
-        placeholder='Equipments needed'
-        value={EquipmentRequired}
-        onChange={handleEquipmentNeededChange}
-      >
-        {eventEquipment.map((option) => (
-          <MenuItem key={option.value} value={option.value}>
-            {option.label}
-          </MenuItem>
-        ))}
-      </TextField>
+      <FormControl>
+        <InputLabel id="demo-multiple-chip-label">Equipments Required (Optional)</InputLabel>
+        <Select
+          labelId="demo-multiple-chip-label"
+          id="demo-multiple-chip"
+          multiple
+          placeholder='Select the Hall Required'
+          value={EquipmentRequired}
+          onChange={handleEquipmentNeededChange}
+          input={<OutlinedInput id="select-multiple-chip" label="Equipments Required (Optional)" />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {eventEquipment.map((equip) => (
+            <MenuItem
+              key={equip.label}
+              value={equip.value}
+              style={getStyles(equip.value, EquipmentRequired, theme)}
+            >
+              {equip.value}
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
 
       {/* special requirement  */}
       <TextField

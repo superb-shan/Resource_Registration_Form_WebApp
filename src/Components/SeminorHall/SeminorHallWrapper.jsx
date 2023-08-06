@@ -12,11 +12,14 @@ import DoneIcon from '@mui/icons-material/Done';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { SeminorContext } from '../../Context/Seminor.Context';
+import moment from 'moment';
+import ReactLoading from 'react-loading';
 
 
 function SeminorHallWrapper() {
 
   const [postStatus, setPostStatus] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext)
 
   useEffect(() => { console.log(postStatus, "useEffect") }, [postStatus, setPostStatus])
@@ -61,6 +64,9 @@ function SeminorHallWrapper() {
     noOfAttendees,
     EquipmentRequired,
     specialRequirements,
+    isAvailabilityChecked,
+    unavailableHalls, 
+    setUnavailableHalls
   } = useContext(SeminorContext);
 
   const fieldsToCheckForValidation = [
@@ -76,46 +82,63 @@ function SeminorHallWrapper() {
     noOfAttendees,
   ];
 
-  const SendSeminorData = async () => {
-
-    // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`/Seminar/create`,
-      {
-        name,
-        userName,
-        contactNumber,
-        requiredHall,
-        purpose,
-        DesignationDepartment,
-        startDate,
-        endDate,
-        startTime,
-        endTime,
-        noOfAttendees,
-        EquipmentRequired,//EquipmentRequired
-        specialRequirements,
-      }
-    );
-    console.log("Response:", res);
-    setPostStatus(res.data.message);
-    setSelectedView('My Bookings')
-    if (postStatus == 'true') {
-      toast.success("Submitted");
-    } else {
-      console.log(postStatus)
-      toast.error(postStatus)
-    }
-  }
 
   const handleSubmit = async () => {
 
-
+    setIsLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-    if (!allFieldsNotEmpty) toast.warning('Fill all the Required fields')
-    else {
-      await SendSeminorData();
-      console.log(postStatus, "hai")
+    if (!allFieldsNotEmpty){ 
+      toast.warning('Fill all the Required fields');
+      setIsLoading(false);
+      return;
+    }
+    if (!isAvailabilityChecked){
+      toast.error(`Please check Availability`);
+      setIsLoading(false);
+      return;
+    }
 
+    //Check for unavailability of hall before sending request
+    const response = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
+    const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
+
+    if (recentUnavailableHalls.includes(requiredHall)){
+      toast.info(`${requiredHall} is not available for this date and time.`);
+      setIsLoading(false);
+      return;
+    }
+    console.log("equip", EquipmentRequired.join(", "));
+
+    //Create booking
+
+    // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
+    const res = await axios.post(`/seminar/create`,
+    {
+      userName: userName,
+      name: name,
+      contactNumber: contactNumber,
+      startDate: moment(startDate.toString()).format("YYYY-MM-DD"),
+      endDate: moment(endDate.toString()).format("YYYY-MM-DD"),
+      startTime: moment(startTime.toString()).format("HH:mm:ss"),
+      endTime: moment(endTime.toString()).format("HH:mm:ss"),
+      purpose: purpose,
+      noOfAttendees: noOfAttendees,
+      seating_capacity:20,
+      equipmentNeeded: EquipmentRequired.join(", "),
+      specialRequirements,
+      designation: DesignationDepartment,
+      requiredhall: requiredHall,
+    }
+  );
+    // console.log("Response:", res);
+    setPostStatus(res.data.message);
+    setSelectedView('My Bookings');
+    setIsLoading(false);
+    if (res.data.message === "true") {
+      toast.success("Submitted");
+    } else {
+      console.log("not created seminar", postStatus)
+      toast.error(postStatus)
     }
   }
 
@@ -133,7 +156,8 @@ function SeminorHallWrapper() {
           color={postStatus ? 'success' : 'primary'}
           endIcon={postStatus ? <DoneIcon /> : <SendIcon />}
         >
-          {postStatus ? "Submitted" : "Submit"}</Button>
+          {isLoading? <ReactLoading height={"20%"} width={"10%"} /> : postStatus ? "Submitted" : "Submit"  }
+          </Button>
       </div>
     </div>
 

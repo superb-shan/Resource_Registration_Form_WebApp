@@ -4,7 +4,7 @@ export const SeminorContext = createContext();
 
 const SeminorProvider = ({ children }) => {
 
-    const [name, setName] = useState('');
+  const [name, setName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
   const [DesignationDepartment, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
@@ -14,9 +14,12 @@ const SeminorProvider = ({ children }) => {
   const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [noOfAttendees, setNoOfAttendees] = useState('');
-  const [EquipmentRequired, setEquipmentNeeded] = useState('');
+  const [EquipmentRequired, setEquipmentNeeded] = useState([]);
   const [specialRequirements, setSpecialRequirements] = useState('');
   const[requiredHall,setHall]=useState('')
+
+  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
+  const [unavailableHalls, setUnavailableHalls] = useState([]);
   
   
     return (
@@ -44,7 +47,10 @@ const SeminorProvider = ({ children }) => {
            setEquipmentNeeded,
             setSpecialRequirements,
             setHall,
-
+            isAvailabilityChecked, 
+            setIsAvailabilityChecked,
+            unavailableHalls, 
+            setUnavailableHalls
         }}
       >
         {children}

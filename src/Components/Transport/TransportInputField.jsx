@@ -179,6 +179,7 @@ function TransportInputField() {
           <DemoContainer components={['DatePicker']}>
             <DatePicker
             label='Pick up Date *'
+            sx={{width: {xs:"300px", md:"500px"}}}
             views={['year', 'month', 'day']}
             disablePast
             value={selectedDate}
