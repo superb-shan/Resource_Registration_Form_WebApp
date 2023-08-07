@@ -77,7 +77,8 @@ function AdminViewTable() {
   const [isLoading, setIsLoading] = useState(true)
   const[isAdd,setIsAdd]=useState(false)
   const [remarks, setRemarks] = useState('');
-  const {userData, setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
+  const {setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
+  // const {}
 
   const fetchData = async () => {
     const param = {}
@@ -86,12 +87,14 @@ function AdminViewTable() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-
+      console.log("fetch entering");
       const transportResponse = await axios.get('/transport/get',{params:param})
+      console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get',{params:param})
+      console.log(seminarResponse);
      const fullData=[...transportResponse .data.data,...seminarResponse.data]
      console.log('fulldata',fullData)
-     setUserData(fullData)
+     setUserData(transportResponse)
       setIsLoading(false)
     }
     catch (error) {

@@ -86,7 +86,7 @@ function MyBookingslist() {
       
        const transportResponse = await axios.get('/transport/get',{params:param})
        const seminarResponse = await axios.get('/seminar/get',{params:param})
-      const fullData=[...transportResponse .data.data,...seminarResponse.data]
+      const fullData=[...transportResponse.data.data,...seminarResponse.data]
       setUserData(fullData)
       setTimeout(() => setIsLoading(false), 500)
     }
