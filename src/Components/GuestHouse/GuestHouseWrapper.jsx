@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import 'react-toastify/dist/ReactToastify.css';
 import { Button } from '@mui/material';
-import SeminorHallForm from './SeminorHallForm'
 import { UserContext } from '../../Context/User.Context';
 import { useContext } from 'react';
 import { useState } from 'react';
@@ -14,9 +13,10 @@ import 'react-toastify/dist/ReactToastify.css';
 import { SeminorContext } from '../../Context/Seminor.Context';
 import moment from 'moment';
 import ReactLoading from 'react-loading';
+import GuestHouseForm from './GuestHouseForm';
 
 
-function SeminorHallWrapper() {
+function GuestHouseWrapper() {
 
   const [postStatus, setPostStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -152,9 +152,9 @@ function SeminorHallWrapper() {
 
   return (
     <div className='flex justify-center flex-col items-center bg-fixed bg-[#1976d2] pt-10'>
-      <p style={{ color: "#ffffff", textAlign: "center", fontSize: "2rem" }}> Seminar Hall Booking Form</p>
+      <p style={{ color: "#ffffff", textAlign: "center", fontSize: "2rem" }}> Guest House Booking Form</p>
       <div className='bg-white m-auto my-10 p-10 w-[1000px] [@media(max-width:640px)]:w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
-        <SeminorHallForm />
+      <GuestHouseForm/>
         <Button
           variant={"contained"}
           sx={{ marginTop: "2.5rem", display:"flex", gap: 1 }}
@@ -170,4 +170,4 @@ function SeminorHallWrapper() {
 }
 
 
-export default SeminorHallWrapper
+export default GuestHouseWrapper

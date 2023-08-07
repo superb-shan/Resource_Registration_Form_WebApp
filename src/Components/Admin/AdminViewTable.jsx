@@ -79,21 +79,19 @@ function AdminViewTable() {
   const [remarks, setRemarks] = useState('');
   const {setUserData,selectedDate, setSelectedDate,userData}= useContext(AdminContext)
   // const {}
+  
 
   const fetchData = async () => {
     const param = {}
     if(selectedDate){
+      console.log(selectedDate)
       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-      console.log("fetch entering");
       const transportResponse = await axios.get('/transport/get',{params:param})
-      console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get',{params:param})
-      console.log(seminarResponse);
-     const fullData=[...transportResponse .data.data,...seminarResponse.data.data]
-     console.log('fulldata',fullData)
+     const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
      setUserData(fullData)
       setIsLoading(false)
     }
@@ -109,6 +107,7 @@ function AdminViewTable() {
     fetchData()
     handleClose()
     toast.success('Accepted')
+    setRemarks("");
 
   }
   const reject = async (id) => {
@@ -124,6 +123,7 @@ function AdminViewTable() {
     fetchData();
     handleClose();
     toast.error('Rejected');
+    setRemarks("");
     }
   };
 
@@ -135,11 +135,12 @@ function AdminViewTable() {
       fetchData();
       setIsAdd(false);
     }
-  }, [setSelectedDate,isAdd]);
+  }, [setSelectedDate,isAdd, selectedDate]);
 
   const handleallbutton = () => {
     setSelectedDate(null);
     setIsAdd(true); 
+    setIsCalOpen(true)
   };
 
 
@@ -251,32 +252,41 @@ function AdminViewTable() {
     
     <ThemeProvider theme={theme}>
       
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-        
-      <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex"}}>
+
+  
+            <DataGrid
+        rows={userData}
+        columns={columns.map((column) => ({
+          ...column,
+          width: column.field === 'name' ? 150 : 150, // Customize the width as needed
+        }))}
+        components={{
+          Toolbar: GridToolbar,
+        }}
+        style={{ maxHeight: '94%', maxWidth: '70%' }}
+      />
+
+       
+        <div>   
+      <div className='flex flex-col items-center p-2 py-0 '>
       <Button 
       variant="contained"
       size="small" 
-       sx={{ height: '30px',marginTop:"5px", display:"flex", gap: 1, fontSize: "14px" }}
+       sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
        onClick={handleallbutton}
+
        >
-          <span>ALL</span>
+          <span>Reset Date</span>
         <SettingsBackupRestore sx={{width:"18px"}} />
 
         </Button>
-
-        
       </div>
-     
-        <DataGrid
-          rows={userData}
-          columns={columns}
-          components={{
-            Toolbar: GridToolbar,
-          }}
-          style={{maxHeight: "94%"}}
-        />
          <AdminCalender />
+         </div>
+        
+       
+        
        
         {/* <Button onClick={handleCalender} >
           <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>

@@ -3,6 +3,7 @@ import TransportContainer from '../Transport/TransportContainer';
 import SeminorHallWrapper from '../SeminorHall/SeminorHallWrapper';
 import { UserContext } from '../../Context/User.Context';
 import MyBookingsWrapper from './MyBookingsWrapper';
+import GuestHouseWrapper from '../GuestHouse/GuestHouseWrapper';
 
 function UserContainer() {
 
@@ -15,7 +16,8 @@ function UserContainer() {
         { selectedView === "Add Bookings" ?
         
         ( selectedForm === "Transport") ? <TransportContainer/> 
-         :  ( selectedForm === "Seminar Hall") ? <SeminorHallWrapper/> : null
+         :  ( selectedForm === "Seminar Hall") ? <SeminorHallWrapper/> 
+            : ( selectedForm === "Guest House") ? <GuestHouseWrapper/>  : null
 
         :
         <MyBookingsWrapper />
