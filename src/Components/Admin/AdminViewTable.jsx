@@ -252,6 +252,7 @@ function AdminViewTable() {
     <ThemeProvider theme={theme}>
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
+        
       <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
       <Button 
       variant="contained"
@@ -264,10 +265,9 @@ function AdminViewTable() {
 
         </Button>
 
-        <Button onClick={handleCalender} >
-          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
-          </Button>
+        
       </div>
+     
         <DataGrid
           rows={userData}
           columns={columns}
@@ -276,14 +276,20 @@ function AdminViewTable() {
           }}
           style={{maxHeight: "94%"}}
         />
-
+         <AdminCalender />
+       
+        {/* <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+          </Button> */}
+         
+{/* 
           {isCalOpen && (
         <Modal open={true} onClose={handleClose} sx={Calstyle}>
           <div>
           <AdminCalender />
           </div>
         </Modal>
-      )}
+      )} */}
 
         <Modal open={isOpen} onClose={handleClose}>
           <div>
