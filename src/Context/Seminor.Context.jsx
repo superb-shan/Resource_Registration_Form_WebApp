@@ -1,4 +1,7 @@
 import React, { useState, createContext } from "react";
+import moment from "moment";
+import axios from "axios";
+import {toast} from "react-toastify";
 
 export const SeminorContext = createContext();
 
@@ -19,7 +22,92 @@ const SeminorProvider = ({ children }) => {
   const[requiredHall,setHall]=useState('')
 
   const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
+  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
   const [unavailableHalls, setUnavailableHalls] = useState([]);
+
+  const eventEquipment = [{
+    value: "Audio",
+    label: "Audio"
+
+  }, {
+    value: "Video",
+    label: "Video"
+
+  },
+  {
+    value: "Reception items",
+    label: "Reception items"
+  },
+  {
+    value: "Power Back up",
+    label: "Power Back up"
+  }, {
+    value: "Others",
+    label: "Others"
+  }
+  ];
+
+
+  const eventHall = [
+    {
+      value: 'Board Room',
+      label: 'Board Room'
+    },
+    {
+      value: 'Ignite',
+      label: 'Ignite'
+    },
+    {
+      value: 'GF-07',
+      label: 'GF-07'
+    },
+    {
+      value: 'placement Lab',
+      label: 'placement Lab'
+    },
+    {
+      value: 'IT center',
+      label: 'IT center'
+    }, {
+      value: 'Seminor Hall 1st Floor',
+      label: 'Seminor Hall 1st Floor'
+    }, {
+      value: 'Seminor Hall 2nd Floor',
+      label: 'Seminor Hall 2nd Floor'
+    },
+    {
+      value: 'Others',
+      label: 'Others'
+    }
+  ];
+
+  const handleCheckAvailability = async () => {
+    if (!startTime || !endTime){
+      toast.warn("Please select a start and end time");
+      return;
+    }
+    if (!startDate || !endDate){
+      toast.warn("Please select a start and end Date");
+      return;
+    }
+    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
+      toast.error('Start date should be same or before End date');
+      return;
+    }
+    // if (!moment(startTime.toString()).isBefore(endTime.toString())){
+      if(!moment(endTime.toString()).isAfter(startTime.toString(), "hour")){
+      toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
+      return;
+    }
+
+    setIsAvailabilityLoading(true);
+    const res = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
+    console.log(res);
+    setIsAvailabilityLoading(false);
+    setIsAvailabilityChecked(true);
+    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
+    // console.log(unavailableHalls);
+  }
   
   
     return (
@@ -50,7 +138,12 @@ const SeminorProvider = ({ children }) => {
             isAvailabilityChecked, 
             setIsAvailabilityChecked,
             unavailableHalls, 
-            setUnavailableHalls
+            setUnavailableHalls,
+            isAvailabilityLoading, 
+            setIsAvailabilityLoading,
+            handleCheckAvailability,
+            eventEquipment,
+            eventHall
         }}
       >
         {children}

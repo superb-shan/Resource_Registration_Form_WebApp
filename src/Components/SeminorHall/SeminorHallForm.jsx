@@ -10,7 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
 import { SeminorContext } from '../../Context/Seminor.Context';
-import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItem, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider } from '@mui/material';
+import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import moment from 'moment';
@@ -37,16 +37,12 @@ function getStyles(name, personName, theme) {
   };
 }
 
-const DemoX = styled('div')(({ theme }) => ({
-  backgroundColor: theme.palette.background.paper,
-}));
 
 
 function SeminorHallForm() {
 
   const theme = useTheme();
 
-  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
 
   const {
     name, setName,
@@ -73,8 +69,12 @@ function SeminorHallForm() {
     isAvailabilityChecked, 
     setIsAvailabilityChecked,
     unavailableHalls, 
-    setUnavailableHalls
-  } = useContext(SeminorContext);
+    isAvailabilityLoading, 
+    handleCheckAvailability,
+    eventEquipment,
+    eventHall
+  } 
+  = useContext(SeminorContext);
 
   const handleNameChange = (event) => {
     setName(event.target.value);
@@ -139,80 +139,6 @@ function SeminorHallForm() {
   const handlepurposeChange = (event) => {
     setPurpose(event.target.value);
   };
-
-  const handleCheckAvailability = async() => {
-    if (!startTime || !endTime){
-      toast.warn("Please select a start and end time");
-      return;
-    }
-    if (!startDate || !endDate){
-      toast.warn("Please select a start and end time");
-      return;
-    }
-    setIsAvailabilityLoading(true);
-    const res = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
-    console.log(res);
-    setIsAvailabilityLoading(false);
-    setIsAvailabilityChecked(true);
-    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
-    // console.log(unavailableHalls);
-  }
-
-  const eventEquipment = [{
-    value: "Audio",
-    label: "Audio"
-
-  }, {
-    value: "Video",
-    label: "Video"
-
-  },
-  {
-    value: "Reception items",
-    label: "Reception items"
-  },
-  {
-    value: "Power Back up",
-    label: "Power Back up"
-  }, {
-    value: "Others",
-    label: "Others"
-  }
-  ];
-
-
-  const eventHall = [
-    {
-      value: 'Board Room',
-      label: 'Board Room'
-    },
-    {
-      value: 'Ignite',
-      label: 'Ignite'
-    },
-    {
-      value: 'GF-07',
-      label: 'GF-07'
-    },
-    {
-      value: 'placement Lab',
-      label: 'placement Lab'
-    },
-    {
-      value: 'IT center',
-      label: 'IT center'
-    }, {
-      value: 'Seminor Hall 1st Floor',
-      label: 'Seminor Hall 1st Floor'
-    }, {
-      value: 'Seminor Hall 2nd Floor',
-      label: 'Seminor Hall 2nd Floor'
-    },
-    {
-      value: 'Others',
-      label: 'Others'
-    }
-  ];
 
 
   return (
@@ -285,18 +211,18 @@ function SeminorHallForm() {
           </Typography>
           <Box>
             <List>
-              {eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
+              { unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
             </List>
           </Box>
         </Grid>
-        <Divider orientation="horizontal" flexItem />
+        <Divider orientation="vertical" flexItem />
         <Grid item xs={12} md={5}>
           <Typography variant="h6" component="div">
             Not Available
           </Typography>
           <Box>
             <List>
-              {unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
+              {unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
             </List>
           </Box>
         </Grid>

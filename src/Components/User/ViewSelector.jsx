@@ -11,7 +11,7 @@ import MenuList from '@mui/material/MenuList';
 import { useState, useRef, useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 
-const options = ['Add Bookings', 'My Bookings'];
+const options = ['Add Bookings', 'My Bookings', 'Check Availability'];
 
 export default function ViewSelector() {
   const [open, setOpen] = useState(false);

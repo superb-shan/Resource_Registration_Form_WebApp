@@ -65,7 +65,14 @@ function SeminorHallWrapper() {
     EquipmentRequired,
     specialRequirements,
     isAvailabilityChecked,
+    handleCheckAvailability
   } = useContext(SeminorContext);
+
+
+  //Check for availability of halls when this component is rendered
+  if(!startDate && !endDate && !startTime && !endTime){
+    handleCheckAvailability();
+  }
 
   const fieldsToCheckForValidation = [
     name,
