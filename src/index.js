@@ -8,6 +8,8 @@ import { ToastContainer } from "react-toastify";
 import AdminProvider from './Context/Admin.Context';
 import SeminorProvider from './Context/Seminor.Context';
 import UserProvider from './Context/User.Context';
+import { ThemeProvider } from '@mui/material/styles';
+import theme from './theme';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -17,11 +19,13 @@ root.render(
       <TransportProvider>
         <AdminProvider>
           <SeminorProvider>
-          <UserProvider>
-        <App />
-        <ToastContainer /> 
-        </UserProvider>
-        </SeminorProvider>
+            <UserProvider>
+              <ThemeProvider theme={theme}>
+                <App />
+                <ToastContainer /> 
+              </ThemeProvider>
+            </UserProvider>
+          </SeminorProvider>
         </AdminProvider>
       </TransportProvider>
     </LoginProvider>

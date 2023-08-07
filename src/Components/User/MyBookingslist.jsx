@@ -46,7 +46,7 @@ const style = {
   boxShadow: 24,
   p: 4,
   borderRadius: 3,
-  overflow:"scroll",
+  overflow:"auto",
   paddingTop:'5px'
 };
 const Calstyle = {
