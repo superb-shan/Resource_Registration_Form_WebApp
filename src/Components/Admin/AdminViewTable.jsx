@@ -77,7 +77,8 @@ function AdminViewTable() {
   const [isLoading, setIsLoading] = useState(true)
   const[isAdd,setIsAdd]=useState(false)
   const [remarks, setRemarks] = useState('');
-  const {userData, setUserData,selectedDate, setSelectedDate}= useContext(AdminContext)
+  const {setUserData,selectedDate, setSelectedDate,userData}= useContext(AdminContext)
+  // const {}
 
   const fetchData = async () => {
     const param = {}
@@ -86,10 +87,12 @@ function AdminViewTable() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-
+      console.log("fetch entering");
       const transportResponse = await axios.get('/transport/get',{params:param})
+      console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get',{params:param})
-     const fullData=[...transportResponse .data.data,...seminarResponse.data]
+      console.log(seminarResponse);
+     const fullData=[...transportResponse .data.data,...seminarResponse.data.data]
      console.log('fulldata',fullData)
      setUserData(fullData)
       setIsLoading(false)
@@ -249,6 +252,7 @@ function AdminViewTable() {
     <ThemeProvider theme={theme}>
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
+        
       <div style={{display:"flex",justifyContent:"end", height: "6%"}}>
       <Button 
       variant="contained"
@@ -261,10 +265,9 @@ function AdminViewTable() {
 
         </Button>
 
-        <Button onClick={handleCalender} >
-          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
-          </Button>
+        
       </div>
+     
         <DataGrid
           rows={userData}
           columns={columns}
@@ -273,14 +276,20 @@ function AdminViewTable() {
           }}
           style={{maxHeight: "94%"}}
         />
-
+         <AdminCalender />
+       
+        {/* <Button onClick={handleCalender} >
+          <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
+          </Button> */}
+         
+{/* 
           {isCalOpen && (
         <Modal open={true} onClose={handleClose} sx={Calstyle}>
           <div>
           <AdminCalender />
           </div>
         </Modal>
-      )}
+      )} */}
 
         <Modal open={isOpen} onClose={handleClose}>
           <div>
