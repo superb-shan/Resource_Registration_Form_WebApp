@@ -213,42 +213,6 @@ function SeminorHallForm() {
   return (
     <div className='flex flex-col gap-10 w-[300px] '>
 
-      {/* selecting user name */}
-
-      <TextField
-        id="outlined-select-name"
-        label="Name *"
-        placeholder='Enter your Name'
-        value={name}
-        onChange={handleNameChange}
-      />
-
-      <TextField
-        id="outlined-phone_number-input"
-        label="Contact number *"
-        type="number"
-        placeholder='Enter your Contact number'
-        value={contactNumber}
-        onChange={handleContactNumberChange}
-      />
-
-      <TextField
-        id="Designation-Department-input"
-        label="Designation & Department *"
-        type="text"
-        placeholder='Example:(AP/CSE)'
-        value={DesignationDepartment}
-        onChange={handleDesignationChange}
-      />
-
-      <TextField
-        id="outlined-select-purpose"
-        label="Purpose of Event *"
-        placeholder='Enter your Purpose'
-        value={purpose}
-        onChange={handlepurposeChange}
-      />
-
       {/* start datepicker*/}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -328,6 +292,41 @@ function SeminorHallForm() {
         ))}
       </TextField>
       
+      {/* selecting user name */}
+
+      <TextField
+        id="outlined-select-name"
+        label="Name *"
+        placeholder='Enter your Name'
+        value={name}
+        onChange={handleNameChange}
+      />
+
+      <TextField
+        id="outlined-phone_number-input"
+        label="Contact number *"
+        type="number"
+        placeholder='Enter your Contact number'
+        value={contactNumber}
+        onChange={handleContactNumberChange}
+      />
+
+      <TextField
+        id="Designation-Department-input"
+        label="Designation & Department *"
+        type="text"
+        placeholder='Example:(AP/CSE)'
+        value={DesignationDepartment}
+        onChange={handleDesignationChange}
+      />
+
+      <TextField
+        id="outlined-select-purpose"
+        label="Purpose of Event *"
+        placeholder='Enter your Purpose'
+        value={purpose}
+        onChange={handlepurposeChange}
+      />
 
       {/* no of attendees */}
 

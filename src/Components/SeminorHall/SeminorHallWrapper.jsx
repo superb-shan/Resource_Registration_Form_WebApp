@@ -157,12 +157,11 @@ function SeminorHallWrapper() {
         <SeminorHallForm />
         <Button
           variant={"contained"}
-          sx={{ marginTop: "2.5rem" }}
+          sx={{ marginTop: "2.5rem", display:"flex", gap: 1 }}
           onClick={handleSubmit}
           color={postStatus ? 'success' : 'primary'}
-          endIcon={postStatus ? <DoneIcon /> : <SendIcon />}
         >
-          {isLoading? <ReactLoading height={"20%"} width={"10%"} /> : postStatus ? "Submitted" : "Submit"  }
+          {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <DoneIcon /></> : <><span>Submit</span> <SendIcon /></>  }
           </Button>
       </div>
     </div>

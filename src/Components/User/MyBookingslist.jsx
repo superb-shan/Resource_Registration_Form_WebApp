@@ -96,11 +96,15 @@ function MyBookingslist() {
   }
 
   const deleted = async (id) => {
-    const res = await axios.delete('/transport/delete', { params: { id } })
+    const res = await axios.delete(`/${selectedRow.type.toLowerCase()}/delete`, { params: { id } })
     console.log(res)
     fetchData()
     handleClose()
+    if(res.data.message){
+      toast.success(`${selectedRow?.type} Deleted Successfully`)
+    }else{
     toast.error(res.data.message)
+  }
   }
 
   useEffect(() => {
