@@ -153,7 +153,7 @@ function SeminorHallWrapper() {
   return (
     <div className='flex justify-center flex-col items-center bg-fixed bg-[#1976d2] pt-10'>
       <p style={{ color: "#ffffff", textAlign: "center", fontSize: "2rem" }}> Seminor Hall Booking Form</p>
-      <div className='bg-white m-auto my-10 p-10 w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
+      <div className='bg-white m-auto my-10 p-10 w-[1000px] [@media(max-width:640px)]:w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>
         <SeminorHallForm />
         <Button
           variant={"contained"}

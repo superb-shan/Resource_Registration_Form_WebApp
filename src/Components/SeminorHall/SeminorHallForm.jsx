@@ -2,6 +2,7 @@
 import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
+import { styled } from '@mui/material/styles';
 import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
@@ -9,7 +10,7 @@ import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
 import { SeminorContext } from '../../Context/Seminor.Context';
-import { Box, Button, Chip, FormControl, InputLabel, OutlinedInput, Select, useTheme } from '@mui/material';
+import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItem, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import moment from 'moment';
@@ -35,6 +36,10 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
+
+const DemoX = styled('div')(({ theme }) => ({
+  backgroundColor: theme.palette.background.paper,
+}));
 
 
 function SeminorHallForm() {
@@ -211,14 +216,13 @@ function SeminorHallForm() {
 
 
   return (
-    <div className='flex flex-col gap-10 w-[300px] '>
-
+    <div className='flex flex-wrap gap-8 justify-evenly items-center w-[800px] [@media(max-width:640px)]:w-[500px]'>
       {/* start datepicker*/}
 
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']} >
           <DatePicker
-            sx={{width: {xs:"300px", md:"500px"}}}
+            sx={{width:"300px"}}
             label='Start Date *'
             views={['year', 'month', 'day']}
             disablePast
@@ -234,7 +238,7 @@ function SeminorHallForm() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']}>
           <DatePicker
-            sx={{width: {xs:"300px", md:"500px"}}}
+            sx={{width:"300px"}}
             label='End Date *'
             views={['year', 'month', 'day']}
             disablePast
@@ -246,11 +250,10 @@ function SeminorHallForm() {
 
       {/* time picker start*/}
 
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker
-            sx={{ width: { xs: "300px", md: "500px" } }}
+            sx={{width:"300px"}}
             label="Start Time *"
             value={startTime}
             onChange={handleStartTimeChange}
@@ -260,11 +263,10 @@ function SeminorHallForm() {
 
       {/* time picker end*/}
 
-
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker
-            sx={{ width: { xs: "300px", md: "500px" } }}
+            sx={{width:"300px"}}
             label="End Time *"
             value={endTime}
             onChange={handleEndTimeChange}
@@ -273,9 +275,37 @@ function SeminorHallForm() {
       </LocalizationProvider>
 
 
-      <Button variant="contained" onClick={handleCheckAvailability} color={isAvailabilityChecked? "success" : "primary"} >{isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done/> : <>Check Availability</>  }</Button>
+      <Button variant="contained" sx={{width:"200px", height: "40px", mx: {xs: 0, md: "300px"}}} onClick={handleCheckAvailability} color={isAvailabilityChecked? "success" : "primary"} >{isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done/> : <>Check Availability</>  }</Button>
+
+      {isAvailabilityChecked && 
+      <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}}}>
+        <Grid item xs={12} md={6} >
+          <Typography variant="h6" component="div" >
+            Available
+          </Typography>
+          <Box>
+            <List>
+              {eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
+            </List>
+          </Box>
+        </Grid>
+        <Divider orientation="horizontal" flexItem />
+        <Grid item xs={12} md={5}>
+          <Typography variant="h6" component="div">
+            Not Available
+          </Typography>
+          <Box>
+            <List>
+              {unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
+            </List>
+          </Box>
+        </Grid>
+      </Grid>
+      }
+
       {/* hall required */}
       <TextField
+        sx={{width:"300px"}}
         id="outlined-hall-required-input"
         select
         label="Required Hall*"
@@ -292,58 +322,13 @@ function SeminorHallForm() {
         ))}
       </TextField>
       
-      {/* selecting user name */}
-
-      <TextField
-        id="outlined-select-name"
-        label="Name *"
-        placeholder='Enter your Name'
-        value={name}
-        onChange={handleNameChange}
-      />
-
-      <TextField
-        id="outlined-phone_number-input"
-        label="Contact number *"
-        type="number"
-        placeholder='Enter your Contact number'
-        value={contactNumber}
-        onChange={handleContactNumberChange}
-      />
-
-      <TextField
-        id="Designation-Department-input"
-        label="Designation & Department *"
-        type="text"
-        placeholder='Example:(AP/CSE)'
-        value={DesignationDepartment}
-        onChange={handleDesignationChange}
-      />
-
-      <TextField
-        id="outlined-select-purpose"
-        label="Purpose of Event *"
-        placeholder='Enter your Purpose'
-        value={purpose}
-        onChange={handlepurposeChange}
-      />
-
-      {/* no of attendees */}
-
-      <TextField
-        id="no_of_attendees-input"
-        label="No of Attendees *"
-        type="number"
-        value={noOfAttendees}
-        onChange={handleNoOfAttendeesChange}
-      />
-
       {/* Equipments needed */}
 
       <FormControl>
         <InputLabel id="demo-multiple-chip-label">Equipments Required (Optional)</InputLabel>
         <Select
           labelId="demo-multiple-chip-label"
+          sx={{width:"300px"}}
           id="demo-multiple-chip"
           multiple
           placeholder='Select the Hall Required'
@@ -371,9 +356,62 @@ function SeminorHallForm() {
         </Select>
       </FormControl>
 
+      {/* selecting user name */}
+
+      <TextField
+        id="outlined-select-name"
+        sx={{width:"300px"}}
+        label="Applicant Name *"
+        placeholder='Enter your Name'
+        value={name}
+        onChange={handleNameChange}
+      />
+
+      <TextField
+        id="outlined-phone_number-input"
+        sx={{width:"300px"}}
+        label="Contact number *"
+        type="number"
+        placeholder='Enter your Contact number'
+        value={contactNumber}
+        onChange={handleContactNumberChange}
+      />
+
+      <TextField
+        id="Designation-Department-input"
+        sx={{width:"300px"}}
+        label="Designation & Department *"
+        type="text"
+        placeholder='Example:(AP/CSE)'
+        value={DesignationDepartment}
+        onChange={handleDesignationChange}
+      />
+
+      <TextField
+        id="outlined-select-purpose"
+        sx={{width:"300px"}}
+        label="Purpose of Event *"
+        placeholder='Enter your Purpose'
+        value={purpose}
+        onChange={handlepurposeChange}
+      />
+
+      {/* no of attendees */}
+
+      <TextField
+        id="no_of_attendees-input"
+        sx={{width:"300px"}}
+        label="No of Attendees *"
+        type="number"
+        value={noOfAttendees}
+        onChange={handleNoOfAttendeesChange}
+      />
+
+
       {/* special requirement  */}
       <TextField
         id="outlined-Specialrequirement-textarea"
+        sx={{width:"300px"}}
         label="Special Requirements (optional)"
         placeholder="Mention all your special requirements"
         multiline
