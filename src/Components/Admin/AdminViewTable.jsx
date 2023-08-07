@@ -91,6 +91,7 @@ function AdminViewTable() {
       const seminarResponse = await axios.get('/seminar/get',{params:param})
      const fullData=[...transportResponse .data.data,...seminarResponse.data]
      console.log('fulldata',fullData)
+    console.log("hai")
      setUserData(fullData)
       setIsLoading(false)
     }
