@@ -226,7 +226,7 @@ function SeminorHallForm() {
       <TextField
         id="outlined-phone_number-input"
         label="Contact number *"
-        type="text"
+        type="number"
         placeholder='Enter your Contact number'
         value={contactNumber}
         onChange={handleContactNumberChange}
@@ -254,6 +254,7 @@ function SeminorHallForm() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']} >
           <DatePicker
+            sx={{width: {xs:"300px", md:"500px"}}}
             label='Start Date *'
             views={['year', 'month', 'day']}
             disablePast
@@ -269,6 +270,7 @@ function SeminorHallForm() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']}>
           <DatePicker
+            sx={{width: {xs:"300px", md:"500px"}}}
             label='End Date *'
             views={['year', 'month', 'day']}
             disablePast

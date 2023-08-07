@@ -24,6 +24,7 @@ import { BsCalendarCheck } from "react-icons/bs";
 import UserCalender from './MyBookingCalender';
 import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
+import { LoginContext } from '../../Context/Login.Context';
 
 const theme = createTheme({
   typography: {
@@ -38,12 +39,15 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
+  height: 800,
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
   boxShadow: 24,
   p: 4,
-  borderRadius: 3
+  borderRadius: 3,
+  overflow:"scroll",
+  paddingTop:'5px'
 };
 const Calstyle = {
   position: 'absolute',
@@ -67,7 +71,8 @@ function MyBookingslist() {
   const [userData, setUserData] = useState([])
   const [isCalOpen, setIsCalOpen] = React.useState(false);
   const[isAdd,setIsAdd]=useState(false)
-  const { userName ,selectedDate, setSelectedDate} = useContext(UserContext)
+  const { selectedDate, setSelectedDate } = useContext(UserContext)
+  const { userName } = useContext(LoginContext)
 
 
   const fetchData = async () => {
@@ -78,9 +83,11 @@ function MyBookingslist() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-      const response = await axios.get('/transport/get',{params:param})
-      console.log(response.data.data)
-      setUserData(response.data.data)
+      
+       const transportResponse = await axios.get('/transport/get',{params:param})
+       const seminarResponse = await axios.get('/seminar/get',{params:param})
+      const fullData=[...transportResponse .data.data,...seminarResponse.data]
+      setUserData(fullData)
       setTimeout(() => setIsLoading(false), 500)
     }
     catch (error) {
@@ -95,13 +102,6 @@ function MyBookingslist() {
     handleClose()
     toast.error(res.data.message)
   }
-
-  // const edit = async (id) => {
-  // const res = await axios.patch('/transport/update', { id, isapproved: 'false' })
-  // console.log(res)
-  // fetchData()
-  // handleClose()
-  // }
 
   useEffect(() => {
 

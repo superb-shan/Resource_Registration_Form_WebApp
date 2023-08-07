@@ -50,6 +50,9 @@ const style = {
   boxShadow: 24,
   p: "1rem 2rem",
   borderRadius: 3,
+  overflow:"scroll",
+  paddingTop:'5px',
+  height:800
 };
 
 const Calstyle = {
@@ -83,9 +86,12 @@ function AdminViewTable() {
      param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
     }
     try {
-      const response = await axios.get('/transport/get',{params:param})
-      console.log(response.data.data)
-      setUserData(response.data.data)
+
+      const transportResponse = await axios.get('/transport/get',{params:param})
+      const seminarResponse = await axios.get('/seminar/get',{params:param})
+     const fullData=[...transportResponse .data.data,...seminarResponse.data]
+     console.log('fulldata',fullData)
+     setUserData(fullData)
       setIsLoading(false)
     }
     catch (error) {
@@ -93,27 +99,9 @@ function AdminViewTable() {
     };
 
   }
-  const handleRemarkButtonClick = async (id) => {
-    try {
-      const response = await axios.patch('/transport/update', {
-        id,
-        remarks: remarks, 
-      });
-      console.log(response);
-      fetchData();
-      handleClose();
-      setRemarks('')
-      // toast.success('Remarks sent successfully');
-    } catch (error) {
-      console.error('Error sending remarks:', error);
-      // toast.error('Error sending remarks');
-    }
-  };
-  
 
   const accept = async (id) => {
-    handleRemarkButtonClick(selectedRow.id)
-    const res = await axios.patch('/transport/update', { id, isapproved: 'true' })
+    const res = await axios.patch(`/${selectedRow.type.toLowerCase()}/update`, { id, isapproved: 'true' ,remarks})
     console.log(res)
     fetchData()
     handleClose()
@@ -124,10 +112,10 @@ function AdminViewTable() {
     if(remarks==''){
       toast.error("Enter the Reason to Reject in Remarks Field")
     }else{
-    handleRemarkButtonClick(selectedRow.id)
-    const res = await axios.patch('/transport/update', {
+    const res = await axios.patch(`/${selectedRow.type.toLowerCase()}/update`, {
       id,
-      isapproved: 'false'
+      isapproved: 'false', 
+      remarks
     });
     console.log(res);
     fetchData();

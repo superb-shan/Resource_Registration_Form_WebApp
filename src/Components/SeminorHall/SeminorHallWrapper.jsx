@@ -65,8 +65,6 @@ function SeminorHallWrapper() {
     EquipmentRequired,
     specialRequirements,
     isAvailabilityChecked,
-    unavailableHalls, 
-    setUnavailableHalls
   } = useContext(SeminorContext);
 
   const fieldsToCheckForValidation = [
@@ -90,6 +88,14 @@ function SeminorHallWrapper() {
     if (!allFieldsNotEmpty){ 
       toast.warning('Fill all the Required fields');
       setIsLoading(false);
+      return;
+    }
+    if(contactNumber.length!='10'){
+      toast.error("Enter 10 digit Phone Number");
+      return;
+    }
+    if (noOfAttendees <=0 ){
+      toast.error("No of Attendees is not valid");
       return;
     }
     if (!isAvailabilityChecked){
