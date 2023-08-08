@@ -80,7 +80,7 @@ function MyBookingslist() {
     param["name"] =userName
     if(selectedDate){
       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
-     param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+     param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
     }
     try {
       
@@ -223,17 +223,18 @@ function MyBookingslist() {
           <ReactLoading type={"spin"} color='#1976d2' height={'5%'} width={'5%'} />
           : */}
           {/* <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex"}}> */}
+          {console.log(userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate}))}
           <DataGrid
-  rows={userData}
-  columns={columns.map((column) => ({
-    ...column,
-    width: column.field === 'name' ? 150 : 150, // Customize the width as needed
-  }))}
-  components={{
-    Toolbar: GridToolbar,
-  }}
-  style={{ maxHeight: '94%', maxWidth: '70%' }}
-/>
+              rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
+              columns={columns.map((column) => ({
+                ...column,
+                width: column.field === 'date' ? 250 : 130, // Customize the width as needed
+              }))}
+              components={{
+                Toolbar: GridToolbar,
+              }}
+              style={{ maxHeight: '94%', maxWidth: '70%' }}
+          />
 
        
         
@@ -245,7 +246,7 @@ function MyBookingslist() {
        sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
        onClick={handleallbutton}
        >
-          <span>Reset Date</span>
+          <span>Reset Data</span>
         <SettingsBackupRestore sx={{width:"18px"}} />
 
         </Button>

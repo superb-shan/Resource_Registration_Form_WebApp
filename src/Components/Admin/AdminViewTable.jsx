@@ -84,14 +84,15 @@ function AdminViewTable() {
   const fetchData = async () => {
     const param = {}
     if(selectedDate){
-      console.log(selectedDate)
-      console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
-     param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+     param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
+     console.log(param)
     }
     try {
+      console.log("entering")
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param})
      const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
+     console.log("fulldata",fullData)
      setUserData(fullData)
       setIsLoading(false)
     }
@@ -256,10 +257,10 @@ function AdminViewTable() {
 
   
             <DataGrid
-        rows={userData}
+        rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
         columns={columns.map((column) => ({
           ...column,
-          width: column.field === 'name' ? 150 : 150, // Customize the width as needed
+          width: column.field === 'date' ? 250 : 130, // Customize the width as needed
         }))}
         components={{
           Toolbar: GridToolbar,
@@ -277,7 +278,7 @@ function AdminViewTable() {
        onClick={handleallbutton}
 
        >
-          <span>Reset Date</span>
+          <span>Reset Data</span>
         <SettingsBackupRestore sx={{width:"18px"}} />
 
         </Button>
