@@ -78,6 +78,7 @@ export const CheckAvailabilityContainer = () => {
                         disablePast
                         value={startDate}
                         onChange={handleStartDateChange}
+                        format='DD-MM-YYYY'
                     />
                     </DemoContainer>
                 </LocalizationProvider>
@@ -94,6 +95,7 @@ export const CheckAvailabilityContainer = () => {
                         disablePast
                         value={endDate}
                         onChange={handleEndDateChange}
+                        format='DD-MM-YYYY'
                     />
                     </DemoContainer>
                 </LocalizationProvider>
@@ -128,27 +130,36 @@ export const CheckAvailabilityContainer = () => {
             </Box>
 
             <Box sx={{display: "flex", gap: "30px", flexDirection: "column"}}>
-                <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}, mt: 1, height: {xs: "auto", md: "340px"}}}>
-                    <Grid item xs={12} md={6} >
-                    <Typography variant="h6" component="div" >
-                        Available
-                    </Typography>
-                    <Box>
-                        <List>
-                        { unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
-                        </List>
-                    </Box>
+                <Typography variant="h6" component="div" sx={{textAlign: "center", m: 0}}> Seminar Halls </Typography>
+                <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}, height: {xs: "auto", md: "300px"}}}>
+                    <Grid item xs={12} md={6} sx={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
+                    {isAvailabilityLoading ? <ReactLoading type="spin" height={"20%"} width={"10%"} color='#1976d2' />  :
+                    <>
+                        <Typography variant="h6" component="div" >
+                            Available
+                        </Typography>
+                        <Box>
+                            <List>
+                            { unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
+                            </List>
+                        </Box>
+                    </>
+                    }
                     </Grid>
                     <Divider orientation="vertical" flexItem />
-                    <Grid item xs={12} md={5}>
-                    <Typography variant="h6" component="div">
-                        Not Available
-                    </Typography>
+                    <Grid item xs={12} md={5} sx={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
+                    {isAvailabilityLoading? <ReactLoading type="spin" height={"20%"} width={"10%"} color='#1976d2' />  :
                     <Box>
-                        <List>
-                        { unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
-                        </List>
+                        <Typography variant="h6" component="div" >
+                            Not Available
+                        </Typography>
+                        <Box>
+                            <List>
+                            { unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
+                            </List>
+                        </Box>
                     </Box>
+                    }
                     </Grid>
                 </Grid>
 

@@ -184,6 +184,7 @@ function TransportInputField() {
             disablePast
             value={selectedDate}
             onChange={handleDateChange}
+            format='DD-MM-YYYY'
             />
           </DemoContainer>
         </LocalizationProvider> 
