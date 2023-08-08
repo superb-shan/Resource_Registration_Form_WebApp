@@ -16,6 +16,7 @@ import { LoginContext } from '../../Context/Login.Context';
 import ViewSelector from './ViewSelector';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import sriEshwarLogo from '../../Images/sriEshwarLogo.png'
 
 import { useState, useEffect, useContext} from 'react';
 
@@ -71,6 +72,17 @@ function UserNavBar() {
     <AppBar position="relative">
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{justifyContent:'end'}}>
+          <Box
+            component="img"
+            sx={{
+              height: 50,
+              width: 50,
+              mr: 3
+            }}
+            alt="Sri Eshwar Logo"
+            src={sriEshwarLogo}
+          />
+          
           <ViewSelector/>
 
           <Typography

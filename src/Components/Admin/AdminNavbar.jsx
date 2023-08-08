@@ -12,6 +12,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { LoginContext } from '../../Context/Login.Context';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
+import sriEshwarLogo from '../../Images/sriEshwarLogo.png'
 
 import { useContext} from 'react';
 
@@ -58,7 +59,20 @@ function AdminNavBar() {
   return (
     <AppBar position="relative">
       <Container maxWidth="xl" >
-        <Toolbar disableGutters sx={{display: "flex", justifyContent:'end'}}>
+        <Toolbar disableGutters sx={{display: "flex", justifyContent:'space-between'}}>
+          <Box sx={{display: "flex", alignItems: "center"}}>
+            <Box
+              component="img"
+              sx={{
+                height: 50,
+                width: 50,
+                mr: 1
+              }}
+              alt="Sri Eshwar Logo"
+              src={sriEshwarLogo}
+            />
+            <Typography>Resource Registration</Typography>
+          </Box>
           <Box sx={{marginLeft: "20px"}}>
           <div>
               <IconButton

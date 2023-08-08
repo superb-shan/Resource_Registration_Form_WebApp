@@ -154,6 +154,7 @@ function SeminorHallForm() {
             disablePast
             value={startDate}
             onChange={handleStartDateChange}
+            format='DD-MM-YYYY'
           />
         </DemoContainer>
       </LocalizationProvider>
@@ -170,6 +171,7 @@ function SeminorHallForm() {
             disablePast
             value={endDate}
             onChange={handleEndDateChange}
+            format='DD-MM-YYYY'
           />
         </DemoContainer>
       </LocalizationProvider>
@@ -211,7 +213,10 @@ function SeminorHallForm() {
           </Typography>
           <Box>
             <List>
-              { unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
+              {
+                isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} />  :
+               (unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />))
+              }
             </List>
           </Box>
         </Grid>

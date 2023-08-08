@@ -21,7 +21,7 @@ import ReactLoading from 'react-loading';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { BsCalendarCheck } from "react-icons/bs";
-import UserCalender from './MyBookingCalender';
+import MyBookingsCalendar from './MyBookingCalender';
 import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
@@ -217,72 +217,38 @@ function MyBookingslist() {
 
   return (
     <ThemeProvider theme={theme}>
+      
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between"}}>
 
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex' }}>
-        {/* {isLoading ?
-          <ReactLoading type={"spin"} color='#1976d2' height={'5%'} width={'5%'} />
-          : */}
-          {/* <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex"}}> */}
-          {console.log(userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate}))}
-          <DataGrid
-              rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
-              columns={columns.map((column) => ({
-                ...column,
-                width: column.field === 'date' ? 250 : 130, // Customize the width as needed
-              }))}
-              components={{
-                Toolbar: GridToolbar,
-              }}
-              style={{ maxHeight: '94%', maxWidth: '70%' }}
-          />
+  
+      <DataGrid
+        rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
+        columns={columns.map((column) => ({
+          ...column,
+          width: column.field === 'date' ? 250 : 130, // Customize the width as needed
+        }))}
+        components={{
+          Toolbar: GridToolbar,
+        }}
+        style={{ maxWidth: '70%' }}
+      />
 
        
         
-        <div>   
-      <div className='flex flex-col items-center p-2 py-0 '>
+      <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center mr-7'>
       <Button 
       variant="contained"
       size="small" 
        sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
        onClick={handleallbutton}
+
        >
-          <span>Reset Data</span>
-        <SettingsBackupRestore sx={{width:"18px"}} />
+      <span>Reset Data</span>
+      <SettingsBackupRestore sx={{width:"18px"}} />
+      </Button>
+      <MyBookingsCalendar />
+    </div>
 
-        </Button>
-      </div>
-      <UserCalender />
-         </div>
-            {/* <Box style={{display:"flex",justifyContent:"end"}}>
-              <Button 
-                variant="contained"  
-                size="small" 
-                sx={{ height: '30px',marginTop:"5px", display:"flex", gap: 1, fontSize: "14px" }}
-                onClick={handleallbutton}
-              >
-                <span>ALL</span>
-                <SettingsBackupRestore sx={{width:"18px"}} />
-              </Button>
-              <Button onClick={handleCalender} >
-                <BsCalendarCheck   style={{maxWidth: '30px', maxHeight: '30px', minWidth: '30px', minHeight: '30px'}}/>
-              </Button>
-            </Box>
-            <DataGrid
-              rows={userData}
-              columns={columns}
-              components={{
-                Toolbar: GridToolbar,
-              }}
-              sx={{maxHeight: {xs: "90%", md: "94%"}}}
-            />
-
-            {isCalOpen && (
-              <Modal open={true} onClose={handleClose} sx={Calstyle}>
-                <div>
-                <UserCalender />
-                </div>
-              </Modal>
-            )} */}
 
             <Modal open={isOpen} onClose={handleClose}>
                 <div>

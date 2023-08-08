@@ -5,14 +5,14 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 import { useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 
-export default function UserCalender() {
+export default function MyBookingsCalendar() {
     const style = {
         position: 'relative',
         // top: '50%',
         // left: '50%',
         // transform: 'translate(-50%, -50%)',
         width: 400,
-        bgcolor: 'background.paper',
+        bgcolor: '#FFD966',
         border: '2px solid white',
         // boxShadow: 24,
         // p: 4,
