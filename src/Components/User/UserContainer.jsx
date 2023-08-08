@@ -16,10 +16,9 @@ function UserContainer() {
         { selectedView === "Add Bookings" ?
         
         ( selectedForm === "Transport") ? <TransportContainer/> 
-         :  
-        ( selectedForm === "Seminar Hall") ? <SeminorHallWrapper/> 
-         : 
-        null
+         :  ( selectedForm === "Seminar Hall") ? <SeminorHallWrapper/> : null
+
+
         :
         selectedView === "My Bookings" ?
         <MyBookingsWrapper />

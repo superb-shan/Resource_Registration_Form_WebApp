@@ -35,19 +35,19 @@ const theme = createTheme({
 const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions','remarks'];
 
 const style = {
-  position: 'absolute',
+ position: 'absolute',
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  height: 800,
   width: 400,
   bgcolor: 'background.paper',
   border: '2px solid #1976d2',
   boxShadow: 24,
-  p: 4,
+  p: "1rem 2rem",
   borderRadius: 3,
-  overflow:"auto",
-  paddingTop:'5px'
+  overflow:"scroll",
+  paddingTop:'5px',
+  height:800
 };
 const Calstyle = {
   position: 'absolute',
@@ -80,13 +80,13 @@ function MyBookingslist() {
     param["name"] =userName
     if(selectedDate){
       console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
-     param.date = moment(selectedDate.toString()).format('DD-MM-YYYY')
+     param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
     }
     try {
       
        const transportResponse = await axios.get('/transport/get',{params:param})
        const seminarResponse = await axios.get('/seminar/get',{params:param})
-      const fullData=[...transportResponse.data.data,...seminarResponse.data]
+      const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
       setUserData(fullData)
       setTimeout(() => setIsLoading(false), 500)
     }
@@ -115,7 +115,7 @@ function MyBookingslist() {
       fetchData();
       setIsAdd(false);
     }
-  }, [setSelectedDate,isAdd]);
+  }, [setSelectedDate,isAdd,selectedDate]);
   
   const handleOpen = (rowData) => {
     setSelectedRow(rowData);
@@ -218,13 +218,42 @@ function MyBookingslist() {
   return (
     <ThemeProvider theme={theme}>
 
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex', justifyContent: "center", alignItems: "center" }}>
-     
-        {isLoading ?
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius: 5, padding: 10, display: 'flex' }}>
+        {/* {isLoading ?
           <ReactLoading type={"spin"} color='#1976d2' height={'5%'} width={'5%'} />
-          :
-          <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 }}>
-            <Box style={{display:"flex",justifyContent:"end"}}>
+          : */}
+          {/* <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex"}}> */}
+          {console.log(userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate}))}
+          <DataGrid
+              rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
+              columns={columns.map((column) => ({
+                ...column,
+                width: column.field === 'date' ? 250 : 130, // Customize the width as needed
+              }))}
+              components={{
+                Toolbar: GridToolbar,
+              }}
+              style={{ maxHeight: '94%', maxWidth: '70%' }}
+          />
+
+       
+        
+        <div>   
+      <div className='flex flex-col items-center p-2 py-0 '>
+      <Button 
+      variant="contained"
+      size="small" 
+       sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
+       onClick={handleallbutton}
+       >
+          <span>Reset Data</span>
+        <SettingsBackupRestore sx={{width:"18px"}} />
+
+        </Button>
+      </div>
+      <UserCalender />
+         </div>
+            {/* <Box style={{display:"flex",justifyContent:"end"}}>
               <Button 
                 variant="contained"  
                 size="small" 
@@ -253,7 +282,7 @@ function MyBookingslist() {
                 <UserCalender />
                 </div>
               </Modal>
-            )}
+            )} */}
 
             <Modal open={isOpen} onClose={handleClose}>
                 <div>
@@ -299,8 +328,8 @@ function MyBookingslist() {
                 </div>
             </Modal>
           </div>
-        }
-      </div>
+        
+      {/* </div> */}
       
     </ThemeProvider>
   );

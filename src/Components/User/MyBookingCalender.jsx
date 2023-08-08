@@ -7,15 +7,15 @@ import { UserContext } from '../../Context/User.Context';
 
 export default function UserCalender() {
     const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
+        position: 'relative',
+        // top: '50%',
+        // left: '50%',
+        // transform: 'translate(-50%, -50%)',
         width: 400,
         bgcolor: 'background.paper',
         border: '2px solid white',
-        boxShadow: 24,
-        p: 4,
+        // boxShadow: 24,
+        // p: 4,
         borderRadius: 3
     }
 
