@@ -253,10 +253,10 @@ function AdminViewTable() {
     
     <ThemeProvider theme={theme}>
       
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex"}}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between"}}>
 
   
-            <DataGrid
+      <DataGrid
         rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
         columns={columns.map((column) => ({
           ...column,
@@ -269,8 +269,8 @@ function AdminViewTable() {
       />
 
        
-        <div>   
-      <div className='flex flex-col items-center p-2 py-0 '>
+        
+      <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center mr-7'>
       <Button 
       variant="contained"
       size="small" 
@@ -282,9 +282,8 @@ function AdminViewTable() {
         <SettingsBackupRestore sx={{width:"18px"}} />
 
         </Button>
-      </div>
          <AdminCalender />
-         </div>
+      </div>
         
        
         

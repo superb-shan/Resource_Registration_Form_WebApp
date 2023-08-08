@@ -14,9 +14,9 @@ export default function AdminCalender() {
         // transform: 'translate(-50%, -50%)',
         width: 400,
         m: 0,
-        bgcolor: 'background.paper',
-        border: '2px solid white',
-        // boxShadow: 24,
+        bgcolor: '#FFD966',
+        border: '1px solid black',
+        boxShadow: 24,
         // p: 4,
         borderRadius: 3
     }
