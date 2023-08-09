@@ -101,11 +101,11 @@ const SeminorProvider = ({ children }) => {
       toast.warn("Please select a start and end Date");
       return;
     }
-    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
-      toast.error('Start date should be same or before End date');
-      return;
-    }
-    if(!moment(endTime.toString()).isAfter(startTime.toString(), "hour")){
+    // if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
+    //   toast.error('Start date should be same or before End date');
+    //   return;
+    // }
+    if(!moment(endDate.toString() + endTime.toString()).isAfter(moment(startDate.toString() + startTime.toString()))){
       toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
       return;
     }
