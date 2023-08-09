@@ -1,7 +1,7 @@
 import React, { useState, createContext } from "react";
 import moment from "moment";
 import axios from "axios";
-import {toast} from "react-toastify";
+import { toast } from "react-toastify";
 
 export const GuestHouseContext = createContext();
 
@@ -19,7 +19,7 @@ const GuestHouseProvider = ({ children }) => {
   const [noOfAttendees, setNoOfAttendees] = useState('');
   const [FoodRequired, setFoodRequired] = useState([]);
   const [specialRequirements, setSpecialRequirements] = useState('');
-  const[requiredHall,setHall]=useState('')
+  const [requiredHall, setHall] = useState('')
 
   const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
@@ -59,109 +59,110 @@ const GuestHouseProvider = ({ children }) => {
       label: 'Suite'
     },
   ];
-        const Menu=[
-            {
-                value:"Elite",
-                lable:"Elite"
+  const Menu = [
+    {
+      value: "Elite",
+      lable: "Elite"
 
-            },
-            {
-                value:"Special",
-                lable:"Special"
+    },
+    {
+      value: "Special",
+      lable: "Special"
 
-            },
-            {
-                value:"Normal",
-                lable:"Normal"
-            }
-        ]
+    },
+    {
+      value: "Normal",
+      lable: "Normal"
+    }
+  ]
 
-        const Payment=[
-            {
-                value:"Paid by institution",
-                lable:"Paid by institution"
+  const Payment = [
+    {
+      value: "Paid by institution",
+      lable: "Paid by institution"
 
-            },
-            {
-                value:"Department",
-                lable:"Department"
-            },
-            {
-                value:"Guest",
-                lable:"Guest"
-            }
-        ]
+    },
+    {
+      value: "Department",
+      lable: "Department"
+    },
+    {
+      value: "Guest",
+      lable: "Guest"
+    }
+  ]
   const handleCheckAvailability = async () => {
-    if (!startTime || !endTime){
+    if (!startTime || !endTime) {
       toast.warn("Please select a start and end time");
       return;
     }
-    if (!startDate || !endDate){
+    if (!startDate || !endDate) {
       toast.warn("Please select a start and end Date");
       return;
     }
-    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
+    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())) {
       toast.error('Start date should be same or before End date');
       return;
     }
     // if (!moment(startTime.toString()).isBefore(endTime.toString())){
-      if(!moment(endTime.toString()).isAfter(startTime.toString(), "hour")){
+    if (!moment(endTime.toString()).isAfter(startTime.toString(), "hour")) {
       toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
       return;
     }
 
     setIsAvailabilityLoading(true);
-    const res = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
+    let arrival = `${startDate.toString()} ${startTime.toString()}`
+    let dept = `${endDate.toString()} ${endTime.toString()}`
+    const res = await axios.get("/guestHouse/checkAvailability", { params: { Departure } });
     console.log(res);
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
-    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
+    setUnavailableHalls(res.data.overlappingSeminars || []?.map(seminar => seminar.requiredHall) || []);
     // console.log(unavailableHalls);
   }
-  
-  
-    return (
-      <GuestHouseContext.Provider
-        value={{
-            //send all the created variables
-            name, setName,
-            contactNumber, setContactNumber,
-            DesignationDepartment, setDesignation,
-            department, setDepartment, purpose,
-            startDate,
-            endDate,
-            startTime,
-            endTime,
-            noOfAttendees,
-            specialRequirements,
-            requiredHall,
-            setPurpose,
-            setStartDate,
-            setEndDate,
-            setStartTime,
-            setEndTime,
-            setNoOfAttendees,
-            setSpecialRequirements,
-            setHall,
-            isAvailabilityChecked, 
-            setIsAvailabilityChecked,
-            unavailableHalls, 
-            setUnavailableHalls,
-            isAvailabilityLoading, 
-            setIsAvailabilityLoading,
-            handleCheckAvailability,
-            Food,
-            TypeOfAcc,
-            Menu,
-            Payment,
-            FoodRequired,
-             setFoodRequired
-        }}
-      >
-        {children}
-      </GuestHouseContext.Provider>
-    );
-  };
-  
-  export default GuestHouseProvider;
-  
+
+
+  return (
+    <GuestHouseContext.Provider
+      value={{
+        //send all the created variables
+        name, setName,
+        contactNumber, setContactNumber,
+        DesignationDepartment, setDesignation,
+        department, setDepartment, purpose,
+        startDate,
+        endDate,
+        startTime,
+        endTime,
+        noOfAttendees,
+        specialRequirements,
+        requiredHall,
+        setPurpose,
+        setStartDate,
+        setEndDate,
+        setStartTime,
+        setEndTime,
+        setNoOfAttendees,
+        setSpecialRequirements,
+        setHall,
+        isAvailabilityChecked,
+        setIsAvailabilityChecked,
+        unavailableHalls,
+        setUnavailableHalls,
+        isAvailabilityLoading,
+        setIsAvailabilityLoading,
+        handleCheckAvailability,
+        Food,
+        TypeOfAcc,
+        Menu,
+        Payment,
+        FoodRequired,
+        setFoodRequired
+      }}
+    >
+      {children}
+    </GuestHouseContext.Provider>
+  );
+};
+
+export default GuestHouseProvider;
