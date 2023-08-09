@@ -10,6 +10,7 @@ import SeminorProvider from './Context/Seminor.Context';
 import UserProvider from './Context/User.Context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
+import GuestHouseProvider from './Context/GuestHouse.Context';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -20,10 +21,12 @@ root.render(
         <AdminProvider>
           <SeminorProvider>
             <UserProvider>
+             <GuestHouseProvider>
               <ThemeProvider theme={theme}>
                 <App />
                 <ToastContainer /> 
               </ThemeProvider>
+              </GuestHouseProvider>
             </UserProvider>
           </SeminorProvider>
         </AdminProvider>
