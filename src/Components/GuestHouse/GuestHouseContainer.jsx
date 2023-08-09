@@ -65,12 +65,14 @@ function GuestHouseContainer() {
     EquipmentRequired,
     specialRequirements,
     isAvailabilityChecked,
-    handleCheckAvailability
+    handleCheckAvailability,
+    FoodRequired,
+    guestName
   } = useContext(GuestHouseContext);
 
 
   //Check for availability of halls when this component is rendered
-  if(!startDate && !endDate && !startTime && !endTime){
+  if(startDate && endDate && startTime && endTime){
     handleCheckAvailability();
   }
 
@@ -85,6 +87,7 @@ function GuestHouseContainer() {
     startTime,
     endTime,
     noOfAttendees,
+    guestName
   ];
 
 
@@ -92,11 +95,11 @@ function GuestHouseContainer() {
 
     setIsLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-    if (!allFieldsNotEmpty){ 
-      toast.warning('Fill all the Required fields');
-      setIsLoading(false);
-      return;
-    }
+    // if (!allFieldsNotEmpty){ 
+    //   toast.warning('Fill all the Required fields');
+    //   setIsLoading(false);
+    //   return;
+    // }
     if(contactNumber.length!='10'){
       toast.error("Enter 10 digit Phone Number");
       return;
@@ -105,14 +108,18 @@ function GuestHouseContainer() {
       toast.error("No of Attendees is not valid");
       return;
     }
-    if (!isAvailabilityChecked){
-      toast.error(`Please check Availability`);
-      setIsLoading(false);
-      return;
-    }
+    // if (!isAvailabilityChecked){
+    //   toast.error(`Please check Availability`);
+    //   setIsLoading(false);
+    //   return;
+    // }
 
     //Check for unavailability of hall before sending request
-    const response = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDate.toString()).format("YYYY-MM-DD"), endDate: moment(endDate.toString()).format("YYYY-MM-DD"), startTime: moment(startTime.toString()).format("HH:mm:ss"), endTime: moment(endTime.toString()).format("HH:mm:ss")}});
+    let arrival = `${startDate.toString()} ${startTime.toString()}`
+    let dept = `${endDate.toString()} ${endTime.toString()}`
+   
+   
+    const response =await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
     const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
 
     if (recentUnavailableHalls.includes(requiredHall)){
@@ -121,26 +128,35 @@ function GuestHouseContainer() {
       return;
     }
     console.log("equip", EquipmentRequired.join(", "));
-
+           console.log(name,
+            contactNumber,
+            requiredHall,
+            purpose,
+            DesignationDepartment,
+            startDate,
+            endDate,
+            startTime,
+            endTime,
+            noOfAttendees,
+            guestName);
     //Create booking
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`/seminar/create`,
+    const res = await axios.post(`/guesthouse/create`,
     {
-      userName: userName,
-      name: name,
-      contactNumber: contactNumber,
-      startDate: moment(startDate.toString()).format("YYYY-MM-DD"),
-      endDate: moment(endDate.toString()).format("YYYY-MM-DD"),
-      startTime: moment(startTime.toString()).format("HH:mm:ss"),
-      endTime: moment(endTime.toString()).format("HH:mm:ss"),
-      purpose: purpose,
-      noOfAttendees: noOfAttendees,
-      seating_capacity:20,
-      equipmentNeeded: EquipmentRequired.join(", "),
-      specialRequirements,
-      designation: DesignationDepartment,
-      requiredhall: requiredHall,
+      userName:userName,
+       DesignationDepartment,
+      applicantName:name,
+      contactNumber,
+      name:guestName,
+      purpose,
+      ArrivialDateTime : `${startDate.toString()} ${startTime.toString()}`, // Use the appropriate date
+      DepartureDateTime:`${endDate.toString()} ${endTime.toSting()}`, // Use the appropriate date
+      Accommodation:"bed",
+      noOfGuest:noOfAttendees,
+      FoodRequirements:FoodRequired,
+      Menu:"Menu",
+
     }
   );
     // console.log("Response:", res);

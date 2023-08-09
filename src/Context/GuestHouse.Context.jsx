@@ -8,6 +8,7 @@ export const GuestHouseContext = createContext();
 const GuestHouseProvider = ({ children }) => {
 
   const [name, setName] = useState('');
+  const [guestName,setGuestName] = useState('')
   const [contactNumber, setContactNumber] = useState('');
   const [DesignationDepartment, setDesignation] = useState('');
   const [department, setDepartment] = useState('');
@@ -113,11 +114,11 @@ const GuestHouseProvider = ({ children }) => {
     setIsAvailabilityLoading(true);
     let arrival = `${startDate.toString()} ${startTime.toString()}`
     let dept = `${endDate.toString()} ${endTime.toString()}`
-    const res = await axios.get("/guestHouse/checkAvailability", { params: { Departure } });
+    const res = await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
     console.log(res);
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
-    setUnavailableHalls(res.data.overlappingSeminars || []?.map(seminar => seminar.requiredHall) || []);
+    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
     // console.log(unavailableHalls);
   }
 
@@ -157,7 +158,8 @@ const GuestHouseProvider = ({ children }) => {
         Menu,
         Payment,
         FoodRequired,
-        setFoodRequired
+        setFoodRequired,
+        guestName,setGuestName
       }}
     >
       {children}

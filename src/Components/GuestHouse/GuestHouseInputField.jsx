@@ -77,7 +77,8 @@ function GuestHouseInputField() {
     TypeOfAcc,
     Menu,
     Payment,
-    FoodRequired, setFoodRequired
+    FoodRequired, setFoodRequired,
+    guestName,setGuestName
     } 
   = useContext(GuestHouseContext);
 
@@ -124,6 +125,9 @@ function GuestHouseInputField() {
 
   const handleNoOfAttendeesChange = (event) => {
     setNoOfAttendees(event.target.value);
+  };
+  const handleGuestName = (event) => {
+    setGuestName(event.target.value);
   };
 
   const handlemenuChange=()=>{
@@ -354,8 +358,8 @@ function GuestHouseInputField() {
         label="Name of Guest(s) *"
         placeholder="Name all the Guests"
         multiline
-        value={noOfGuest}
-        onChange={handlenoOfGuest}
+        value={guestName}
+        onChange={handleGuestName}
       />
 
        {/* Menu */}
