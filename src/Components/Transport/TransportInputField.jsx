@@ -130,7 +130,7 @@ function TransportInputField() {
 
 
   return (
-         <div className='flex flex-col gap-10 w-[300px] '>
+    <div className='flex flex-wrap gap-8 justify-evenly items-center w-[800px] [@media(max-width:640px)]:w-[500px]'>
         
  {/* selecting user name */}
 
@@ -140,6 +140,7 @@ function TransportInputField() {
           value={name}
           onChange={handleNameChange}
           placeholder='Enter your Name'
+          sx={{width: "300px"}}
         >
          
         </TextField>
@@ -153,6 +154,7 @@ function TransportInputField() {
           value={phoneNumber}
           onChange={handlePhoneNumberChange}
           placeholder='Enter your Contact number'
+          sx={{width: "300px"}}
         />
 
  {/* selecting purpose */}
@@ -164,6 +166,7 @@ function TransportInputField() {
           value={purposeOfTravel}
           onChange={handlePurposeOfTravelChange}
           placeholder='Select the Purpose'
+          sx={{width: "300px"}}
         >
           {travel_purpose.map((option) => (
             <MenuItem key={option.value} value={option.value}>
@@ -172,6 +175,19 @@ function TransportInputField() {
           ))}
         </TextField>
 
+        {/* no of passenger */}
+
+    <TextField
+          id="no_of_pasanger-input"
+          label="No of Passengers *"
+          type="number" 
+          value={noOfPassengers}
+          onChange={handleNoOfPassengersChange}
+          InputProps={{ inputProps: { min: 1, max: 6 } }}
+          placeholder='Enter the no of Passengers'
+          sx={{width: "300px"}}
+        /> 
+
         {/* datepicker */}
 
 
@@ -179,7 +195,7 @@ function TransportInputField() {
           <DemoContainer components={['DatePicker']}>
             <DatePicker
             label='Pick up Date *'
-            sx={{width: {xs:"300px", md:"500px"}}}
+            sx={{width: "300px"}}
             views={['year', 'month', 'day']}
             disablePast
             value={selectedDate}
@@ -196,7 +212,7 @@ function TransportInputField() {
       <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']} >
           <TimePicker 
-            sx={{width: {xs:"300px", md:"500px"}}}
+            sx={{width: "300px"}}
             label="Pick up Time *" 
             value={selectedTime}
             onChange={handleTimeChange}
@@ -213,6 +229,7 @@ function TransportInputField() {
           value={pickupLocation}
           onChange={handlePickupLocationChange}
           placeholder='Enter  Pickup location'
+          sx={{width: "300px"}}
         />  
 
 {/* drop location */}
@@ -224,19 +241,9 @@ function TransportInputField() {
           value={dropLocation}
           onChange={handleDropLocationChange}
           placeholder='Enter Drop location'
+          sx={{width: "300px"}}
         />  
 
-        {/* no of passenger */}
-
-    <TextField
-          id="no_of_pasanger-input"
-          label="No of Passengers *"
-          type="number" 
-          value={noOfPassengers}
-          onChange={handleNoOfPassengersChange}
-          InputProps={{ inputProps: { min: 1, max: 6 } }}
-          placeholder=''
-        /> 
 
         {/* special requirement  */}
         <TextField
@@ -246,6 +253,7 @@ function TransportInputField() {
           multiline
           onChange={handleSpecialRequirementChange}
           value={specialRequirement}
+          sx={{width: "300px"}}
         />
         </div>
   );

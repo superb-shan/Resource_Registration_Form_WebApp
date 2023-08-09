@@ -66,7 +66,7 @@ export const CheckAvailabilityContainer = () => {
       }
 
   return (
-    <div className='p-20 px-40 [@media(max-width:640px)]:p-5 h-[92.7vh] bg-fixed bg-[#1976d2] flex items-start'>
+    <div className='p-20 px-40 [@media(max-width:640px)]:p-5 h-[90.7vh] bg-fixed bg-[#1976d2] flex items-start'>
         <div className='h-full w-full bg-white rounded-md p-10 flex gap-8 items-center justify-evenly'>
             <Box sx={{display: "flex", gap: "30px", flexDirection: "column"}}>
                 <LocalizationProvider dateAdapter={AdapterDayjs}>

@@ -81,6 +81,17 @@ const SeminorProvider = ({ children }) => {
     }
   ];
 
+  const isWithinNextTwoMonths = (givenDate) => {
+    if (!givenDate) {
+      return false;
+    }
+
+    //moment() -> gives current DateTime
+    const twoMonthsFromNow = moment().add(2, 'months');
+
+    return moment(givenDate.toString()).isBefore(twoMonthsFromNow.toString(), 'day'); // returns true or false
+  };
+
   const handleCheckAvailability = async () => {
     if (!startTime || !endTime){
       toast.warn("Please select a start and end time");
@@ -94,9 +105,12 @@ const SeminorProvider = ({ children }) => {
       toast.error('Start date should be same or before End date');
       return;
     }
-    // if (!moment(startTime.toString()).isBefore(endTime.toString())){
-      if(!moment(endTime.toString()).isAfter(startTime.toString(), "hour")){
+    if(!moment(endTime.toString()).isAfter(startTime.toString(), "hour")){
       toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
+      return;
+    }
+    if (!isWithinNextTwoMonths(startDate) || !isWithinNextTwoMonths(endDate)){
+      toast.info('You can only book Halls within next months');
       return;
     }
 
@@ -106,7 +120,6 @@ const SeminorProvider = ({ children }) => {
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
     setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
-    // console.log(unavailableHalls);
   }
   
   

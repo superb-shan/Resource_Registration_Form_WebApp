@@ -75,7 +75,7 @@ export const ChangePassword = () => {
       }
 
   return (
-    <div className='flex justify-center items-center h-screen bg-[#1976d2]'>
+    <div className='flex justify-center items-center h-[96vh] bg-[#1976d2]'>
         <div className='bg-white w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl gap-10 p-10'>
             <p className='text-4xl'>Change Password</p>
             <div className='flex flex-col gap-10 items-center w-[300px]'>

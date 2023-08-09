@@ -32,7 +32,7 @@ const theme = createTheme({
   },
 });
 
-const VISIBLE_FIELDS = ['type', 'name', 'date', 'status', 'actions','remarks'];
+const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
 
 const style = {
  position: 'absolute',
@@ -41,26 +41,15 @@ const style = {
   transform: 'translate(-50%, -50%)',
   width: 400,
   bgcolor: 'background.paper',
-  border: '2px solid #1976d2',
+  // border: '2px solid #1976d2',
   boxShadow: 24,
   p: "1rem 2rem",
   borderRadius: 3,
-  overflow:"scroll",
+  overflow:"auto",
   paddingTop:'5px',
   height:800
 };
-const Calstyle = {
-  position: 'absolute',
-  // top: '50%',
-  // left: '50%',
-  // transform: 'translate(-50%, -50%)',
-  width: '100%',
-  backgroundColor:'transparent',
-   border: '2px solid white',
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 3
-};
+
 
 function MyBookingslist() {
 
@@ -73,6 +62,8 @@ function MyBookingslist() {
   const[isAdd,setIsAdd]=useState(false)
   const { selectedDate, setSelectedDate } = useContext(UserContext)
   const { userName } = useContext(LoginContext)
+  const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
+  const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
 
 
   const fetchData = async () => {
@@ -107,6 +98,16 @@ function MyBookingslist() {
   }
   }
 
+  const handleCustomTypeFilter = async (event) => {
+    let name= event.target.name;
+    setCustomActiveTypeFilter(name);
+  }
+
+  const handleCustomStatusFilter = async (event) => {
+    let name= event.target.name;
+    setCustomActiveStatusFilter(name);
+  }
+
   useEffect(() => {
 
     fetchData()
@@ -125,6 +126,8 @@ function MyBookingslist() {
   const handleallbutton = () => {
     setSelectedDate(null);
     setIsAdd(true); 
+    setCustomActiveStatusFilter(null);
+    setCustomActiveTypeFilter(null);
   };
   
   const handleClose = () => {
@@ -220,12 +223,31 @@ function MyBookingslist() {
       
       <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between"}}>
 
+{console.log(userData)}
   
       <DataGrid
-        rows={userData.map((obj) => obj.type === "Transport"? obj : {...obj, date: obj.startDate + " to " + obj.endDate})}
+        rows={
+          userData.map(
+            (obj) => obj.type === "Seminar" 
+            ? 
+            {...obj, date: obj.startDate + " to " + obj.endDate, time: obj.startTime + " to " + obj.endTime} 
+            : 
+            obj
+            )
+            .filter(
+              item => (
+                (!customActiveTypeFilter || item.type === customActiveTypeFilter) &&
+                (customActiveStatusFilter === "Pending" ? item.isapproved === null :
+                 customActiveStatusFilter === "Success" ? item.isapproved :
+                 customActiveStatusFilter === "Rejected" ? item.isapproved :
+                 true
+                )
+              )
+            )
+        }
         columns={columns.map((column) => ({
           ...column,
-          width: column.field === 'date' ? 250 : 130, // Customize the width as needed
+          width: (column.field === 'date' || column.field === 'time') ? 200 : 130, // Customize the width as needed
         }))}
         components={{
           Toolbar: GridToolbar,
@@ -239,15 +261,36 @@ function MyBookingslist() {
       <Button 
       variant="contained"
       size="small" 
-       sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
-       onClick={handleallbutton}
+      sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
+      onClick={handleallbutton}
 
        >
       <span>Reset Data</span>
       <SettingsBackupRestore sx={{width:"18px"}} />
       </Button>
       <MyBookingsCalendar />
-    </div>
+      {/* //an mui box with  two columns with 1st column having 6 buttons vertically aligned and 2nd column having 3 buttons */}
+      <Box sx={{ width: 400, borderRadius: 3 }}>
+        <Typography sx={{mb: 1}}>Custom Filters</Typography>
+        <Box sx={{display: "flex", gap: 5}}>
+          <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+            <Button variant={customActiveTypeFilter === "Transport" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Transport" onClick={handleCustomTypeFilter}>Transport</Button>
+            <Button variant={customActiveTypeFilter === "Seminar" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Seminar" onClick={handleCustomTypeFilter}>Seminar</Button>
+            <Button variant={customActiveTypeFilter === "GuestHouse" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "GuestHouse" onClick={handleCustomTypeFilter}>GuestHouse</Button>
+            <Button variant={customActiveTypeFilter === "Items" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Items" onClick={handleCustomTypeFilter}>Items</Button>
+            <Button variant={customActiveTypeFilter === "Event/poster" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Event/poster" onClick={handleCustomTypeFilter}>Event/Poster</Button>
+            <Button variant={customActiveTypeFilter === "Food" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Food" onClick={handleCustomTypeFilter}>Food</Button>
+          </Box>
+          <Box sx={{display: "flex", flexDirection: "column", gap: 2}}>
+            <Button variant={customActiveStatusFilter === "Pending" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Pending" onClick={handleCustomStatusFilter}>Pending</Button>
+            <Button variant={customActiveStatusFilter === "Success" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Success" onClick={handleCustomStatusFilter}>Success</Button>
+            <Button variant={customActiveStatusFilter === "Rejected" ? 'contained' : 'outlined'} sx={{height: "30px"}} name = "Rejected" onClick={handleCustomStatusFilter}>Rejected</Button>
+          </Box>
+        </Box>
+      </Box>
+
+
+      </div>
 
 
             <Modal open={isOpen} onClose={handleClose}>

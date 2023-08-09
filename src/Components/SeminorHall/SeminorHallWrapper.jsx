@@ -70,7 +70,7 @@ function SeminorHallWrapper() {
 
 
   //Check for availability of halls when this component is rendered
-  if(!startDate && !endDate && !startTime && !endTime){
+  if(startDate && endDate && startTime && endTime){
     handleCheckAvailability();
   }
 
