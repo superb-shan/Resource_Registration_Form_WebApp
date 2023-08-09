@@ -6,7 +6,7 @@ import { UserPage } from './Pages/UserPage';
 import { AdminPage } from './Pages/AdminPage';
 import { ChangePassword } from './Pages/ChangePassword';
 import { CreateUserPage } from './Pages/CreateUserPage';
-import LayoutProvider from './Components/Layouts/LayoutProvider';
+import LayoutProvider from './Layouts/LayoutProvider';
 
 axios.defaults.baseURL = 'http://localhost:8000'
 

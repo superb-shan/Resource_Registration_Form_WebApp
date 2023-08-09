@@ -93,6 +93,7 @@ const SeminorProvider = ({ children }) => {
   };
 
   const handleCheckAvailability = async () => {
+    console.log("inside CA");
     if (!startTime || !endTime){
       toast.warn("Please select a start and end time");
       return;
@@ -101,11 +102,29 @@ const SeminorProvider = ({ children }) => {
       toast.warn("Please select a start and end Date");
       return;
     }
-    // if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
-    //   toast.error('Start date should be same or before End date');
+    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())){
+      toast.error('Start date should be same or before End date');
+      return;
+    }
+    // if(moment(endDate).isSame(moment(startDate)) && moment(endTime).isSameOrBefore(moment(startTime), 'hour')){
+    //   toast.error("Start Time Should Be Before End Time with at least 1 hour slot");
     //   return;
     // }
-    if(!moment(endDate.toString() + endTime.toString()).isAfter(moment(startDate.toString() + startTime.toString()))){
+
+    // const startDateTime = moment(`${startDate} ${startTime}`, 'DD-MM-YYYY HH:mm A');
+    // const endDateTime = moment(`${endDate} ${endTime}`, 'DD-MM-YYYY HH:mm A');
+    // if(moment(endDate).isSame(moment(startDate)) && moment(endDateTime).isSameOrBefore(moment(startDateTime), 'hour')){
+    //   toast.error("Start Time Should Be Before End Time with at least 1 hour slot");
+    //   return;
+    // }
+
+    // console.log("s:", startDateTime, "e:", endDateTime);
+    // if (endDateTime.isBefore(startDateTime)) {
+    //   console.log("s:", startDateTime, "e:", endDateTime);
+    //   toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
+    //   return;
+    // }
+    if(!moment(endTime.toString()).isAfter(moment(startTime.toString()), 'hour')){
       toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
       return;
     }

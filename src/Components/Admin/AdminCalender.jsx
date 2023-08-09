@@ -15,8 +15,8 @@ export default function AdminCalender() {
         width: 400,
         m: 0,
         bgcolor: '#FFD966',
-        border: '1px solid black',
-        boxShadow: 24,
+        border: '1px solid white',
+        boxShadow: 5,
         // p: 4,
         borderRadius: 3
     }

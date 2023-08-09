@@ -8,29 +8,29 @@ export const GuestHouseContext = createContext();
 const GuestHouseProvider = ({ children }) => {
 
   const [name, setName] = useState('');
-  const [guestName,setGuestName] = useState('')
+  const [guestName, setGuestName] = useState('')
   const [contactNumber, setContactNumber] = useState('');
-  const [DesignationDepartment, setDesignation] = useState('');
-  const [department, setDepartment] = useState('');
+  const [designationDepartment, setDesignationDepartment] = useState('');
   const [purpose, setPurpose] = useState('');
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [startTime, setStartTime] = useState(null);
-  const [endTime, setEndTime] = useState(null);
-  const [noOfAttendees, setNoOfAttendees] = useState('');
-  const [FoodRequired, setFoodRequired] = useState([]);
+  const [startDateTime, setStartDateTime] = useState(null);
+  const [endDateTime, setEndDateTime] = useState(null);
+  const [noOfGuests, setNoOfGuests] = useState('');
+  const [foodRequired, setFoodRequired] = useState([]);
+  const [menuRequired, setMenuRequired] = useState('');
+  const [paymentDoneBy, setPaymentDoneBy] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState('');
-  const [requiredHall, setHall] = useState('')
+  const [requiredRoom, setRequiredRoom] = useState('')
 
-  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
-  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
-  const [unavailableHalls, setUnavailableHalls] = useState([]);
+  const [isGuestHouseAvailabilityChecked, setIsGuestHouseAvailabilityChecked] = useState(false);
+  const [isGuestHouseAvailabilityLoading, setIsGuestHouseAvailabilityLoading] = useState(false);
+  const [unavailableGuestHouses, setUnavailableGuestHouses] = useState([]);
 
-  const Food = [{
+  const foodType = [
+  {
     value: "Breakfast",
     label: "Breakfast"
-
-  }, {
+  }, 
+  {
     value: "Lunch",
     label: "Lunch"
 
@@ -45,80 +45,69 @@ const GuestHouseProvider = ({ children }) => {
   },
   ];
 
-
-  const TypeOfAcc = [
-    {
-      value: 'Single Room',
-      label: 'Single Room'
-    },
-    {
-      value: 'Double Room',
-      label: 'Double Room'
-    },
-    {
-      value: 'Suite',
-      label: 'Suite'
-    },
-  ];
-  const Menu = [
+  const menuType = [
     {
       value: "Elite",
-      lable: "Elite"
+      label: "Elite"
 
     },
     {
       value: "Special",
-      lable: "Special"
+      label: "Special"
 
     },
     {
       value: "Normal",
-      lable: "Normal"
+      label: "Normal"
     }
   ]
 
-  const Payment = [
+  const paymentType = [
     {
       value: "Paid by institution",
-      lable: "Paid by institution"
+      label: "Paid by institution"
 
     },
     {
       value: "Department",
-      lable: "Department"
+      label: "Department"
     },
     {
       value: "Guest",
-      lable: "Guest"
+      label: "Guest"
     }
   ]
-  const handleCheckAvailability = async () => {
-    if (!startTime || !endTime) {
-      toast.warn("Please select a start and end time");
-      return;
-    }
-    if (!startDate || !endDate) {
-      toast.warn("Please select a start and end Date");
-      return;
-    }
-    if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())) {
-      toast.error('Start date should be same or before End date');
-      return;
-    }
-    // if (!moment(startTime.toString()).isBefore(endTime.toString())){
-    if (!moment(endTime.toString()).isAfter(startTime.toString(), "hour")) {
-      toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
-      return;
-    }
 
-    setIsAvailabilityLoading(true);
-    let arrival = `${startDate.toString()} ${startTime.toString()}`
-    let dept = `${endDate.toString()} ${endTime.toString()}`
-    const res = await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
-    console.log(res);
-    setIsAvailabilityLoading(false);
-    setIsAvailabilityChecked(true);
-    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
+  const allRooms = [
+    {value: "No 1", label: "No 1"},
+    {value:"No 2",label:'No 2'},
+    {value:"No 3",label:'No 3'},
+    {value:"No 4",label:'No 4'},
+    {value:"No 5",label:'No 5'}
+  ]
+  const handleGuestRoomCheckAvailability = async () => {
+    if (!startDateTime || !endDateTime) {
+      toast.warn("Please select a start/End Date/Time");
+      return;
+    }
+    // if (!moment(startDate.toString()).isSameOrBefore(endDate.toString())) {
+    //   toast.error('Start date should be same or before End date');
+    //   return;
+    // }
+    // // if (!moment(startTime.toString()).isBefore(endTime.toString())){
+    // if (!moment(endTime.toString()).isAfter(startTime.toString(), "hour")) {
+    //   toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
+    //   return;
+    // }
+
+    setIsGuestHouseAvailabilityLoading(true);
+    // let arrival = `${startDate.toString()} ${startTime.toString()}`
+    // let dept = `${endDate.toString()} ${endTime.toString()}`
+    // const res = await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
+    // console.log(res);
+    setIsGuestHouseAvailabilityLoading(false);
+    setIsGuestHouseAvailabilityChecked(true);
+    // setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
     // console.log(unavailableHalls);
   }
 
@@ -126,40 +115,30 @@ const GuestHouseProvider = ({ children }) => {
   return (
     <GuestHouseContext.Provider
       value={{
+
         //send all the created variables
+        
         name, setName,
+        guestName, setGuestName,
         contactNumber, setContactNumber,
-        DesignationDepartment, setDesignation,
-        department, setDepartment, purpose,
-        startDate,
-        endDate,
-        startTime,
-        endTime,
-        noOfAttendees,
-        specialRequirements,
-        requiredHall,
-        setPurpose,
-        setStartDate,
-        setEndDate,
-        setStartTime,
-        setEndTime,
-        setNoOfAttendees,
-        setSpecialRequirements,
-        setHall,
-        isAvailabilityChecked,
-        setIsAvailabilityChecked,
-        unavailableHalls,
-        setUnavailableHalls,
-        isAvailabilityLoading,
-        setIsAvailabilityLoading,
-        handleCheckAvailability,
-        Food,
-        TypeOfAcc,
-        Menu,
-        Payment,
-        FoodRequired,
-        setFoodRequired,
-        guestName,setGuestName
+        designationDepartment, setDesignationDepartment,
+        purpose, setPurpose,
+        startDateTime, setStartDateTime,
+        endDateTime, setEndDateTime,
+        noOfGuests, setNoOfGuests,
+        foodRequired, setFoodRequired,
+        menuRequired, setMenuRequired,
+        paymentDoneBy, setPaymentDoneBy,
+        specialRequirements, setSpecialRequirements,
+        requiredRoom, setRequiredRoom,
+        isGuestHouseAvailabilityChecked, setIsGuestHouseAvailabilityChecked,
+        isGuestHouseAvailabilityLoading, setIsGuestHouseAvailabilityLoading,
+        unavailableGuestHouses, setUnavailableGuestHouses,
+        foodType,
+        menuType,
+        paymentType,
+        handleGuestRoomCheckAvailability,
+        allRooms
       }}
     >
       {children}

@@ -14,6 +14,7 @@ export default function MyBookingsCalendar() {
         width: 400,
         bgcolor: '#FFD966',
         border: '2px solid white',
+        boxShadow: 5,
         // boxShadow: 24,
         // p: 4,
         borderRadius: 3

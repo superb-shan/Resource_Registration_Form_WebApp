@@ -3,11 +3,9 @@ import * as React from 'react';
 import TextField from '@mui/material/TextField';
 import MenuItem from '@mui/material/MenuItem';
 import { styled } from '@mui/material/styles';
-import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
+import { DemoContainer, DemoItem } from '@mui/x-date-pickers/internals/demo';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { TimePicker } from '@mui/x-date-pickers/TimePicker';
 import { useContext } from 'react';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider } from '@mui/material';
@@ -17,6 +15,7 @@ import moment from 'moment';
 import { useState } from 'react';
 import ReactLoading from 'react-loading';
 import { Done } from '@mui/icons-material';
+import { DateTimePicker } from '@mui/x-date-pickers';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -43,42 +42,28 @@ function GuestHouseInputField() {
 
   const theme = useTheme();
 
-
   const {
-    name, setName,
-    contactNumber, setContactNumber,
-    DesignationDepartment, setDesignation,
-    requiredRoom,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    noOfAttendees,
-    foodRequirements,
-    noOfGuest,
-    setHall,
-    setStartDate,
-    setEndDate,
-    setStartTime,
-    setEndTime,
-    setNoOfAttendees,
-    setSpecialRequirements,
-    setPurpose,
-    purpose,
-    isAvailabilityChecked, 
-    setIsAvailabilityChecked,
-    unavailableHalls, 
-    isAvailabilityLoading, 
-    handleCheckAvailability,
-    requiredmenu,
-    requiredPayment,
-    eventHall,
-    Food,
-    TypeOfAcc,
-    Menu,
-    Payment,
-    FoodRequired, setFoodRequired,
-    guestName,setGuestName
+        name, setName,
+        guestName, setGuestName,
+        contactNumber, setContactNumber,
+        designationDepartment, setDesignationDepartment,
+        purpose, setPurpose,
+        startDateTime, setStartDateTime,
+        endDateTime, setEndDateTime,
+        noOfGuests, setNoOfGuests,
+        foodRequired, setFoodRequired,
+        menuRequired, setMenuRequired,
+        paymentDoneBy, setPaymentDoneBy,
+        specialRequirements, setSpecialRequirements,
+        requiredRoom, setRequiredRoom,
+        isGuestHouseAvailabilityChecked, setIsGuestHouseAvailabilityChecked,
+        isGuestHouseAvailabilityLoading, setIsGuestHouseAvailabilityLoading,
+        unavailableGuestHouses, setUnavailableGuestHouses,
+        foodType,
+        menuType,
+        paymentType,
+        allRooms,
+        handleGuestRoomCheckAvailability
     } 
   = useContext(GuestHouseContext);
 
@@ -86,55 +71,70 @@ function GuestHouseInputField() {
     setName(event.target.value);
   };
 
-  const handleContactNumberChange = (event) => {
-    setContactNumber(event.target.value);
-  };
-
-  const handleDesignationChange = (event) => {
-    setDesignation(event.target.value);
-  };
-
-
-  const handleroomChange = (event) => {
-    setHall(event.target.value);
-  };
-
-  const handleStartDateChange = (date) => {
-    setHall('');
-    setIsAvailabilityChecked(false);
-    setStartDate(date);
-  };
-
-  const handleEndDateChange = (date) => {
-    setHall('');
-    setIsAvailabilityChecked(false);
-    setEndDate(date);
-  };
-
-  const handleStartTimeChange = (time) => {
-    setHall('');
-    setIsAvailabilityChecked(false);
-    setStartTime(time);
-  };
-
-  const handleEndTimeChange = (time) => {
-    setHall('');
-    setIsAvailabilityChecked(false);
-    setEndTime(time);
-  };
-
-  const handleNoOfAttendeesChange = (event) => {
-    setNoOfAttendees(event.target.value);
-  };
   const handleGuestName = (event) => {
     setGuestName(event.target.value);
   };
 
-  const handlemenuChange=()=>{
-    console.log("hai")
-  }
+  const handleContactNumberChange = (event) => {
+    setContactNumber(event.target.value);
+  };
+
+  const handleDesignationDepartmentChange = (event) => {
+    setDesignationDepartment(event.target.value);
+  };
+
+  const handlePurposeChange = (event) => {
+    setPurpose(event.target.value);
+  };
 
 
+  // const handleroomChange = (event) => {
+  //   setHall(event.target.value);
+  // };
+
+  // const handleStartDateChange = (date) => {
+  //   setHall('');
+  //   setIsAvailabilityChecked(false);
+  //   setStartDate(date);
+  // };
+
+
+  const handleStartDateTimeChange = (dateTime) => {
+    setRequiredRoom('');
+    setIsGuestHouseAvailabilityChecked(false);
+    setStartDateTime(dateTime);
+    console.log(dateTime);
+  };
+
+  const handleEndDateTimeChange = (dateTime) => {
+    setRequiredRoom('');
+    setIsGuestHouseAvailabilityChecked(false);
+    setEndDateTime(dateTime);
+    console.log(dateTime);
+  };
+
+  // const handleEndDateChange = (date) => {
+  //   setHall('');
+  //   setIsAvailabilityChecked(false);
+  //   setEndDate(date);
+  // };
+
+  // const handleStartTimeChange = (time) => {
+  //   setHall('');
+  //   setIsAvailabilityChecked(false);
+  //   setStartTime(time);
+  // };
+
+  // const handleEndTimeChange = (time) => {
+  //   setHall('');
+  //   setIsAvailabilityChecked(false);
+  //   setEndTime(time);
+  // };
+
+  const handleNoOfGuestsChange = (event) => {
+    setNoOfGuests(event.target.value);
+  };
+  
   const handleFoodRequirementsChange = (event) => {
     const {
       target: { value },
@@ -145,24 +145,30 @@ function GuestHouseInputField() {
     );
   };
 
-  const handlenoOfGuest = (event) => {
+  const handleMenuRequirementChange=(event)=>{
+    setMenuRequired(event.target.value)
+  }
+
+  const handlePaymentDoneByChange = (event)=>{
+    setPaymentDoneBy(event.target.value)
+  }
+
+  const handleSpecialRequirementsChange = (event) => {
     setSpecialRequirements(event.target.value);
   };
 
-  const handlepurposeChange = (event) => {
-    setPurpose(event.target.value);
+  const handleRequiredRoomChange = (event) => {
+    setRequiredRoom(event.target.value);
   };
 
-  const handlepaymentChange=()=>{
-    console.log("payment")
-  }
+  
 
 
   return (
     <div className='flex flex-wrap gap-8 justify-evenly items-center w-[800px] [@media(max-width:640px)]:w-[500px]'>
       {/* start datepicker*/}
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']} >
           <DatePicker
             sx={{width:"300px"}}
@@ -173,12 +179,32 @@ function GuestHouseInputField() {
             onChange={handleStartDateChange}
           />
         </DemoContainer>
+      </LocalizationProvider> */}
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateTimePicker
+           sx={{width:"300px"}}
+           label = "Check-in Datetime *" 
+           disablePast value={startDateTime} 
+           onChange={handleStartDateTimeChange} 
+           format="DD-MM-YYYY hh:mm A"
+          />
+      </LocalizationProvider>
+
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+          <DateTimePicker
+           sx={{width:"300px"}}
+           label = "Check-out Datetime *" 
+           disablePast value={endDateTime} 
+           onChange={handleEndDateTimeChange} 
+           format="DD-MM-YYYY hh:mm A"
+          />
       </LocalizationProvider>
 
       {/* end datepicker*/}
 
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['DatePicker']}>
           <DatePicker
             sx={{width:"300px"}}
@@ -189,11 +215,11 @@ function GuestHouseInputField() {
             onChange={handleEndDateChange}
           />
         </DemoContainer>
-      </LocalizationProvider>
+      </LocalizationProvider> */}
 
       {/* time picker start*/}
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker
             sx={{width:"300px"}}
@@ -202,11 +228,11 @@ function GuestHouseInputField() {
             onChange={handleStartTimeChange}
           />
         </DemoContainer>
-      </LocalizationProvider>
+      </LocalizationProvider> */}
 
       {/* time picker end*/}
 
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+      {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
         <DemoContainer components={['TimePicker']}>
           <TimePicker
             sx={{width:"300px"}}
@@ -215,12 +241,12 @@ function GuestHouseInputField() {
             onChange={handleEndTimeChange}
           />
         </DemoContainer>
-      </LocalizationProvider>
+      </LocalizationProvider> */}
 
 
-      <Button variant="contained" sx={{width:"200px", height: "40px", mx: {xs: 0, md: "300px"}}} onClick={handleCheckAvailability} color={isAvailabilityChecked? "success" : "primary"} >{isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done/> : <>Check Availability</>  }</Button>
+      <Button variant="contained" sx={{width:"200px", height: "40px", mx: {xs: 0, md: "300px"}}} onClick={handleGuestRoomCheckAvailability} color={isGuestHouseAvailabilityChecked? "success" : "primary"} >{isGuestHouseAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isGuestHouseAvailabilityChecked ? <Done/> : <>Check Availability</> }</Button>
 
-      {isAvailabilityChecked && 
+      {/* {isAvailabilityChecked && 
       <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}}}>
         <Grid item xs={12} md={6} >
           <Typography variant="h6" component="div" >
@@ -244,7 +270,7 @@ function GuestHouseInputField() {
           </Box>
         </Grid>
       </Grid>
-      }
+      } */}
 
       {/* Room required */}
       <TextField
@@ -254,12 +280,14 @@ function GuestHouseInputField() {
         label="Required Room *"
         placeholder='Select a Room from available for the selected slot'
         value={requiredRoom}
-        onChange={handleroomChange}
-        disabled={!isAvailabilityChecked}
-        title={isAvailabilityChecked? "" : "Check Availability to Enable"}
+        onChange={handleRequiredRoomChange}
+        disabled={!isGuestHouseAvailabilityChecked}
+        title={isGuestHouseAvailabilityChecked? "" : "Check Availability to Enable"}
       >
-        {TypeOfAcc.map((option) => (
-          <MenuItem key={option.value} value={option.value} disabled={unavailableHalls.includes(option.value)}>
+        {allRooms.map((option) => (
+          <MenuItem key={option.value} value={option.value} 
+          //disabled={unavailableHalls.includes(option.value)}
+          >
             {option.label}
           </MenuItem>
         ))}
@@ -274,10 +302,10 @@ function GuestHouseInputField() {
           sx={{width:"300px"}}
           id="demo-multiple-chip"
           multiple
-          placeholder='Select the Hall Required'
-          value={FoodRequired}
+          placeholder='Select the Foods Required'
+          value={foodRequired}
           onChange={handleFoodRequirementsChange}
-          input={<OutlinedInput id="select-multiple-chip" label="Equipments Required (Optional)" />}
+          input={<OutlinedInput id="select-multiple-chip" label="Food Requirements *" />}
           renderValue={(selected) => (
             <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
               {selected.map((value) => (
@@ -287,19 +315,19 @@ function GuestHouseInputField() {
           )}
           MenuProps={MenuProps}
         >
-          {Food.map((equip) => (
+          {foodType.map((food) => (
             <MenuItem
-              key={equip.label}
-              value={equip.value}
-              style={getStyles(equip.value ,FoodRequired, theme)}
+              key={food.label}
+              value={food.value}
+              style={getStyles(food.value , foodRequired, theme)}
             >
-              {equip.value}
+              {food.value}
             </MenuItem>
           ))}
         </Select>
       </FormControl>
 
-      {/* selecting user name */}
+      {/* selecting applicant name */}
 
       <TextField
         id="outlined-select-name"
@@ -326,8 +354,8 @@ function GuestHouseInputField() {
         label="Designation & Department *"
         type="text"
         placeholder='Example:(AP/CSE)'
-        value={DesignationDepartment}
-        onChange={handleDesignationChange}
+        value={designationDepartment}
+        onChange={handleDesignationDepartmentChange}
       />
 
       <TextField
@@ -336,7 +364,7 @@ function GuestHouseInputField() {
         label="Purpose of Visit *"
         placeholder='Enter your Purpose'
         value={purpose}
-        onChange={handlepurposeChange}
+        onChange={handlePurposeChange}
       />
 
       {/* no of attendees */}
@@ -346,14 +374,14 @@ function GuestHouseInputField() {
         sx={{width:"300px"}}
         label="No of Guest *"
         type="number"
-        value={noOfAttendees}
-        onChange={handleNoOfAttendeesChange}
+        value={noOfGuests}
+        onChange={handleNoOfGuestsChange}
       />
 
 
       {/* Name of guest */}
       <TextField
-        id="outlined-Specialrequirement-textarea"
+        id="outlined-Name-of-Guest-text"
         sx={{width:"300px"}}
         label="Name of Guest(s) *"
         placeholder="Name all the Guests"
@@ -363,44 +391,51 @@ function GuestHouseInputField() {
       />
 
        {/* Menu */}
-            <TextField
-            sx={{width:"300px"}}
-            id="outlined-Menu-input"
-            select
-            label="Menu Requested*"
-            placeholder='Select a Menu '
-            value={requiredmenu}
-            onChange={handlemenuChange}
-            >
-            {Menu.map((option) => (
-                <MenuItem key={option.value} value={option.value} >
-                {option.lable}
-                </MenuItem>
-            ))}
-</TextField>
-{console.log(Payment)}
+      <TextField
+      sx={{width:"300px"}}
+      id="outlined-Menu-input"
+      select
+      label="Menu Requested*"
+      placeholder='Select a Menu '
+      value={menuRequired}
+      onChange={handleMenuRequirementChange}
+      >
+      {menuType.map((option) => (
+          <MenuItem key={option.value} value={option.value} >
+          {option.label}
+          </MenuItem>
+      ))}
+      </TextField>
 
-
-<TextField
+      <TextField
         sx={{width:"300px"}}
         id="outlined-room-required-input"
         select
-        label="Payment BY"
+        label="Payment By"
         placeholder='Select Payment Option'
-        value={requiredPayment}
-        onChange={handlepaymentChange}
+        value={paymentDoneBy}
+        onChange={handlePaymentDoneByChange}
       >
-        {Payment.map((option) =>  (
+        {paymentType.map((option) =>  (
           <MenuItem 
             key={option.value}
             value={option.value}
           >
-            {option.lable}
+            {option.label}
           </MenuItem>
         ))}
       </TextField>
 
-      
+      <TextField
+        id="outlined-Special-requirement-textarea"
+        sx={{width:"300px"}}
+        label="Special requirements *"
+        placeholder="Name all the special requirements"
+        multiline
+        value={specialRequirements}
+        onChange={handleSpecialRequirementsChange}
+      />
+
     </div>
   );
 }
