@@ -8,7 +8,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { useContext } from 'react';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
-import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider } from '@mui/material';
+import { Box, Button, Chip, FormControl, Grid, InputLabel, List, ListItemText, OutlinedInput, Select, Typography, useTheme, Demo, Divider, ListSubheader } from '@mui/material';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import moment from 'moment';
@@ -36,6 +36,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
+ListSubheader.muiSkipListHighlight = true;
 
 
 function GuestHouseInputField() {
@@ -158,9 +159,18 @@ function GuestHouseInputField() {
   };
 
   const handleRequiredRoomChange = (event) => {
+    console.log("Inside hanle change", event.target);
     setRequiredRoom(event.target.value);
   };
 
+  const [selectedValue, setSelectedValue] = useState(""); // Initialize selectedValue state
+
+  const handleSelectChange = (event) => {
+    console.log("event", event);
+    const newValue = event.target.value;
+    setSelectedValue(newValue); // Update selectedValue state
+    console.log("Selected:", newValue); // Check if the correct value is logged
+  };
   
 
 
@@ -284,15 +294,72 @@ function GuestHouseInputField() {
         disabled={!isGuestHouseAvailabilityChecked}
         title={isGuestHouseAvailabilityChecked? "" : "Check Availability to Enable"}
       >
-        {allRooms.map((option) => (
-          <MenuItem key={option.value} value={option.value} 
+        {allRooms.map((bed) => (
+          <MenuItem key={bed} value={bed} 
           //disabled={unavailableHalls.includes(option.value)}
           >
-            {option.label}
+            {bed}
           </MenuItem>
         ))}
       </TextField>
-      
+      {/* <FormControl sx={{ width: "300px" }}>
+        <InputLabel htmlFor="grouped-select">Required Room</InputLabel>
+        <Select
+          id="grouped-select"
+          label="Required Room"
+          value={requiredRoom}
+          onChange={handleRequiredRoomChange}
+        >
+          {Object.keys(allRooms).map((category) => (
+            <div key={category}>
+              <ListSubheader sx={{ fontWeight: "bold" }}>{category}</ListSubheader>
+              {Object.keys(allRooms[category]).map((suiteRoom) => (
+                <div key={suiteRoom}>
+                  <ListSubheader>{suiteRoom}</ListSubheader>
+                  {allRooms[category][suiteRoom].map((bed) => (
+                    <MenuItem
+                      key={`${category}-${suiteRoom}-${bed}`}
+                      value={`${category} - ${suiteRoom} - ${bed}`}
+                    >
+                      {bed}
+                    </MenuItem>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </Select>
+      </FormControl> */}
+
+{/* <FormControl sx={{ width: "300px" }}>
+        <InputLabel htmlFor="grouped-select">Required Room</InputLabel>
+        <Select
+          id="grouped-select"
+          label="Required Room"
+          value={selectedValue || ''}
+          onChange={handleSelectChange}
+        >
+          {Object.keys(allRooms).map((category) => (
+            <div key={category}>
+              <ListSubheader sx={{ fontWeight: "bold" }}>{category}</ListSubheader>
+              {Object.keys(allRooms[category]).map((suiteRoom) => (
+                <div key={suiteRoom}>
+                  <ListSubheader>{suiteRoom}</ListSubheader>
+                  {allRooms[category][suiteRoom].map((bed) => (
+                    <MenuItem
+                      key={`${category}-${suiteRoom}-${bed}`}
+                      value={`${category} - ${suiteRoom} - ${bed}`}
+                    >
+                      {bed}
+                    </MenuItem>
+                  ))}
+                </div>
+              ))}
+            </div>
+          ))}
+        </Select>
+      </FormControl> */}
+
       {/*Food  Requireds*/}
 
       <FormControl>
@@ -376,6 +443,8 @@ function GuestHouseInputField() {
         type="number"
         value={noOfGuests}
         onChange={handleNoOfGuestsChange}
+        disabled
+        title='one form for one guest for precise and separate needs'
       />
 
 
@@ -383,8 +452,8 @@ function GuestHouseInputField() {
       <TextField
         id="outlined-Name-of-Guest-text"
         sx={{width:"300px"}}
-        label="Name of Guest(s) *"
-        placeholder="Name all the Guests"
+        label="Name of Guest *"
+        placeholder="Name of the Guest"
         multiline
         value={guestName}
         onChange={handleGuestName}

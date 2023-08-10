@@ -52,122 +52,122 @@ function GuestHouseContainer() {
   const { userName } = useContext(LoginContext);
 
   const {
-    name,
-    contactNumber,
-    purpose,
-    requiredHall,
-    DesignationDepartment,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    noOfAttendees,
-    EquipmentRequired,
-    specialRequirements,
-    isAvailabilityChecked,
-    handleCheckAvailability,
-    FoodRequired,
-    guestName
+        name, 
+        guestName, 
+        contactNumber, 
+        designationDepartment, 
+        purpose, 
+        startDateTime, 
+        endDateTime, 
+        noOfGuests, 
+        foodRequired, 
+        menuRequired, 
+        paymentDoneBy,
+        specialRequirements, 
+        requiredRoom,
+        isGuestHouseAvailabilityChecked,
+        isGuestHouseAvailabilityLoading,
+        handleGuestRoomCheckAvailability
   } = useContext(GuestHouseContext);
 
 
   //Check for availability of halls when this component is rendered
-  if(startDate && endDate && startTime && endTime){
-    handleCheckAvailability();
+  if(startDateTime && endDateTime){
+    handleGuestRoomCheckAvailability();
   }
 
   const fieldsToCheckForValidation = [
-    name,
-    contactNumber,
-    requiredHall,
-    purpose,
-    DesignationDepartment,
-    startDate,
-    endDate,
-    startTime,
-    endTime,
-    noOfAttendees,
-    guestName
+        name, 
+        guestName, 
+        contactNumber, 
+        designationDepartment, 
+        purpose, 
+        startDateTime, 
+        endDateTime, 
+        noOfGuests, 
+        foodRequired, 
+        menuRequired, 
+        paymentDoneBy, 
+        requiredRoom,
   ];
 
 
   const handleSubmit = async () => {
 
-    setIsLoading(true);
+    isGuestHouseAvailabilityLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-    // if (!allFieldsNotEmpty){ 
-    //   toast.warning('Fill all the Required fields');
-    //   setIsLoading(false);
-    //   return;
-    // }
+    if (!allFieldsNotEmpty){ 
+      toast.warning('Fill all the Required fields');
+      isGuestHouseAvailabilityLoading(false);
+      return;
+    }
     if(contactNumber.length!='10'){
       toast.error("Enter 10 digit Phone Number");
+      isGuestHouseAvailabilityLoading(false);
       return;
     }
-    if (noOfAttendees <=0 ){
-      toast.error("No of Attendees is not valid");
+    if (!isGuestHouseAvailabilityChecked){
+      toast.error(`Please check Availability`);
+      isGuestHouseAvailabilityLoading(false);
       return;
     }
-    // if (!isAvailabilityChecked){
-    //   toast.error(`Please check Availability`);
+
+    //Check for unavailability of hall before sending request
+    // let arrival = `${startDate.toString()} ${startTime.toString()}`
+    // let dept = `${endDate.toString()} ${endTime.toString()}`
+   
+   
+    // const response =await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
+    // const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
+
+    // if (recentUnavailableHalls.includes(requiredHall)){
+    //   toast.info(`${requiredHall} is not available for this date and time.`);
     //   setIsLoading(false);
     //   return;
     // }
-
-    //Check for unavailability of hall before sending request
-    let arrival = `${startDate.toString()} ${startTime.toString()}`
-    let dept = `${endDate.toString()} ${endTime.toString()}`
-   
-   
-    const response =await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
-    const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
-
-    if (recentUnavailableHalls.includes(requiredHall)){
-      toast.info(`${requiredHall} is not available for this date and time.`);
-      setIsLoading(false);
-      return;
-    }
-    console.log("equip", EquipmentRequired.join(", "));
-           console.log(name,
-            contactNumber,
-            requiredHall,
-            purpose,
-            DesignationDepartment,
-            startDate,
-            endDate,
-            startTime,
-            endTime,
-            noOfAttendees,
-            guestName);
+    // console.log("equip", EquipmentRequired.join(", "));
+    //        console.log(name,
+    //         contactNumber,
+    //         requiredHall,
+    //         purpose,
+    //         DesignationDepartment,
+    //         startDate,
+    //         endDate,
+    //         startTime,
+    //         endTime,
+    //         noOfAttendees,
+    //         guestName);
+    
     //Create booking
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`/guesthouse/create`,
     {
       userName:userName,
-       DesignationDepartment,
-      applicantName:name,
+      DesignationDepartment: designationDepartment,
+      applicantName: name,
       contactNumber,
-      name:guestName,
+      name: guestName,
       purpose,
-      ArrivialDateTime : `${startDate.toString()} ${startTime.toString()}`, // Use the appropriate date
-      DepartureDateTime:`${endDate.toString()} ${endTime.toSting()}`, // Use the appropriate date
-      Accommodation:"bed",
-      noOfGuest:noOfAttendees,
-      FoodRequirements:FoodRequired,
-      Menu:"Menu",
-
+      ArrivialDateTime : moment(startDateTime, "YYYY-MM-DD HH:mm A"), // Use the appropriate date
+      DepartureDateTime: moment(endDateTime, "YYYY-MM-DD HH:mm A"), // Use the appropriate date
+      noOfGuest: 1,
+      foodRequired,
+      menuRequired, 
+      paymentDoneBy, 
+      requiredRoom,
+      specialRequirements
     }
   );
     // console.log("Response:", res);
     setPostStatus(res.data.message);
     setSelectedView('My Bookings');
-    setIsLoading(false);
+    isGuestHouseAvailabilityLoading(false);
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {
-      console.log("not created seminar", postStatus)
-      toast.error(postStatus)
+      console.log("not created Guest House", postStatus);
+      toast.error(postStatus);
     }
   }
 

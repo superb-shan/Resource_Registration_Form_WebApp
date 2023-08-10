@@ -14,7 +14,7 @@ const GuestHouseProvider = ({ children }) => {
   const [purpose, setPurpose] = useState('');
   const [startDateTime, setStartDateTime] = useState(null);
   const [endDateTime, setEndDateTime] = useState(null);
-  const [noOfGuests, setNoOfGuests] = useState('');
+  const [noOfGuests, setNoOfGuests] = useState('1');
   const [foodRequired, setFoodRequired] = useState([]);
   const [menuRequired, setMenuRequired] = useState('');
   const [paymentDoneBy, setPaymentDoneBy] = useState('');
@@ -79,12 +79,38 @@ const GuestHouseProvider = ({ children }) => {
   ]
 
   const allRooms = [
-    {value: "No 1", label: "No 1"},
-    {value:"No 2",label:'No 2'},
-    {value:"No 3",label:'No 3'},
-    {value:"No 4",label:'No 4'},
-    {value:"No 5",label:'No 5'}
+    'Amenities - Suite 01 - Bed 01',
+    'Amenities - Suite 01 - Bed 02',
+    'Amenities - Suite 02 - Bed 01',
+    'Amenities - Suite 02 - Bed 02',
+    'Amenities - Suite 03 - Bed 01',
+    'Amenities - Suite 03 - Bed 02',
+    'Main Block - SF Suite - Bed 01',
+    'Main Block - SF Suite - Bed 02',
+    'Main Block - TF Suite - Bed 01',
+    'Main Block - TF Suite - Bed 02',
+    'D Block Men\'s Hostel - Room No. 214 - Bed 01',
+    'D Block Men\'s Hostel - Room No. 214 - Bed 02',
+    'D Block Men\'s Hostel - Room No. 215 - Bed 01',
+    'D Block Men\'s Hostel - Room No. 215 - Bed 02',
+    'D Block Men\'s Hostel - Room No. 205 - Bed 01',
+    'D Block Men\'s Hostel - Room No. 205 - Bed 02',
+    'D Block Men\'s Hostel - Room No. 208 - Bed 01',
+    'D Block Men\'s Hostel - Room No. 208 - Bed 02',
+    'D Block Men\'s Hostel - Room No. 208 - Bed 03',
+    'D Block Men\'s Hostel - Room No. 208 - Bed 04',
+    'C Block Men\'s Hostel - Room No. 209 - Bed 01',
+    'C Block Men\'s Hostel - Room No. 209 - Bed 02',
+    'C Block Men\'s Hostel - Room No. 209 - Bed 03',
+    'C Block Men\'s Hostel - Room No. 209 - Bed 04',
+    'Bath not attached - Room No. 209 - Bed 01',
+    'Bath not attached - Room No. 209 - Bed 02',
+    'Bath not attached - Room No. 209 - Bed 03',
+    'Bath not attached - Room No. 209 - Bed 04',
+    'Bath not attached - Room No. 107 - Bed 01',
+    'Bath not attached - Room No. 107 - Bed 02'
   ]
+  
   const handleGuestRoomCheckAvailability = async () => {
     if (!startDateTime || !endDateTime) {
       toast.warn("Please select a start/End Date/Time");
