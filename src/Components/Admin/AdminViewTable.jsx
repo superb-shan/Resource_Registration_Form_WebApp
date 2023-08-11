@@ -93,7 +93,8 @@ function AdminViewTable() {
       console.log("entering")
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param})
-     const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
+      const itemResponse = await axios.get('/item/get',{params:param})
+     const fullData=[...transportResponse.data.data,...seminarResponse.data.data,...itemResponse.data.data]
      console.log("fulldata",fullData)
      setUserData(fullData)
       setIsLoading(false)
@@ -268,7 +269,10 @@ function AdminViewTable() {
             ? 
             {...obj, date: obj.startDate + " to " + obj.endDate, time: obj.startTime + " to " + obj.endTime} 
             : 
-            obj
+            obj.type==="Item" 
+            ?
+            {...obj,date:obj.selectedDate}
+            :obj
             )
             .filter(
               item => (

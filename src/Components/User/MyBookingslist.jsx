@@ -77,7 +77,8 @@ function MyBookingslist() {
       
        const transportResponse = await axios.get('/transport/get',{params:param})
        const seminarResponse = await axios.get('/seminar/get',{params:param})
-      const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
+       const itemResponse = await axios.get('/item/get',{params:param})
+      const fullData=[...transportResponse.data.data,...seminarResponse.data.data,...itemResponse.data.data]
       setUserData(fullData)
       setTimeout(() => setIsLoading(false), 500)
     }
@@ -224,7 +225,10 @@ function MyBookingslist() {
             ? 
             {...obj, date: obj.startDate + " to " + obj.endDate, time: obj.startTime + " to " + obj.endTime} 
             : 
-            obj
+            obj.type==="Item" 
+            ?
+            {...obj,date:obj.selectedDate}
+            :obj
             )
             .filter(
               item => (
