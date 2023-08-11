@@ -25,9 +25,9 @@ function ItemsContainer() {
       return false;
     }
   
-    if (typeof value === "string" || Array.isArray(value)) {
-      return value.trim() !== "";
-    }
+    // if (typeof value === "string" || Array.isArray(value)) {
+    //   return value.trim() !== "";
+    // }
   
     if (typeof value === "object" && value instanceof Date) {
       return !isNaN(value.getTime());
@@ -75,11 +75,16 @@ function ItemsContainer() {
     selectedDate, 
     Designation, 
     Department,
+    purpose,
+    withindays,
+    Ondate
   ];
 
 //not changed
 
     const handleSubmit = async() => {
+
+      console.log(name,"name")
 
       const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
       if (!allFieldsNotEmpty){
@@ -87,14 +92,28 @@ function ItemsContainer() {
          return;
       }
 
-      const formattedDateTime = moment(selectedDate.toString()).format("YYYY-MM-DD") 
-      const res = await axios.post(`/transport/create`, 
+      const formettedDate = moment(selectedDate.toString()).format("YYYY-MM-DD");
+      const formattedOnDate = moment(Ondate.toString()).format("YYYY-MM-DD") 
+      const res = await axios.post(`/item/create`, 
       {
-        name, 
+        name,
         EmpID, 
-        selectedDate, 
+        formettedDate, 
         Designation, 
         Department,
+        printing,
+        guestMomento,
+        studentMomento,
+        printedEnvelop,
+        answerBooklet,
+        studentnotebook,
+        studentnotebookwithgraph,
+        studentnotebookWithoutgraph,
+        observation,
+        purpose,
+        withindays,
+        formattedOnDate,
+        userName
       }
       );
       console.log("Response:", res);
@@ -102,9 +121,9 @@ function ItemsContainer() {
       setSelectedView('My Bookings');
       if(res.data.message===true){
         toast.success("Submitted");
-        console.log("date", selectedDate, formattedDateTime);
+        console.log("date", selectedDate, formettedDate);
       }else{
-        toast.error("plz fill the form correctly")
+          toast.error("plz fill the form correctly")
       }
     };
 
