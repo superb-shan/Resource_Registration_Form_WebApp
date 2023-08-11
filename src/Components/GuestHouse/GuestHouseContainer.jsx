@@ -117,28 +117,17 @@ function GuestHouseContainer() {
     // let arrival = `${startDate.toString()} ${startTime.toString()}`
     // let dept = `${endDate.toString()} ${endTime.toString()}`
    
-   
-    // const response =await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
-    // const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
-
-    // if (recentUnavailableHalls.includes(requiredHall)){
-    //   toast.info(`${requiredHall} is not available for this date and time.`);
-    //   setIsLoading(false);
-    //   return;
-    // }
-    // console.log("equip", EquipmentRequired.join(", "));
-    //        console.log(name,
-    //         contactNumber,
-    //         requiredHall,
-    //         purpose,
-    //         DesignationDepartment,
-    //         startDate,
-    //         endDate,
-    //         startTime,
-    //         endTime,
-    //         noOfAttendees,
-    //         guestName);
+    let arrival = moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")
+    let dept = moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")
+    const response = await axios.get("/guestHouse/checkAvailablity", { params: { DepartureDateTime:dept,ArrivialDateTime:arrival } });
     
+    const recentUnavailableGuestRooms = response.data.overlappingGusetHouses?.map(room => room.RequiredRoom) || [];
+
+    if (recentUnavailableGuestRooms.includes(requiredRoom)){
+      toast.info(`Currently ${requiredRoom} is not available for this date and time.`);
+      setIsGuestHouseAvailabilityLoading(false);
+      return;
+    }    
     //Create booking
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
@@ -154,7 +143,7 @@ function GuestHouseContainer() {
       ArrivialDateTime : moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), // Use the appropriate date
       DepartureDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), // Use the appropriate date
       noOfGuest: 1,
-      foodRequired,
+      foodRequired: foodRequired.join(", "),
       menuRequired, 
       paymentDoneBy, 
       requiredRoom,
