@@ -11,6 +11,7 @@ import UserProvider from './Context/User.Context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import GuestHouseProvider from './Context/GuestHouse.Context';
+import ItemsProvider from './Context/Items.Context';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -22,10 +23,12 @@ root.render(
           <SeminorProvider>
             <UserProvider>
              <GuestHouseProvider>
+               <ItemsProvider>
               <ThemeProvider theme={theme}>
                 <App />
                 <ToastContainer /> 
               </ThemeProvider>
+                </ItemsProvider>
               </GuestHouseProvider>
             </UserProvider>
           </SeminorProvider>
