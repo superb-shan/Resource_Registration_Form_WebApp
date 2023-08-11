@@ -121,20 +121,20 @@ const GuestHouseProvider = ({ children }) => {
     //   return;
     // }
     // // if (!moment(startTime.toString()).isBefore(endTime.toString())){
-    // if (!moment(endTime.toString()).isAfter(startTime.toString(), "hour")) {
-    //   toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
-    //   return;
-    // }
+    if (!moment(endDateTime.toString()).isAfter(startDateTime.toString())) {
+      toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
+      return;
+    }
 
     setIsGuestHouseAvailabilityLoading(true);
-    // let arrival = `${startDate.toString()} ${startTime.toString()}`
-    // let dept = `${endDate.toString()} ${endTime.toString()}`
-    // const res = await axios.get("/guestHouse/checkAvailablity", { params: { Departure:dept,ArrivialDateTime:arrival } });
+    let arrival = moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")
+    let dept = moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")
+    const res = await axios.get("/guestHouse/checkAvailablity", { params: { DepartureDateTime:dept,ArrivialDateTime:arrival } });
     // console.log(res);
     setIsGuestHouseAvailabilityLoading(false);
     setIsGuestHouseAvailabilityChecked(true);
-    // setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
-    // console.log(unavailableHalls);
+    setUnavailableGuestHouses(res.data.overlappingGusetHouses?.map(room => room.RequiredRoom) || []);
+    console.log(res.data.overlappingGusetHouses?.map(room => room.RequiredRoom) || []);
   }
 
 

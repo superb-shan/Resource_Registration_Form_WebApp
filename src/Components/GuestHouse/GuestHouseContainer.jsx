@@ -29,7 +29,7 @@ function GuestHouseContainer() {
       return false;
     }
 
-    if (typeof value === "string" || Array.isArray(value)) {
+    if (typeof value === "string") {
       return value.trim() !== "";
     }
 
@@ -67,14 +67,15 @@ function GuestHouseContainer() {
         requiredRoom,
         isGuestHouseAvailabilityChecked,
         isGuestHouseAvailabilityLoading,
+        setIsGuestHouseAvailabilityLoading,
         handleGuestRoomCheckAvailability
   } = useContext(GuestHouseContext);
 
 
   //Check for availability of halls when this component is rendered
-  if(startDateTime && endDateTime){
-    handleGuestRoomCheckAvailability();
-  }
+  // if(startDateTime && endDateTime){
+  //   handleGuestRoomCheckAvailability();
+  // }
 
   const fieldsToCheckForValidation = [
         name, 
@@ -94,21 +95,21 @@ function GuestHouseContainer() {
 
   const handleSubmit = async () => {
 
-    isGuestHouseAvailabilityLoading(true);
+    setIsGuestHouseAvailabilityLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
     if (!allFieldsNotEmpty){ 
       toast.warning('Fill all the Required fields');
-      isGuestHouseAvailabilityLoading(false);
+      setIsGuestHouseAvailabilityLoading(false);
       return;
     }
     if(contactNumber.length!='10'){
       toast.error("Enter 10 digit Phone Number");
-      isGuestHouseAvailabilityLoading(false);
+      setIsGuestHouseAvailabilityLoading(false);
       return;
     }
     if (!isGuestHouseAvailabilityChecked){
       toast.error(`Please check Availability`);
-      isGuestHouseAvailabilityLoading(false);
+      setIsGuestHouseAvailabilityLoading(false);
       return;
     }
 
@@ -143,14 +144,15 @@ function GuestHouseContainer() {
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`/guesthouse/create`,
     {
-      userName:userName,
+
+      userName,  
       DesignationDepartment: designationDepartment,
       applicantName: name,
       contactNumber,
       name: guestName,
       purpose,
-      ArrivialDateTime : moment(startDateTime, "YYYY-MM-DD HH:mm A"), // Use the appropriate date
-      DepartureDateTime: moment(endDateTime, "YYYY-MM-DD HH:mm A"), // Use the appropriate date
+      ArrivialDateTime : moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), // Use the appropriate date
+      DepartureDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), // Use the appropriate date
       noOfGuest: 1,
       foodRequired,
       menuRequired, 
@@ -162,7 +164,7 @@ function GuestHouseContainer() {
     // console.log("Response:", res);
     setPostStatus(res.data.message);
     setSelectedView('My Bookings');
-    isGuestHouseAvailabilityLoading(false);
+    setIsGuestHouseAvailabilityLoading(false);
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {

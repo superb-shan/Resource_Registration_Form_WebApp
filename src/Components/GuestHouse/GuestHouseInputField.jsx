@@ -36,7 +36,7 @@ function getStyles(name, personName, theme) {
   };
 }
 
-ListSubheader.muiSkipListHighlight = true;
+// ListSubheader.muiSkipListHighlight = true;
 
 
 function GuestHouseInputField() {
@@ -256,15 +256,15 @@ function GuestHouseInputField() {
 
       <Button variant="contained" sx={{width:"200px", height: "40px", mx: {xs: 0, md: "300px"}}} onClick={handleGuestRoomCheckAvailability} color={isGuestHouseAvailabilityChecked? "success" : "primary"} >{isGuestHouseAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isGuestHouseAvailabilityChecked ? <Done/> : <>Check Availability</> }</Button>
 
-      {/* {isAvailabilityChecked && 
-      <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}}}>
+      {isGuestHouseAvailabilityChecked && 
+      <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"800px"}, borderRadius: "10px", ml: {xs:0,md:1}}}>
         <Grid item xs={12} md={6} >
           <Typography variant="h6" component="div" >
             Available
           </Typography>
           <Box>
             <List>
-              { unavailableHalls.length === eventHall.length ? <ListItemText primary={"None"} />  : eventHall.filter(hall => !unavailableHalls.includes(hall.value)).map((hall) => <ListItemText primary={hall.value} />)}
+              { unavailableGuestHouses.length === allRooms.length ? <ListItemText primary={"None"} />  : allRooms.filter(room => !unavailableGuestHouses.includes(room)).map((room) => <ListItemText primary={room} />)}
             </List>
           </Box>
         </Grid>
@@ -275,12 +275,12 @@ function GuestHouseInputField() {
           </Typography>
           <Box>
             <List>
-              {unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
+              {unavailableGuestHouses.length === 0 ? <ListItemText primary={"None"} />  : unavailableGuestHouses.map((room) => <ListItemText primary={room}/>)}  
             </List>
           </Box>
         </Grid>
       </Grid>
-      } */}
+      }
 
       {/* Room required */}
       <TextField
@@ -296,7 +296,7 @@ function GuestHouseInputField() {
       >
         {allRooms.map((bed) => (
           <MenuItem key={bed} value={bed} 
-          //disabled={unavailableHalls.includes(option.value)}
+          disabled={unavailableGuestHouses.includes(bed)}
           >
             {bed}
           </MenuItem>
