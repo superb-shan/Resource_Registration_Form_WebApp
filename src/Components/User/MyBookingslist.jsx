@@ -67,18 +67,19 @@ function MyBookingslist() {
 
 
   const fetchData = async () => {
-    const param = {}
-    param["name"] =userName
+    const param = {};
+    param["name"] = userName;
     if(selectedDate){
-      console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
-     param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
+      // console.log(moment(selectedDate.toString()).format('DD-MM-YYYY'));
+     param.date = moment(selectedDate.toString()).format('YYYY-MM-DD');
     }
     try {
-      
-       const transportResponse = await axios.get('/transport/get',{params:param})
-       const seminarResponse = await axios.get('/seminar/get',{params:param})
-      const fullData=[...transportResponse.data.data,...seminarResponse.data.data]
+      const transportResponse = await axios.get('/transport/get',{params:param})
+      const seminarResponse = await axios.get('/seminar/get',{params:param});
+      const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
+      const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data];
       setUserData(fullData)
+      console.log(fullData);
       setTimeout(() => setIsLoading(false), 500)
     }
     catch (error) {
@@ -213,7 +214,7 @@ function MyBookingslist() {
   return (
     <ThemeProvider theme={theme}>
       
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between"}}>
+      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between", flexWrap: "wrap"}}>
 
 {console.log(userData)}
   
@@ -224,6 +225,10 @@ function MyBookingslist() {
             ? 
             {...obj, date: obj.startDate + " to " + obj.endDate, time: obj.startTime + " to " + obj.endTime} 
             : 
+            obj.type === "GuestHouse" 
+            ? 
+            {...obj, date: obj.ArrivialDateTime.split(" ")[0] + " to " + obj.DepartureDateTime.split(" ")[0], time: obj.ArrivialDateTime.split(" ")[1] + " to " + obj.DepartureDateTime.split(" ")[0]}
+            :
             obj
             )
             .filter(
