@@ -202,7 +202,7 @@ export const CheckAvailabilityContainer = () => {
             </Box>
 
             <Box sx={{display: "flex", gap: "30px", flexDirection: "column"}}>
-                <Typography variant="h6" component="div" sx={{textAlign: "center", m: 0}}> Seminar Halls </Typography>
+                <Typography variant="h6" component="div" sx={{textAlign: "center", m: 0}}> {seminarOrGuest} </Typography>
                 <Grid container spacing={2} sx={{textAlign: "center",backgroundColor: "#FFD966",  width: {xs:"400px", md:"800px"}, borderRadius: "10px", ml: {xs:0,md:1}, height: {xs: "auto", md: "300px"}, overflow: "auto"}}> 
                     <Grid item xs={12} md={6} sx={{display: "flex", justifyContent: "flex-start", flexDirection: "column", p: 1}}>
                     {isAvailabilityLoading ? <ReactLoading type="spin" height={"20%"} width={"10%"} color='#1976d2' />  :
