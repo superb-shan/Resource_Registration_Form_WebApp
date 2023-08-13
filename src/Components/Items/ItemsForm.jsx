@@ -7,6 +7,8 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { ItemsContext } from '../../Context/Items.Context';
 import { useContext } from 'react';
+import { Typography } from '@mui/material';
+
 
 
 function ItemsForm() {
@@ -111,7 +113,7 @@ function ItemsForm() {
 
 
   return (
-    <div className='flex flex-wrap gap-8 justify-evenly items-center w-[800px] [@media(max-width:640px)]:w-[500px]' style={{ maxHeight: '400px', overflowY: 'auto' }}>        
+    <div className='flex flex-wrap gap-8 justify-evenly items-center w-[800px] [@media(max-width:640px)]:w-[500px]'>        
          {/* datepicker */}
 
 
@@ -191,7 +193,7 @@ function ItemsForm() {
         />  
 
 
-        <p> &nbsp; Enter the Required Quantity for the required field alone in the below  &nbsp;</p>
+        <Typography sx={{mx: 4}}> Enter the Required Quantity for the required field alone below </Typography>
 
 
 

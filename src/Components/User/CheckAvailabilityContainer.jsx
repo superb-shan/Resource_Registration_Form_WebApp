@@ -8,6 +8,7 @@ import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
 import { UserContext } from '../../Context/User.Context';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
+import sriEshwarCollegeImage from '../../Images/sriEshwarCollegeImage.png'
 
 export const CheckAvailabilityContainer = () => {
 
@@ -101,8 +102,9 @@ export const CheckAvailabilityContainer = () => {
       };
 
   return (
-    <div className='p-20 px-40 [@media(max-width:640px)]:p-5 h-[90.7vh] bg-fixed bg-[#1976d2] flex items-start'>
-        <div className='h-full w-full bg-white rounded-md p-10 flex gap-8 items-center justify-evenly'>
+    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+    <div className='p-20 px-40 [@media(max-width:640px)]:p-5 h-[90.7vh] bg-fixed flex items-start [@media(max-width:640px)]:h-auto' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
+        <div className='h-full w-full bg-white rounded-md p-10 flex gap-8 items-center justify-evenly [@media(max-width:640px)]:flex-col'>
             <Box sx={{display: "flex", gap: "30px", flexDirection: "column"}}>
                 
                 <ToggleButtonGroup
@@ -246,6 +248,7 @@ export const CheckAvailabilityContainer = () => {
                 <Button variant="contained" sx={{width:"200px", height: "40px", mx: "auto"}} onClick={handleProceed} disabled={seminarOrGuest === "Seminar Hall" ? !isAvailabilityChecked : !isGuestHouseAvailabilityChecked} endIcon={<Send />}>Proceed</Button>
             </Box>
         </div>
+    </div>
     </div>
   )
 }

@@ -215,9 +215,9 @@ function MyBookingslist() {
   return (
     <ThemeProvider theme={theme}>
       
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between", flexWrap: "wrap"}}>
+      <Box sx={{ height: {xs: "auto", md:"100%"}, width: '100%', backgroundColor: 'white', borderRadius:1.5, padding: 1 ,display:"flex", justifyContent: "space-between", flexDirection: {xs: "column-reverse", md: "row"}}}>
 
-{console.log(userData)}
+{/* {console.log(userData)} */}
   
       <DataGrid
         rows={
@@ -228,7 +228,7 @@ function MyBookingslist() {
             : 
             obj.type === "GuestHouse" 
             ? 
-            {...obj, date: obj.ArrivialDateTime.split(" ")[0] + " to " + obj.DepartureDateTime.split(" ")[0], time: obj.ArrivialDateTime.split(" ")[1] + " to " + obj.DepartureDateTime.split(" ")[0]}
+            {...obj, date: obj.ArrivialDateTime.split(" ")[0] + " to " + obj.DepartureDateTime.split(" ")[0], time: obj.ArrivialDateTime.split(" ")[1] + " to " + obj.DepartureDateTime.split(" ")[1]}
             :
             obj.type==="Item" 
             ?
@@ -253,12 +253,12 @@ function MyBookingslist() {
         components={{
           Toolbar: GridToolbar,
         }}
-        style={{ maxWidth: '70%' }}
+        sx={{ maxWidth: {xs: "100%", md:'70%'}, m: {xs: 2, md: 0} }}
       />
 
        
         
-      <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center mr-7'>
+      <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center'>
         <Button 
         variant="contained"
         size="small" 
@@ -334,7 +334,7 @@ function MyBookingslist() {
                   )}
                 </div>
             </Modal>
-          </div>
+          </Box>
         
       {/* </div> */}
       

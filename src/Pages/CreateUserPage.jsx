@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useState, useEffect } from 'react';
 import { FormControl, IconButton, InputAdornment, InputLabel, OutlinedInput, TextField, Button } from '@mui/material';
 import {AccountCircle, VisibilityOff, Visibility, Mail, Done} from '@mui/icons-material';
+import sriEshwarCollegeImage from '../Images/sriEshwarCollegeImage.png'
 
 
 export const CreateUserPage = () => {
@@ -94,7 +95,8 @@ export const CreateUserPage = () => {
   }
 
   return (
-    <div className='flex justify-center items-center h-[96vh] bg-[#1976d2]'>
+    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+      <div className='flex justify-center items-center h-[96vh]' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
         <div className='bg-white w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl gap-10 p-10'>
             <p className='text-4xl'>Create a new User</p>
             <div className='flex flex-col gap-10 items-center w-[300px]'>
@@ -167,6 +169,7 @@ export const CreateUserPage = () => {
             <Button variant={"contained"} sx={{paddingLeft: "20px", paddingRight: "20px"}} onClick={handleLogin} color={isCreated? "success": "primary"} endIcon={isCreated?<Done />:<></>}>{isCreated? "Created" : "Create"}</Button>
             </div>
         </div>
+    </div>
     </div>
   )
 }

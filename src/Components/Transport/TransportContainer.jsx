@@ -12,6 +12,7 @@ import { useState } from 'react';
 import { UserContext } from '../../Context/User.Context';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+import sriEshwarCollegeImage from '../../Images/sriEshwarCollegeImage.png'
 
 function TransportContainer() {
 
@@ -111,11 +112,13 @@ function TransportContainer() {
     };
 
   return (
-    <div className='flex justify-center flex-col items-center bg-fixed h-[90.3vh] bg-[#1976d2] pt-10'>
-      <p style={{color: "#ffffff", textAlign:"center", fontSize:"2rem"}}> Transportation Registration Form </p>
-      <div className='bg-white m-auto my-10 p-10 w-[1000px] [@media(max-width:640px)]:w-[500px] border rounded-2xl flex items-center flex-col shadow-md shadow-inner-md'>
-          <TransportInputField />
-          <Button variant={"contained"} sx={{ marginTop: "2.5rem"}}  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<DoneIcon />:<SendIcon />}>{postStatus?"Submitted":"Submit"}</Button>
+    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+      <div className='flex justify-center flex-col items-center bg-fixed h-[90.3vh] [@media(max-width:640px)]:h-auto pt-10' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
+        <p style={{color: "#ffffff", textAlign:"center", fontSize:"2rem"}}> Transportation Registration Form </p>
+        <div className='bg-white m-auto my-10 p-10 w-[1000px] [@media(max-width:640px)]:w-[500px] border rounded-2xl flex items-center flex-col shadow-md shadow-inner-md'>
+            <TransportInputField />
+            <Button variant={"contained"} sx={{ marginTop: "2.5rem"}}  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<DoneIcon />:<SendIcon />}>{postStatus?"Submitted":"Submit"}</Button>
+        </div>
       </div>
     </div>
   )

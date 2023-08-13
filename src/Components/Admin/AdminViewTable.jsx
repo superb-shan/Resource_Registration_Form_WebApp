@@ -260,9 +260,7 @@ function AdminViewTable() {
     
     <ThemeProvider theme={theme}>
       
-      <div style={{ height: "100%", width: '100%', backgroundColor: 'white', borderRadius:5, padding: 10 ,display:"flex", justifyContent: "space-between"}}>
-
-  
+      <Box sx={{ height: {xs: "auto", md:"100%"}, width: '100%', backgroundColor: 'white', borderRadius:1.5, padding: 1 ,display:"flex", flexDirection: {xs: "column-reverse", md: "row"}}}>
       <DataGrid
         rows={
           userData.map(
@@ -297,12 +295,12 @@ function AdminViewTable() {
         components={{
           Toolbar: GridToolbar,
         }}
-        style={{ maxWidth: '70%' }}
+        sx={{ maxWidth: {xs: "100%", md:'70%'}, m: {xs: 2, md: 0}  }}
       />
 
        
         
-      <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center mr-7'>
+      <div className='flex flex-col gap-4 p-2 py-0 justify-center items-center w-[30%] [@media(max-width:640px)]:w-[100%]'>
         <Button 
         variant="contained"
         size="small" 
@@ -405,7 +403,7 @@ function AdminViewTable() {
             )}
           </div>
         </Modal>
-      </div>
+      </Box>
     </ThemeProvider>
   );
 }
