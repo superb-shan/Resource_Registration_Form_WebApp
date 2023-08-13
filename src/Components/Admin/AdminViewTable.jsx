@@ -19,7 +19,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import { BsCalendarCheck } from "react-icons/bs";
+import printJS from "print-js";
 import AdminCalender from './AdminCalender';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Admin.Context';
@@ -94,7 +94,7 @@ function AdminViewTable() {
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param})
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
-       const itemResponse = await axios.get('/item/get',{params:param})
+       const itemResponse = await axios.get('/items/get',{params:param})
      const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data,...itemResponse.data.data];
      console.log("fulldata",fullData)
      setUserData(fullData)
@@ -396,6 +396,9 @@ function AdminViewTable() {
                     </Button>
                     <Button variant="contained" color="error" disabled={selectedRow.isapproved !== null} onClick={() => { reject(selectedRow.id) }}>
                       Reject
+                    </Button>
+                    <Button variant="contained" color="warning" onClick={() => window.print()} >
+                      Print
                     </Button>
                   </Stack>
                 </Box>

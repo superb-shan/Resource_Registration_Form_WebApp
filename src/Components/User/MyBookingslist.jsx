@@ -25,6 +25,8 @@ import MyBookingsCalendar from './MyBookingCalender';
 import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
+import printJS from "print-js";
+
 
 const theme = createTheme({
   typography: {
@@ -77,7 +79,7 @@ function MyBookingslist() {
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param});
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
-       const itemResponse = await axios.get('/item/get',{params:param})
+       const itemResponse = await axios.get('/items/get',{params:param})
       const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data,...itemResponse.data.data];
       setUserData(fullData)
       console.log(fullData);
@@ -133,6 +135,10 @@ function MyBookingslist() {
   const handleCalender =()=>{
     setIsCalOpen(true)
   }
+;
+  
+      
+ 
 
   const columns = VISIBLE_FIELDS.map((field) => {
 
@@ -215,7 +221,7 @@ function MyBookingslist() {
   return (
     <ThemeProvider theme={theme}>
       
-      <Box sx={{ height: {xs: "auto", md:"100%"}, width: '100%', backgroundColor: 'white', borderRadius:1.5, padding: 1 ,display:"flex", justifyContent: "space-between", flexDirection: {xs: "column-reverse", md: "row"}}}>
+      <Box className="print" sx={{ height: {xs: "auto", md:"100%"}, width: '100%', backgroundColor: 'white', borderRadius:1.5, padding: 1 ,display:"flex", justifyContent: "space-between", flexDirection: {xs: "column-reverse", md: "row"}}}>
 
 {/* {console.log(userData)} */}
   
@@ -327,6 +333,10 @@ function MyBookingslist() {
                         <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
                           <Button variant="contained" color="error" style={{ width: "90px" }} disabled={selectedRow.isapproved !== null} onClick={() => { deleted(selectedRow.id) }}>
                             Cancel
+                          </Button>
+                          {/* <Button variant="contained" color="warning" style={{ width: "90px" }}> */}
+                          <Button variant="contained" color="warning" style={{ width: "90px" }} onClick={() => window.print()}>
+                            Print
                           </Button>
                         </Stack>
                       </Box>
