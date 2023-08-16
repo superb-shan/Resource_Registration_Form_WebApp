@@ -19,7 +19,7 @@ import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import printJS from "print-js";
+import jsPDF from "jspdf";
 import AdminCalender from './AdminCalender';
 import { useContext } from 'react';
 import { AdminContext } from '../../Context/Admin.Context';
@@ -170,6 +170,53 @@ function AdminViewTable() {
   const handleCalender =()=>{
     setIsCalOpen(true)
   }
+
+  const generatePDF = () => {
+    const pdf = new jsPDF();
+  
+    pdf.setFontSize(16);
+    pdf.text("Sri Eshwar College of Engineering", 60, 25);
+  
+    // const logoPath = "/Users/jeethula/Desktop/project_sece/download.png";
+    // pdf.addImage(logoPath, "png", 20, 10, 30, 30);
+  
+    if (selectedRow) {
+      pdf.setFontSize(14);
+      pdf.text("The Details of the Bookings are below , ", 20, 40);
+  
+      let yPos = 60;
+      const lineHeight = 10; // Adjust this value to control the vertical spacing between lines
+  
+      const borderWidth = 1;
+      const increasedHeight = yPos - 55 + borderWidth * 2 + 260;
+  
+      pdf.setDrawColor(3);
+      pdf.setLineWidth(borderWidth);
+      pdf.rect(10, 10, 180, increasedHeight, "S");
+  
+      for (const key of Object.keys(selectedRow)) {
+        if (key === "id" || key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt") {
+          continue;
+        }
+  
+        const formattedKey = key[0].toUpperCase() + key.slice(1);
+        let formattedValue = ""; // Initialize formattedValue as an empty string
+  
+        if (typeof selectedRow[key] === "object") {
+          formattedValue = moment(selectedRow[key]).format("YYYY-MM-DD HH:mm:ss");
+        } else {
+          formattedValue = selectedRow[key].toString(); // Convert to string
+        }
+  
+        pdf.text(`${formattedKey} :`.padEnd(35, " "), 20, yPos);
+        pdf.text(formattedValue, 90, yPos); // Adjust the x-coordinate as needed
+        yPos += lineHeight;
+      }
+    }
+  
+    pdf.save("Resource_Registration.pdf");
+  };
+  
  
 
   if (!userData) {
@@ -397,7 +444,7 @@ function AdminViewTable() {
                     <Button variant="contained" color="error" disabled={selectedRow.isapproved !== null} onClick={() => { reject(selectedRow.id) }}>
                       Reject
                     </Button>
-                    <Button variant="contained" color="warning" onClick={() => window.print()} >
+                    <Button variant="contained" color="warning" onClick={generatePDF} >
                       Print
                     </Button>
                   </Stack>
