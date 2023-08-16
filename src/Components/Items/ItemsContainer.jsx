@@ -95,7 +95,7 @@ function ItemsContainer() {
       const formettedDate = moment(selectedDate.toString()).format("YYYY-MM-DD");
       const formattedOnDate = moment(Ondate.toString()).format("YYYY-MM-DD") ;
       console.log(selectedDate, formettedDate)
-      const res = await axios.post(`/item/create`, 
+      const res = await axios.post(`/items/create`, 
       {
         name,
         EmpID, 

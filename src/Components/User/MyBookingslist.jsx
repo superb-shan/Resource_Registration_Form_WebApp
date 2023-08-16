@@ -236,9 +236,9 @@ function MyBookingslist() {
             ? 
             {...obj, date: obj.ArrivialDateTime.split(" ")[0] + " to " + obj.DepartureDateTime.split(" ")[0], time: obj.ArrivialDateTime.split(" ")[1] + " to " + obj.DepartureDateTime.split(" ")[0]}
             :
-            obj.type==="Item" 
+            obj.type==="Items" 
             ?
-            {...obj,date:obj.selectedDate}
+            {...obj, date: obj.selectedDate}
             :obj
             )
             .filter(
