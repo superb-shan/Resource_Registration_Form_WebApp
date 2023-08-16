@@ -62,8 +62,8 @@ const SeminorProvider = ({ children }) => {
       label: 'GF-07'
     },
     {
-      value: 'placement Lab',
-      label: 'placement Lab'
+      value: 'Placement Lab',
+      label: 'Placement Lab'
     },
     {
       value: 'IT center',
