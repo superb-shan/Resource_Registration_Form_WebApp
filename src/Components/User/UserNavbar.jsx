@@ -17,6 +17,7 @@ import ViewSelector from './ViewSelector';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import sriEshwarLogo from '../../Images/sriEshwarLogo.png'
+import { Link } from 'react-router-dom';
 
 import { useState, useEffect, useContext} from 'react';
 
@@ -72,38 +73,20 @@ function UserNavBar() {
     <AppBar position="relative">
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{justifyContent:'end'}}>
-          <Box
-            component="img"
-            sx={{
-              height: 50,
-              width: 50,
-              mr: 3
-            }}
-            alt="Sri Eshwar Logo"
-            src={sriEshwarLogo}
-          />
+          <Link to="/">
+            <Box
+              component="img"
+              sx={{
+                height: 50,
+                width: 50,
+                mr: 3
+              }}
+              alt="Sri Eshwar Logo"
+              src={sriEshwarLogo}
+            />
+          </Link>
           
           <ViewSelector/>
-
-          <Typography
-            variant="h5"
-            noWrap
-            component="a"
-            href=""
-            sx={{
-              width: 20,
-               mr: 0,
-              display: { xs: 'flex', md: 'none', justifyContent:'end' },
-              flexGrow: 1,
-              fontFamily: 'monospace',
-              fontWeight: 700,
-              letterSpacing: '.3rem',
-              color: 'inherit',
-              textDecoration: 'none',
-            }}
-          >
-            SECE
-          </Typography>
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
             {selectedView==="Add Bookings" && pages.map((page) => (
               <Button
