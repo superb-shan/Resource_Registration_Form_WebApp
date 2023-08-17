@@ -19,6 +19,7 @@
     "axios": "^1.4.0",
     "dayjs": "^1.11.9",
     "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.5.31",
     "moment": "^2.29.4",
     "pdfkit": "^0.13.0",
     "print-js": "^1.6.0",

@@ -114,7 +114,7 @@ function ItemsContainer() {
         observation,
         purpose,
         withindays,
-        formattedOnDate,
+        Ondate:formattedOnDate,
         userName
       }
     );
