@@ -89,8 +89,8 @@ function TransportInputField() {
             label: 'Chief Guest'
         },
         {
-            value:'placement',
-            label: 'placement'
+            value:'Placement',
+            label: 'Placement'
         },
         {
             value:'Session/Lectures',
