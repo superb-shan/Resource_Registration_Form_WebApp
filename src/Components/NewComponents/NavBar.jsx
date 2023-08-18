@@ -13,28 +13,31 @@ import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
-import ViewSelector from './ViewSelector';
+// import ViewSelector from './ViewSelector';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import sriEshwarLogo from '../../Images/sriEshwarLogo.png'
 import { Link } from 'react-router-dom';
+import { Selector, DropDownSelector } from './InteractionFields';
 
 import { useState, useEffect, useContext} from 'react';
 
 
-const pages = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
+
+const views = [{ name: 'Add Bookings' }, {name: 'My Bookings'}, {name: 'Check Availability'}];
+const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
 
-const UserNavBar = () => {
+function NavBar({...props}) {
 
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const { selectedForm, setSelectedForm,selectedView} = useContext(UserContext);
+  const { selectedForm, setSelectedForm, selectedView, setSelectedView} = useContext(UserContext);
   const { userName, setIsLoggedIn } = useContext(LoginContext);
 
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
 
   // const handleChange = (event) => {
   //   setAuth(event.target.checked);
@@ -70,33 +73,40 @@ const UserNavBar = () => {
   }, [selectedForm, setSelectedForm]);
 
   return (
-    <AppBar position="relative">
+    <AppBar position="relative" color='secondary'>
       <Container maxWidth="xl" >
         <Toolbar disableGutters sx={{justifyContent:'end'}}>
           <Link to="/">
-            <Box
-              component="img"
-              sx={{
-                height: 50,
-                width: 50,
-                mr: 3
-              }}
-              alt="Sri Eshwar Logo"
-              src={sriEshwarLogo}
-            />
+            <Box sx={{display: "flex", alignItems: "center"}}>
+                <Box
+                component="img"
+                sx={{
+                    height: 50,
+                    width: 50,
+                }}
+                alt="Sri Eshwar Logo"
+                src={sriEshwarLogo}
+                />
+                <Typography variant='h6' sx={{ml: 1, mr: 5, fontWeight: '600'}}>{props.title}</Typography>
+            </Box>
           </Link>
           
-          <ViewSelector/>
+          {/* <ViewSelector/> */}
+
+          <Selector
+            list={views}
+            value={selectedView}
+            setValue={setSelectedView}
+            color="secondary"
+          />
+
+
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
-            {selectedView==="Add Bookings" && pages.map((page) => (
-              <Button
-                key={page}
-                onClick={()=>{ setSelectedForm(page)}}
-                sx={{ my: 2, color: 'white', display: 'block' }}
-          >
-                {page}
-              </Button>
-            ))}
+            {
+                selectedView==="Add Bookings" 
+                &&
+                <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
+            }
           </Box>
 
            {/* for phone  size */}
@@ -132,7 +142,7 @@ const UserNavBar = () => {
                     display: { xs: 'block', md: 'none' },
                   }}
                 >
-                  {pages.map((page) => (
+                  {forms.map((page) => (
                     <MenuItem key={page} onClick={()=>{ setSelectedForm(page) }}>
                       <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
@@ -147,7 +157,7 @@ const UserNavBar = () => {
                 size="large"
                 onClick={handleMenu}
                 color="inherit"
-                sx={{borderRadius: "5px", border: "1px white solid", padding: 1}}
+                sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
               >
                 <AccountCircle />
                 <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>{userName[0].toUpperCase() + userName.slice(1)}</Typography>
@@ -176,4 +186,4 @@ const UserNavBar = () => {
     </AppBar>
   );
 }
-export default UserNavBar;
+export default NavBar;

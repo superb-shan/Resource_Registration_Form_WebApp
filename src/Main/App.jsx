@@ -1,15 +1,18 @@
 import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import axios from 'axios';
-import { LoginPage } from '../Pages/LoginPage';
-import { UserPage } from '../Pages/UserPage';
+// import { LoginPage } from '../Pages/LoginPage';
+// import { UserPage } from '../Pages/UserPage';
 import { AdminPage } from '../Pages/AdminPage';
-import { ChangePassword } from '../Pages/ChangePassword';
-import { CreateUserPage } from '../Pages/CreateUserPage';
+// import { ChangePassword } from '../Pages/ChangePassword';
+// import { CreateUserPage } from '../Pages/CreateUserPage';
 import LayoutProvider from '../Layouts/LayoutProvider';
 import { Wrapper } from '../Components/NewComponents/Wrapper';
 import { AccountManagerContainer } from '../Components/NewComponents/AccountManagerContainer';
-import Login from '../Components/NewComponents/Login';
+
+//New -->
+import LoginPage from '../Components/NewComponents/LoginPage';
+import UserPage from '../Components/NewComponents/UserPage';
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
@@ -34,10 +37,10 @@ export default function App() {
       <Router>
         <LayoutProvider>
           <Routes>
-            <Route path="/" element={<Login />} />
-            {/* <Route path="/user" element={<UserPage/>} />
+            <Route path="/" element={<LoginPage />} />
+            <Route path="/user" element={<UserPage/>} />
             <Route path="/admin" element={<AdminPage/>} />
-            <Route path="/change-password" element={<ChangePassword/>} />
+            {/*<Route path="/change-password" element={<ChangePassword/>} />
             <Route path="/create-user" element={<CreateUserPage/>} /> */}
           </Routes>
         </LayoutProvider>
