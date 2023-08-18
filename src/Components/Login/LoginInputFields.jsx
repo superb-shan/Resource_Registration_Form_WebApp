@@ -52,7 +52,7 @@ export const LoginInputFields = () => {
                 value={password}
                 onChange={handlePasswordChange}
             />
-            </FormControl>
+        </FormControl>
         </div>
     </div>
   )

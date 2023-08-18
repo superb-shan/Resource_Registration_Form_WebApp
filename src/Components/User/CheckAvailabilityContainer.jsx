@@ -102,7 +102,7 @@ export const CheckAvailabilityContainer = () => {
       };
 
   return (
-    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+    <div className="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
     <div className='p-20 px-40 [@media(max-width:640px)]:p-5 h-[90.7vh] bg-fixed flex items-start [@media(max-width:640px)]:h-auto' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
         <div className='h-full w-full bg-white rounded-md p-10 flex gap-8 items-center justify-evenly [@media(max-width:640px)]:flex-col'>
             <Box sx={{display: "flex", gap: "30px", flexDirection: "column"}}>

@@ -159,7 +159,7 @@ function SeminorHallWrapper() {
 
 
   return (
-    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+    <div className="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
       <div className='flex justify-center flex-col items-center bg-fixed pt-10' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
         <p style={{ color: "#ffffff", textAlign: "center", fontSize: "2rem" }}> Seminar Hall Booking Form</p>
         <div className='bg-white m-auto my-10 p-10 w-[1000px] [@media(max-width:640px)]:w-[500px] border rounded-2xl flex items-center flex-col shadow-2xl'>

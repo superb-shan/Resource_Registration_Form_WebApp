@@ -7,6 +7,9 @@ import { AdminPage } from '../Pages/AdminPage';
 import { ChangePassword } from '../Pages/ChangePassword';
 import { CreateUserPage } from '../Pages/CreateUserPage';
 import LayoutProvider from '../Layouts/LayoutProvider';
+import { Wrapper } from '../Components/NewComponents/Wrapper';
+import { AccountManagerContainer } from '../Components/NewComponents/AccountManagerContainer';
+import Login from '../Components/NewComponents/Login';
 
 axios.defaults.baseURL = 'http://localhost:8000'
 
@@ -14,7 +17,7 @@ export default function App() {
 
   return (
     <div className='font-[Poppins]'>
-      <Router>
+      {/* <Router>
         <LayoutProvider>
           <Routes>
             <Route path="/" element={<LoginPage/>} />
@@ -22,6 +25,20 @@ export default function App() {
             <Route path="/admin" element={<AdminPage/>} />
             <Route path="/change-password" element={<ChangePassword/>} />
             <Route path="/create-user" element={<CreateUserPage/>} />
+          </Routes>
+        </LayoutProvider>
+      </Router> */}
+
+      {/* New Components */}
+
+      <Router>
+        <LayoutProvider>
+          <Routes>
+            <Route path="/" element={<Login />} />
+            {/* <Route path="/user" element={<UserPage/>} />
+            <Route path="/admin" element={<AdminPage/>} />
+            <Route path="/change-password" element={<ChangePassword/>} />
+            <Route path="/create-user" element={<CreateUserPage/>} /> */}
           </Routes>
         </LayoutProvider>
       </Router>

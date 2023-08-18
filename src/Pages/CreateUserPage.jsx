@@ -95,7 +95,7 @@ export const CreateUserPage = () => {
   }
 
   return (
-    <div class="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
+    <div className="background-image bg-cover bg-center w-full h-full" style={{backgroundImage: `url(${sriEshwarCollegeImage})`}}>
       <div className='flex justify-center items-center h-[96vh]' style={{backgroundColor: 'rgba(25, 118, 210, 0.9)'}}>
         <div className='bg-white w-[500px] border rounded-2xl flex justify-evenly items-center flex-col shadow-2xl gap-10 p-10'>
             <p className='text-4xl'>Create a new User</p>

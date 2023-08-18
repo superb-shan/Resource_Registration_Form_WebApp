@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 export default function LoginUserSelector() {
+  
   const {user, setUser} = useContext(LoginContext);
 
   const handleChange = (event, newUser) => {
@@ -23,7 +24,6 @@ export default function LoginUserSelector() {
 
   return (
     <>
-
       <ToggleButtonGroup
         color="primary"
         value={user}
