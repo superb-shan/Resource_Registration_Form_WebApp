@@ -16,6 +16,7 @@ import { useState } from 'react';
 import ReactLoading from 'react-loading';
 import { Done } from '@mui/icons-material';
 import { DateTimePicker } from '@mui/x-date-pickers';
+import { renderTimeViewClock } from '@mui/x-date-pickers/timeViewRenderers';
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -197,7 +198,12 @@ function GuestHouseInputField() {
            label = "Check-in Datetime *" 
            disablePast value={startDateTime} 
            onChange={handleStartDateTimeChange} 
-           format="DD-MM-YYYY hh:mm A"
+           format="DD MMM YYYY hh:mm A"
+           viewRenderers={{
+            hours: renderTimeViewClock,
+            minutes: renderTimeViewClock,
+            seconds: renderTimeViewClock,
+          }}
           />
       </LocalizationProvider>
 
@@ -207,7 +213,12 @@ function GuestHouseInputField() {
            label = "Check-out Datetime *" 
            disablePast value={endDateTime} 
            onChange={handleEndDateTimeChange} 
-           format="DD-MM-YYYY hh:mm A"
+           format="DD MMM YYYY hh:mm A"
+           viewRenderers={{
+            hours: renderTimeViewClock,
+            minutes: renderTimeViewClock,
+            seconds: renderTimeViewClock,
+          }}
           />
       </LocalizationProvider>
 
