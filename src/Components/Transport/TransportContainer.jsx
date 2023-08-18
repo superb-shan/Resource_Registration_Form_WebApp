@@ -85,6 +85,19 @@ function TransportContainer() {
         toast.error("Enter 10 digit Phone Number");
         return;
       }
+      if(name.length <3 || name.length>=50){
+        toast.error("Name should be greater than three characters")
+        return;
+      }
+      if(noOfPassengers<1 || noOfPassengers>6){
+        toast.error("Passenger count must between 1 to 6")
+        return
+      }
+      if(selectedDate.format("DD-MM-YYYY") == moment().format("DD-MM-YYYY")){
+        
+        toast.error("cannot book transport for today");
+        return;
+      }
 
       const formattedDateTime = moment(selectedDate.toString()).format("YYYY-MM-DD") + "T" + moment(selectedTime.toString()).format("HH:mm:ss");
       const res = await axios.post(`/transport/create`, 
