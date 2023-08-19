@@ -11,6 +11,8 @@ import moment from 'momnet';
 import axios from 'axios';
 import { useState } from 'react';
 import UserDataModal from './UserDataModal';
+import { UserContext } from '../../Context/User.Context';
+import DataFilterContainer from './DataFilterContainer';
 
 
  const UserPage = () => {
@@ -24,6 +26,7 @@ import UserDataModal from './UserDataModal';
   const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
   const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
   const {isLoggedIn} = useContext(LoginContext);
+  const {selectedView} = useContext(UserContext);
 
 const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
 
@@ -35,13 +38,25 @@ const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','rem
      console.log(param)
     }
     try {
-      console.log("entering")
+      // console.log("entering")
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param})
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
       const itemResponse = await axios.get('/items/get',{params:param})
+    //   const transportRequest = axios.get('/transport/get', { params: param });
+    // const seminarRequest = axios.get('/seminar/get', { params: param });
+    // const guestHouseRequest = axios.get('/guesthouse/get', { params: param });
+    // const itemRequest = axios.get('/items/get', { params: param });
+
+    // // Run all requests in parallel and wait for all of them to complete
+    // const [transportResponse, seminarResponse, guestHouseResponse, itemResponse] = await Promise.all([
+    //   transportRequest,
+    //   seminarRequest,
+    //   guestHouseRequest,
+    //   itemRequest,
+    // ]);
       const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data,...itemResponse.data.data];
-      console.log("fullData",fullData)
+      // console.log("fullData",fullData)
       setGridData(fullData)
       setIsLoading(false)
     }
@@ -80,9 +95,31 @@ const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','rem
   return (
     <Wrapper alignment="start">
         <NavBar title={'Resource Registration'} />
-        <DataViewContainer>
-          <DataGridTable gridData={gridData} VISIBLE_FIELDS = {VISIBLE_FIELDS} setSelectedRow={setSelectedRow} setIsModalOpen={setIsModalOpen} fetchData={fetchData} customActiveTypeFilter={customActiveTypeFilter} handleModalOpen={handleModalOpen} modal={<UserDataModal isModalOpen={isModalOpen}  handleModalClose={handleModalClose} selectedRow={selectedRow} fetchData={fetchData} />}/>
+        {selectedView === "My Bookings"? 
+          <DataViewContainer>
+            <DataGridTable 
+              gridData={gridData} 
+              VISIBLE_FIELDS = {VISIBLE_FIELDS} 
+              setSelectedRow={setSelectedRow} 
+              setIsModalOpen={setIsModalOpen} 
+              fetchData={fetchData} 
+              customActiveTypeFilter={customActiveTypeFilter} 
+              customActiveStatusFilter ={customActiveStatusFilter}
+              selectedDate={selectedDate}
+              handleModalOpen={handleModalOpen} 
+              modal={
+                <UserDataModal 
+                isModalOpen={isModalOpen}  
+                handleModalClose={handleModalClose} 
+                selectedRow={selectedRow} 
+                fetchData={fetchData} 
+              />
+            }
+          />
+          <DataFilterContainer setSelectedDate={setSelectedDate} setCustomActiveStatusFilter={setCustomActiveStatusFilter} setCustomActiveTypeFilter={setCustomActiveTypeFilter} selectedDate={selectedDate} customActiveTypeFilter={customActiveTypeFilter} customActiveStatusFilter={customActiveStatusFilter}/>
         </DataViewContainer>
+        : null}
+        
 
     </Wrapper>
   )
