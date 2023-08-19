@@ -8,7 +8,7 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import Button from '@mui/material/Button';
+// import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
 import { UserContext } from '../../Context/User.Context';
@@ -153,15 +153,20 @@ function NavBar({...props}) {
           </Box>
 
           <Box sx={{marginLeft: "20px"}}>
-              <IconButton
-                size="large"
-                onClick={handleMenu}
-                color="inherit"
-                sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
-              >
-                <AccountCircle />
-                <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>{userName[0].toUpperCase() + userName.slice(1)}</Typography>
-              </IconButton>
+          {userName && (
+            <IconButton
+              size="large"
+              onClick={handleMenu}
+              color="inherit"
+              sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
+            >
+              <AccountCircle />
+              <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>
+                {userName[0].toUpperCase() + userName.slice(1)}
+              </Typography>
+            </IconButton>
+            )
+          }
               <Menu
                 id="menu-appbar"
                 anchorEl={anchorEl}

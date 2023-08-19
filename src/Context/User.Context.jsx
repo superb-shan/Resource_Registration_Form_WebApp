@@ -4,7 +4,7 @@ export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   
-  const [selectedView, setSelectedView] = useState('Check Availability');
+  const [selectedView, setSelectedView] = useState('My Bookings');
   const [selectedForm, setSelectedForm] = useState('Transport');
   const [selectedDate, setSelectedDate] = useState(null)
 

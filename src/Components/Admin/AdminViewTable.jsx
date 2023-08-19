@@ -35,12 +35,6 @@ import pending  from '../../Images/pending.png'
 import autoTable from 'jspdf-autotable'
 
 
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Poppins, sans-serif',
-  },
-});
-
 const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
 
 const style = {
@@ -59,27 +53,13 @@ const style = {
   height:800
 };
 
-const Calstyle = {
-  position: 'absolute',
-  // top: '50%',
-  // left: '50%',
-  // transform: 'translate(-50%, -50%)',
-  width: '100%',
-  backgroundColor:'transparent',
-   border: '2px solid white',
-  boxShadow: 24,
-  p: 4,
-  borderRadius: 3
-};
-
 function AdminViewTable() {
 
 
   const [isOpen, setIsOpen] = React.useState(false);
-  const [isCalOpen, setIsCalOpen] = React.useState(false);
   const [selectedRow, setSelectedRow] = React.useState(null);
   const [isLoading, setIsLoading] = useState(true)
-  const[isAdd,setIsAdd]=useState(false)
+  const [isAdd,setIsAdd]=useState(false)
   const [remarks, setRemarks] = useState('');
   const {setUserData,selectedDate, setSelectedDate,userData}= useContext(AdminContext)
   const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
@@ -98,10 +78,10 @@ function AdminViewTable() {
       const transportResponse = await axios.get('/transport/get',{params:param})
       const seminarResponse = await axios.get('/seminar/get',{params:param})
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
-       const itemResponse = await axios.get('/items/get',{params:param})
-     const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data,...itemResponse.data.data];
-     console.log("fulldata",fullData)
-     setUserData(fullData)
+      const itemResponse = await axios.get('/items/get',{params:param})
+      const fullData=[...transportResponse.data.data,...seminarResponse.data.data, ...guestHouseResponse.data.data,...itemResponse.data.data];
+      console.log("fullData",fullData)
+      setUserData(fullData)
       setIsLoading(false)
     }
     catch (error) {
@@ -152,7 +132,6 @@ function AdminViewTable() {
   const handleallbutton = () => {
     setSelectedDate(null);
     setIsAdd(true); 
-    setIsCalOpen(true);
     setCustomActiveStatusFilter(null);
     setCustomActiveTypeFilter(null);
   };
@@ -166,14 +145,8 @@ function AdminViewTable() {
   const handleClose = () => {
     setSelectedRow(null);
     setIsOpen(false);
-    setIsCalOpen(false)
     fetchData()
-
   };
-
-  const handleCalender =()=>{
-    setIsCalOpen(true)
-  }
 
   const generatePDF = () => {
     const pdf = new jsPDF();
@@ -369,8 +342,7 @@ window.open(pdf.output("bloburl"), "_blank","toolbar=no,status=no,menubar=no,scr
   }
   return (
     
-    <ThemeProvider theme={theme}>
-      
+    <ThemeProvider>
       <Box sx={{ height: {xs: "auto", md:"100%"}, width: '100%', backgroundColor: 'white', borderRadius:1.5, padding: 1 ,display:"flex", flexDirection: {xs: "column-reverse", md: "row"}}}>
       <DataGrid
         rows={

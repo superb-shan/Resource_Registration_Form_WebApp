@@ -15,16 +15,15 @@ import { toast } from 'react-toastify';
 const LoginPage = () => {
 
   const navigate = useNavigate();
-  const { user, setUser, userName, setUserName, password, setPassword, isLoggedIn, setIsLoggedIn } = useContext(LoginContext);
-  
-  useEffect(()=>{
-    // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
-  },[userName, password]);
-
-  if (isLoggedIn){
-    // return (<Navigate to={`/${user}`} />);
-    navigate(`/${user}`);
-  }
+  const { user,
+          setUser,
+          userName, 
+          setUserName, 
+          password, 
+          setPassword,
+          isLoggedIn,
+          setIsLoggedIn 
+        } = useContext(LoginContext);
 
   const handleLogin = async (event) => {
 
@@ -36,19 +35,28 @@ const LoginPage = () => {
     if (loginStatus !== true){
       toast.error("Username/Password is Incorrect");
       setIsLoggedIn(false);
+      sessionStorage.setItem("isLoggedIn", false);
     }
     else{
       setIsLoggedIn(true);
+      sessionStorage.setItem("isLoggedIn", true);
       console.log("Success");
-      // navigate(`/${user}`);
-      // console.log(user);
-      // console.log(isLoggedIn);
+      navigate(`/${user}`);
     }
 
   }
+  
+  useEffect(()=>{
+    // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
+  },[userName, password]);
 
-  return (
-    <Wrapper>
+  // if (isLoggedIn){
+  //   return (<Navigate to={`/${user}`} />);
+  //   // navigate(`/${user}`);
+  // }
+
+  try{return (
+    <Wrapper alignment="center" >
       <AccountManagerContainer title = "Login" onSubmit = {handleLogin}>
           <Selector
             list={[
@@ -63,7 +71,9 @@ const LoginPage = () => {
           <Button variant="contained" sx={{ width: "100px" }} type="submit" color={isLoggedIn ? "success" : "primary"}>Login</Button>
       </AccountManagerContainer>
     </Wrapper>
-  )
+  )}catch(err){
+    console.log(err);
+  }
 }
 
 export default LoginPage;
