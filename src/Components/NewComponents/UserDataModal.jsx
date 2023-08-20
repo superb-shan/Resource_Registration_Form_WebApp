@@ -96,7 +96,6 @@ const UserDataModal = ({...props}) => {
     <Modal open={props.isModalOpen} onClose={props.handleModalClose}>
         {/* Render the detailed information from props.selectedRow */}
         {props.selectedRow ? (
-        <div >
             <Box sx={style}>
             <div style={{ textAlign: 'right' }}>
                 <Button onClick={props.handleModalClose}  ><IoCloseCircleOutline /></Button>
@@ -135,7 +134,6 @@ const UserDataModal = ({...props}) => {
                 </Button>
             </Stack>
             </Box>
-        </div>
         ):
         <div></div>}
 

@@ -6,7 +6,7 @@ import { DateCalendar } from '@mui/x-date-pickers/DateCalendar';
 export default function Calendar({...props}) {
     const style = {
         position: 'relative',
-        width: 400,
+        width: 350,
         bgcolor: '#FFD966',
         border: '2px solid white',
         boxShadow: 5,

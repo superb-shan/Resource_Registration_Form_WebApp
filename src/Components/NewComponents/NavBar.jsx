@@ -8,15 +8,13 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-// import Button from '@mui/material/Button';
 import MenuItem from '@mui/material/MenuItem';
 import { BsMenuButtonFill} from "react-icons/bs";
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
-// import ViewSelector from './ViewSelector';
 import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
-import sriEshwarLogo from '../../Images/sriEshwarLogo.png'
+import sriEshwarLogo from '../../Assets/Images/sriEshwarLogo.png'
 import { Link } from 'react-router-dom';
 import { Selector, DropDownSelector } from './InteractionFields';
 
@@ -34,14 +32,9 @@ function NavBar({...props}) {
 
   const [anchorElNav, setAnchorElNav] = useState(null);
   const { selectedForm, setSelectedForm, selectedView, setSelectedView} = useContext(UserContext);
-  const { userName, setIsLoggedIn } = useContext(LoginContext);
-
+  const { user, userName, setIsLoggedIn } = useContext(LoginContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
-
-  // const handleChange = (event) => {
-  //   setAuth(event.target.checked);
-  // };
 
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
@@ -50,10 +43,6 @@ function NavBar({...props}) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-
-  const handleChangePassword = () => {
-     navigate('/change-password');
-  }
 
   const handleLogOut = () => {
     setIsLoggedIn(false);
@@ -87,30 +76,44 @@ function NavBar({...props}) {
                 alt="Sri Eshwar Logo"
                 src={sriEshwarLogo}
                 />
-                <Typography variant='h6' sx={{ml: 1, mr: 5, fontWeight: '600'}}>{props.title}</Typography>
+                <Typography variant='h6' component='span' fontWeight="600" sx={{ml: 1, mr: {xs:0, md:5}}} lineHeight={"1.2"} >{props.title}</Typography>
             </Box>
           </Link>
           
           {/* <ViewSelector/> */}
+          <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+            {
+              user === "user" && 
+              <Selector
+                list={views}
+                value={selectedView}
+                setValue={setSelectedView}
+                color="secondary"
+              />
+            }
+          </Box>
 
-          <Selector
-            list={views}
-            value={selectedView}
-            setValue={setSelectedView}
-            color="secondary"
-          />
+          <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+            {
+              user === "user" && 
+              <DropDownSelector 
+                list={views.map(view => view.name)}
+                value={selectedView}
+                setValue={setSelectedView} 
+              />
+            }
+          </Box>
 
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
             {
-                selectedView==="Add Bookings" 
-                &&
-                <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
+              selectedView==="Add Bookings" 
+              &&
+              <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
             }
           </Box>
 
            {/* for phone  size */}
-           
           <Box sx={{ width: 10 , flexGrow: 1, display: { xs: 'flex', md: 'none' , justifyContent:"end"} }}>
             {selectedView === "Add Bookings" && 
               <div>
@@ -152,39 +155,40 @@ function NavBar({...props}) {
             }
           </Box>
 
-          <Box sx={{marginLeft: "20px"}}>
-          {userName && (
-            <IconButton
-              size="large"
-              onClick={handleMenu}
-              color="inherit"
-              sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
-            >
-              <AccountCircle />
-              <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>
-                {userName[0].toUpperCase() + userName.slice(1)}
-              </Typography>
-            </IconButton>
-            )
-          }
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                keepMounted
-                transformOrigin={{
-                  vertical: 'top',
-                  horizontal: 'right',
-                }}
-                open={Boolean(anchorEl)}
-                onClose={handleClose}
+          <Box sx={{ml: {xs:"10px", md:"20px"}}}>
+            {userName && (
+              <IconButton
+                size="large"
+                onClick={handleMenu}
+                color="inherit"
+                sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
               >
-                <MenuItem onClick={handleChangePassword}>Change Password</MenuItem>
-                <MenuItem onClick={handleLogOut} sx={{diaplay: "flex", justifyContent: "space-between"}}> <span>Log Out</span> <LogoutIcon/></MenuItem>
-              </Menu>
+                <AccountCircle />
+                <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>
+                  {userName[0].toUpperCase() + userName.slice(1)}
+                </Typography>
+              </IconButton>
+              )
+            }
+            <Menu
+              id="menu-appbar"
+              anchorEl={anchorEl}
+              anchorOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+              }}
+              open={Boolean(anchorEl)}
+              onClose={handleClose}
+            >
+              <MenuItem onClick={() => navigate('/change-password')}>Change Password</MenuItem>
+              {user === "admin" ? <MenuItem onClick={() => navigate('/create-user')}>Create User</MenuItem> : null}
+              <MenuItem onClick={handleLogOut} sx={{display: "flex", justifyContent: "space-between"}}> <span>Log Out</span> <LogoutIcon/></MenuItem>
+            </Menu>
           </Box>
         </Toolbar>
       </Container>

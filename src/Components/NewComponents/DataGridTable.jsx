@@ -9,8 +9,6 @@ import 'react-toastify/dist/ReactToastify.css';
 
 const DataGridTable = ({...props}) => {
 
-  // console.log(props.VISIBLE_FIELDS, "gridz", props.gridData);
-  console.log(props)
   const columns = props.VISIBLE_FIELDS.map((field) => {
     if (field === 'actions') {
       return {
@@ -46,7 +44,7 @@ const DataGridTable = ({...props}) => {
               <>
                 <CheckCircleOutlineIcon style={{ color: 'green', marginRight: 4 }} />
                 <Typography variant="body1" style={{ color: 'green' }}>
-                  Approved
+                  Accepted
                 </Typography>
               </>
             )}
@@ -92,7 +90,7 @@ const DataGridTable = ({...props}) => {
               item => (
                 (!props.customActiveTypeFilter || item.type === props.customActiveTypeFilter) &&
                 (   props.customActiveStatusFilter === "Pending" ? item.isapproved === null :
-                    props.customActiveStatusFilter === "Success" ? item.isapproved :
+                    props.customActiveStatusFilter === "Accepted" ? item.isapproved :
                     props.customActiveStatusFilter === "Rejected" ? item.isapproved === false :
                 true
                 )

@@ -1,5 +1,5 @@
 import React from 'react'
-import sriEshwarCollegeImage from '../../Images/sriEshwarCollegeImage.png'
+import sriEshwarCollegeImage from '../../Assets/Images/sriEshwarCollegeImage.png'
 
 export const Wrapper = ({children, ...props}) => {
   return (

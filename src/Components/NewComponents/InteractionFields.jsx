@@ -13,15 +13,15 @@ import MenuItem from '@mui/material/MenuItem';
 import MenuList from '@mui/material/MenuList';
 import { useState, useRef } from 'react';
 import 'react-toastify/dist/ReactToastify.css';
-import { IconButton, InputAdornment, InputLabel, OutlinedInput, TextField } from '@mui/material';
+import { Box, Chip, IconButton, InputAdornment, InputLabel, OutlinedInput, Select, TextField, useTheme } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect } from 'react';
+import { DateTimePicker, LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 
 
  const Selector = ({ ...props }) => {
-
-  const list = props.list;
 
   const handleChange = (event, newValue) => props.setValue(newValue);
 
@@ -32,7 +32,7 @@ import { useEffect } from 'react';
         exclusive
         onChange = {handleChange}
       >
-        {list.map((option) => < ToggleButton value={option.name} key={option.name} sx={{fontWeight: "bold"}} > {option?.adornment}  <span className='ml-1'> {option.name} </span> </ToggleButton> )}
+        {props.list.map((option) => < ToggleButton value={option.name} key={option.name} sx={{fontWeight: "bold"}} > {option?.adornment}  <span className='ml-1'> {option.name} </span> </ToggleButton> )}
       </ToggleButtonGroup>
   );
 }
@@ -42,32 +42,62 @@ const TextInput = ({...props}) => {
 
   const handleValueChange = (event) => props.setValue(event.target.value);
 
- if ("endAdornment" in props)
   return (
     <FormControlWrapper>
-      <TextField id="outlined-basic" label={props.label} variant="outlined" 
+      <TextField 
+        id={`outlined-basic-${props.label}`}
+        variant="outlined" 
+        label={props.label} 
+        type={props.type} 
+        placeholder={props.placeholder}
+        select={props.select} 
+        multiline={props.multiline} 
+        disabled={props.disabled} 
         InputProps={{
-            endAdornment: <InputAdornment position="end"> {props.endAdornment} </InputAdornment>
+          endAdornment: <InputAdornment position="end"> {props.endAdornment} </InputAdornment>
         }}
         value={props.value}
         onChange={handleValueChange}
-      />
+      >
+        {props.options?.map((option) => (
+            <MenuItem key={option} value={option}>
+              {option}
+            </MenuItem>
+          ))}
+      </TextField>
     </FormControlWrapper>
-    );
-
-  else 
-    return (
-      <FormControlWrapper>
-        <TextField id="outlined-basic" label={props.label} variant="outlined" 
-          value={props.value}
-          onChange={handleValueChange}
-        />
-      </FormControlWrapper>
-    );
+  );
 
 }
 
+const DateTimeInput = ({...props}) => {
+
+  const handleValueChange = (dateTime) => {
+    props.setValue(dateTime);
+  };
+
+  return (
+    <FormControlWrapper>
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <DateTimePicker
+          label = {props.label}
+          disablePast 
+          value={props.value} 
+          onChange={handleValueChange} 
+          format="DD MMM YYYY hh:mm A"
+          viewRenderers={{
+          hours: renderTimeViewClock,
+          minutes: renderTimeViewClock,
+          seconds: renderTimeViewClock,
+        }}
+        />
+      </LocalizationProvider>
+    </FormControlWrapper>
+  );
+}
+
 const PasswordInput = ({...props}) => {
+
   const [showPassword, setShowPassword] = useState(false);
   const handleValueChange = (event) => props.setValue(event.target.value);
   const handleClickShowPassword = () => setShowPassword((show) => !show);
@@ -75,9 +105,9 @@ const PasswordInput = ({...props}) => {
 
   return (
     <FormControlWrapper>
-      <InputLabel htmlFor="outlined-adornment-password">{props.label}</InputLabel>
+      <InputLabel htmlFor={`outlined-adornment-${props.label}`}>{props.label}</InputLabel>
         <OutlinedInput            
-          id="outlined-adornment-password"
+          id={`outlined-adornment-${props.label}`}
           type={showPassword ? 'text' : 'password'}
           endAdornment={
           <InputAdornment position="end">
@@ -99,12 +129,82 @@ const PasswordInput = ({...props}) => {
   );
 }
 
+const ChipsInput = ({...props}) => {
+
+  const ITEM_HEIGHT = 48;
+  const ITEM_PADDING_TOP = 8;
+  const MenuProps = {
+    PaperProps: {
+      style: {
+        maxHeight: ITEM_HEIGHT * 4.5 + ITEM_PADDING_TOP,
+        width: 250,
+      },
+    },
+  };
+
+  function getStyles(name, personName, theme) {
+    return {
+      fontWeight:
+        personName.indexOf(name) === -1
+          ? theme.typography.fontWeightRegular
+          : theme.typography.fontWeightMedium,
+    };
+  }
+
+  const handleValueChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    props.setValue(
+      // On autofill we get a stringified value.
+      typeof value === 'string' ? value.split(',') : value,
+    );
+  };
+
+  const theme = useTheme();
+
+  return (
+    <FormControlWrapper>
+      <InputLabel id={`${props.label}-multiple-chip-label`}>{props.label}</InputLabel>
+        <Select
+          labelId={`${props.label}-multiple-chip-label`}
+          id={`${props.label}-multiple-chip`}
+          multiple
+          placeholder={props.placeholder}
+          value={props.value}
+          onChange={handleValueChange}
+          input={<OutlinedInput id={`${props.label}-multiple-chip`} label={props.label} />}
+          renderValue={(selected) => (
+            <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 0.5 }}>
+              {selected.map((value) => (
+                <Chip key={value} label={value} />
+              ))}
+            </Box>
+          )}
+          MenuProps={MenuProps}
+        >
+          {props.options?.map((option) => (
+            <MenuItem
+              key={option}
+              value={option}
+              style={getStyles(option, props.value, theme)}
+            >
+              {option}
+            </MenuItem>
+          ))}
+        </Select>
+    </FormControlWrapper>
+  );
+
+}
+
 const DropDownSelector = ({...props}) => {
+
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
   const [selectedIndex, setSelectedIndex] = useState(props.list.indexOf(props.value));
 
-  useEffect(()=> {setSelectedIndex(props.list.indexOf(props.value))}, [props.value, selectedIndex]);
+  useEffect(()=> {setSelectedIndex(props.list.indexOf(props.value))}, [props.value, selectedIndex, props.list]);
 
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
@@ -186,4 +286,4 @@ const DropDownSelector = ({...props}) => {
 
 
 
-export { Selector, TextInput, PasswordInput, DropDownSelector };
+export { Selector, TextInput, DateTimeInput, PasswordInput, ChipsInput, DropDownSelector };

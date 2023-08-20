@@ -9,7 +9,7 @@ import { AccountCircle } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
 const LoginPage = () => {
@@ -28,10 +28,8 @@ const LoginPage = () => {
   const handleLogin = async (event) => {
 
     event.preventDefault();
-    console.log("Inside handleLogin");
     const res = await axios.get(`/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
-    console.log("user", user, "status", loginStatus, "u-p", userName, password);
     if (loginStatus !== true){
       toast.error("Username/Password is Incorrect");
       setIsLoggedIn(false);
@@ -40,7 +38,7 @@ const LoginPage = () => {
     else{
       setIsLoggedIn(true);
       sessionStorage.setItem("isLoggedIn", true);
-      console.log("Success");
+      toast.success(`Logged in as ${user.toUpperCase()}` )
       navigate(`/${user}`);
     }
 
@@ -49,11 +47,6 @@ const LoginPage = () => {
   useEffect(()=>{
     // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
   },[userName, password]);
-
-  // if (isLoggedIn){
-  //   return (<Navigate to={`/${user}`} />);
-  //   // navigate(`/${user}`);
-  // }
 
   try{return (
     <Wrapper alignment="center" >
