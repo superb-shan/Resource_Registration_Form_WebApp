@@ -8,6 +8,10 @@ import { LoginContext } from '../../Context/Login.Context';
 import { toast } from 'react-toastify';
 import axios from 'axios';
 import moment from 'moment';
+import { Done, Send } from '@mui/icons-material';
+import ReactLoading from 'react-loading';
+import { Button } from '@mui/material';
+import CheckAvailability from './CheckAvailability';
 
 const allHalls = ['Board Room', 'Ignite', 'GF-07', 'Placement Lab', 'IT center', 'Seminar Hall 1st Floor', 'Seminar Hall 2nd Floor', 'Others'];
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH'];
@@ -29,13 +33,14 @@ const SeminarHallForm = () => {
   const [hallRequired, setHallRequired] = useState('');
 
   const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
-  const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
   const [unavailableHalls, setUnavailableHalls] = useState([]);
 
   const [postStatus, setPostStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
+
+  
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -139,22 +144,26 @@ const SeminarHallForm = () => {
       toast.error(postStatus)
     }
   }
-  
+
+  const startDateTimeData={ label:"Start Date & Time *", value: startDateTime, setValue: setStartDateTime }
+  const endDateTimeData={ label:"End Date & Time *", value: endDateTime, setValue: setEndDateTime }
 
   return (
     <FormContainer title="Seminar Hall Form">
+      <CheckAvailability startDateTimeData={startDateTimeData} endDateTimeData={endDateTimeData} isAvailabilityChecked={isAvailabilityChecked} setIsAvailabilityChecked={setIsAvailabilityChecked} allHalls={allHalls} unavailableHalls={unavailableHalls} setUnavailableHalls={setUnavailableHalls} />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
       <TextInput label="Speaker Name *" value={speakerName} setValue={setSpeakerName} />
       <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber}/>
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Topic *" value={topic} setValue={setTopic} />
-      <DateTimeInput label="Start Date & Time *" value={startDateTime} setValue={setStartDateTime} />
-      <DateTimeInput label="End Date & Time *" value={endDateTime} setValue={setEndDateTime} />
       <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls} />
       <TextInput label="No. of Attendees *" type='number' value={noOfAttendees} setValue={setNoOfAttendees} />
       <ChipsInput label="Equipments Required" value={equipmentsRequired} setValue={setEquipmentsRequired} options={allEquipments} />
       <TextInput label="Special Requirements *" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
+      <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
+        {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
+      </Button>
     </FormContainer>
   )
 }

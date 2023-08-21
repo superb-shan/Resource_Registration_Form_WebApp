@@ -7,7 +7,7 @@ export default function Calendar({...props}) {
     const style = {
         position: 'relative',
         width: 350,
-        bgcolor: '#FFD966',
+        bgcolor: 'secondary.main',
         border: '2px solid white',
         boxShadow: 5,
         borderRadius: 3

@@ -119,8 +119,8 @@ const TransportForm = () => {
     <FormContainer title="Transportation Form">
         <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
         <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-        <TextInput label="Guest Name *" value={guestName} setValue={setGuestName} />
-        <TextInput label="Guest Phone Number *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
+        <TextInput label="Guest Name(s) *" value={guestName} setValue={setGuestName} />
+        <TextInput label="Guest Phone Number(s) *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
         <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS']} />
         <TextInput label="Purpose of Travel *" select={true} value={purposeOfTravel} setValue={setPurposeOfTravel} options={['Events', 'Seminar', 'Chief Guest', 'Placement', 'Session/Lectures', 'Others']} />
         <DateTimeInput label="Travel Date Time *" value={travelDateTime} setValue={setTravelDateTime} />

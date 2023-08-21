@@ -6,6 +6,7 @@ const theme = createTheme({
   palette: {
     primary: {
       main: '#1976D2',
+      //! wont be applied for the overall bg, because it needs to have opacity reduced, which is done with rgba
     },
     secondary: {
       main: '#ffd966',
