@@ -19,10 +19,12 @@ const SeminorProvider = ({ children }) => {
   const [noOfAttendees, setNoOfAttendees] = useState('');
   const [EquipmentRequired, setEquipmentNeeded] = useState([]);
   const [specialRequirements, setSpecialRequirements] = useState('');
-  const[requiredHall,setHall]=useState('')
-
-  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
+  const[requiredHall,setHall]=useState('');
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+
+  const [startDateTime, setStartDateTime] = useState(null);
+  const [endDateTime, setEndDateTime] = useState(null);
+  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
   const [unavailableHalls, setUnavailableHalls] = useState([]);
 
   const eventEquipment = [{
@@ -80,6 +82,8 @@ const SeminorProvider = ({ children }) => {
       label: 'Others'
     }
   ];
+
+  const allHalls = ['Board Room', 'Ignite', 'GF-07', 'Placement Lab', 'IT center', 'Seminar Hall 1st Floor', 'Seminar Hall 2nd Floor', 'Others'];
 
   const isWithinNextTwoMonths = (givenDate) => {
     if (!givenDate) {
@@ -167,15 +171,21 @@ const SeminorProvider = ({ children }) => {
            setEquipmentNeeded,
             setSpecialRequirements,
             setHall,
-            isAvailabilityChecked, 
-            setIsAvailabilityChecked,
-            unavailableHalls, 
-            setUnavailableHalls,
             isAvailabilityLoading, 
             setIsAvailabilityLoading,
             handleCheckAvailability,
             eventEquipment,
-            eventHall
+            eventHall,
+
+            //new 
+
+            isAvailabilityChecked, 
+            setIsAvailabilityChecked,
+            unavailableHalls, 
+            setUnavailableHalls,
+            startDateTime, setStartDateTime,
+            endDateTime, setEndDateTime,
+            allHalls,
         }}
       >
         {children}

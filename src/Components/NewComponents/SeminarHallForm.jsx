@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import FormContainer from './FormContainer';
-import { ChipsInput, DateTimeInput, TextInput } from './InteractionFields';
+import { ChipsInput, TextInput } from './InteractionFields';
 import { useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
@@ -12,8 +12,8 @@ import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
 import CheckAvailability from './CheckAvailability';
+import { SeminorContext } from '../../Context/Seminor.Context';
 
-const allHalls = ['Board Room', 'Ignite', 'GF-07', 'Placement Lab', 'IT center', 'Seminar Hall 1st Floor', 'Seminar Hall 2nd Floor', 'Others'];
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH'];
 const allEquipments = ['Audio', 'Video', 'Reception items', 'Power Back up', 'Others'];
 
@@ -25,20 +25,17 @@ const SeminarHallForm = () => {
   const [speakerPhoneNumber, setSpeakerPhoneNumber] = useState('');
   const [organizingDepartment, setOrganizingDepartment] = useState('');
   const [topic, setTopic] = useState('');
-  const [startDateTime, setStartDateTime] = useState(null);
-  const [endDateTime, setEndDateTime] = useState(null);
   const [noOfAttendees, setNoOfAttendees] = useState('');
   const [equipmentsRequired, setEquipmentsRequired] = useState([]);
   const [specialRequirements, setSpecialRequirements] = useState('');
   const [hallRequired, setHallRequired] = useState('');
 
-  const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
-  const [unavailableHalls, setUnavailableHalls] = useState([]);
 
   const [postStatus, setPostStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
+  const { allHalls, startDateTime,  endDateTime,  isAvailabilityChecked } = useContext(SeminorContext);
 
   
 
@@ -145,12 +142,10 @@ const SeminarHallForm = () => {
     }
   }
 
-  const startDateTimeData={ label:"Start Date & Time *", value: startDateTime, setValue: setStartDateTime }
-  const endDateTimeData={ label:"End Date & Time *", value: endDateTime, setValue: setEndDateTime }
 
   return (
     <FormContainer title="Seminar Hall Form">
-      <CheckAvailability startDateTimeData={startDateTimeData} endDateTimeData={endDateTimeData} isAvailabilityChecked={isAvailabilityChecked} setIsAvailabilityChecked={setIsAvailabilityChecked} allHalls={allHalls} unavailableHalls={unavailableHalls} setUnavailableHalls={setUnavailableHalls} />
+      <CheckAvailability target={"seminar"}  />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
       <TextInput label="Speaker Name *" value={speakerName} setValue={setSpeakerName} />

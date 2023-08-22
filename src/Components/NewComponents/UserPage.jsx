@@ -7,6 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import Bookings from './Bookings';
 import { UserContext } from '../../Context/User.Context';
 import Forms from './Forms';
+import CheckAvailabilityView from './CheckAvailabilityView';
 
  const UserPage = () => {
 
@@ -31,7 +32,7 @@ import Forms from './Forms';
         selectedView === "Add Bookings"? 
           <Forms />
       :
-        null
+         <CheckAvailabilityView />
       }
     </Wrapper>
   )
