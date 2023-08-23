@@ -3,6 +3,8 @@ import { useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 import TransportForm from './TransportForm';
 import SeminarHallForm from './SeminarHallForm';
+import GuestHouseForm from './GuestHouseForm';
+import ItemsForm from './ItemsForm';
 
 
 const Forms = () => {
@@ -13,7 +15,9 @@ const Forms = () => {
   return (
     <>
         {selectedForm === "Transport"? <TransportForm /> :
-         selectedForm === "Seminar Hall"? <SeminarHallForm /> : null }
+         selectedForm === "Seminar Hall"? <SeminarHallForm /> : 
+         selectedForm === "Guest House"? <GuestHouseForm /> :
+         selectedForm === "Items"? <ItemsForm /> : null }
     </>
   )
 }

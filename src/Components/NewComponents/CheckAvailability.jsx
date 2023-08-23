@@ -126,8 +126,8 @@ const CheckAvailability = ({...props}) => {
           />
         </Box>
       }
-      <DateTimeInput label="Start Date & Time *" value={startDateTime} setValue={setStartDateTime} />
-      <DateTimeInput label="End Date & Time *" value={endDateTime} setValue={setEndDateTime} />
+      <DateTimeInput label="Start Date & Time *" value={startDateTime} setValue={setStartDateTime} unCheck={setIsAvailabilityChecked} />
+      <DateTimeInput label="End Date & Time *" value={endDateTime} setValue={setEndDateTime} unCheck={setIsAvailabilityChecked} />
 
       <Button variant="contained" sx={{width:"300px", height: "40px", mb: '1rem', mx: {xs: 0, md: "200px"}}} onClick={handleCheckAvailability} color={ isAvailabilityChecked? "success" : "primary"} >{isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done/> : <>Check Availability</>  }</Button>
 

@@ -47,12 +47,7 @@ const TextInput = ({...props}) => {
       <TextField 
         id={`outlined-basic-${props.label}`}
         variant="outlined" 
-        label={props.label} 
-        type={props.type} 
-        placeholder={props.placeholder}
-        select={props.select} 
-        multiline={props.multiline} 
-        disabled={props.disabled} 
+        {...props} 
         InputProps={{
           endAdornment: <InputAdornment position="end"> {props.endAdornment} </InputAdornment>
         }}
@@ -60,7 +55,7 @@ const TextInput = ({...props}) => {
         onChange={handleValueChange}
       >
         {props.options?.map((option) => (
-            <MenuItem key={option} value={option}>
+            <MenuItem key={option} value={option} disabled={props.disabledOptions?.includes(option)}>
               {option}
             </MenuItem>
           ))}
@@ -74,6 +69,7 @@ const DateTimeInput = ({...props}) => {
 
   const handleValueChange = (dateTime) => {
     props.setValue(dateTime);
+    props?.unCheck(false);
   };
 
   return (

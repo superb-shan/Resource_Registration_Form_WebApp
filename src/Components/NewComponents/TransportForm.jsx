@@ -9,6 +9,8 @@ import { UserContext } from '../../Context/User.Context';
 import { Button } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
 
+const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
+
 const TransportForm = () => {
 
     const [coordinatorName, setCoordinatorName] = useState('');
@@ -121,7 +123,7 @@ const TransportForm = () => {
         <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
         <TextInput label="Guest Name(s) *" value={guestName} setValue={setGuestName} />
         <TextInput label="Guest Phone Number(s) *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
-        <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS']} />
+        <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
         <TextInput label="Purpose of Travel *" select={true} value={purposeOfTravel} setValue={setPurposeOfTravel} options={['Events', 'Seminar', 'Chief Guest', 'Placement', 'Session/Lectures', 'Others']} />
         <DateTimeInput label="Travel Date Time *" value={travelDateTime} setValue={setTravelDateTime} />
         <TextInput label="Pick-up Location *" value={pickupLocation} setValue={setPickupLocation} />

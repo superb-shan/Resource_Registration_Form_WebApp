@@ -12,30 +12,34 @@ import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
 import CheckAvailability from './CheckAvailability';
-import { SeminorContext } from '../../Context/Seminor.Context';
+import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
-const allEquipments = ['Audio', 'Video', 'Reception items', 'Power Back up', 'Others'];
+const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks'];
+const allPaymentOptions = ["Paid by institution", "Department", "Guest"];
+const allMenu = ["Elite", "Special", "Normal"];
 
-const SeminarHallForm = () => {
+const GuestHouseForm = () => {
 
   const [coordinatorName, setCoordinatorName] = useState('');
   const [coordinatorPhoneNumber, setCoordinatorPhoneNumber] = useState('');
-  const [speakerName, setSpeakerName] = useState('');
-  const [speakerPhoneNumber, setSpeakerPhoneNumber] = useState('');
+  const [guestName, setGuestName] = useState('');
+  const [guestPhoneNumber, setGuestPhoneNumber] = useState('');
   const [organizingDepartment, setOrganizingDepartment] = useState('');
-  const [topic, setTopic] = useState('');
-  const [noOfAttendees, setNoOfAttendees] = useState('');
-  const [equipmentsRequired, setEquipmentsRequired] = useState([]);
+  const [purposeOfStay, setPurposeOfStay] = useState('');
+  const [foodRequired, setFoodRequired] = useState([]);
+  const [noOfGuests, setNoOfGuests] = useState(1);
+  const [menuRequired, setMenuRequired] = useState('');
+  const [paymentDoneBy, setPaymentDoneBy] = useState('');
   const [specialRequirements, setSpecialRequirements] = useState('');
-  const [hallRequired, setHallRequired] = useState('');
+  const [roomRequired, setRoomRequired] = useState('');
 
 
   const [postStatus, setPostStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
-  const { allHalls, startDateTime,  endDateTime,  isAvailabilityChecked } = useContext(SeminorContext);
+  const { allRooms, startDateTime,  endDateTime,  isGuestHouseAvailabilityChecked: isAvailabilityChecked, unavailableGuestHouses } = useContext(GuestHouseContext);
 
   
 
@@ -67,15 +71,17 @@ const SeminarHallForm = () => {
   const fieldsToCheckForValidation = [
     coordinatorName,
     coordinatorPhoneNumber,
-    speakerName,
-    speakerPhoneNumber,
+    guestName, 
+    guestPhoneNumber,
     organizingDepartment,
-    topic,
+    purposeOfStay,
+    foodRequired,
+    menuRequired,
+    paymentDoneBy,
     startDateTime,
     endDateTime,
-    noOfAttendees,
-    equipmentsRequired,
-    hallRequired
+    noOfGuests,
+    roomRequired
   ];
 
   const handleSubmit = async () => {
@@ -87,12 +93,8 @@ const SeminarHallForm = () => {
       setIsLoading(false);
       return;
     }
-    if(coordinatorPhoneNumber.length !=='10' || speakerPhoneNumber.length !=='10'){
+    if(coordinatorPhoneNumber.length !=='10' || guestPhoneNumber.length !=='10'){
       toast.error("Enter 10 digit Phone Number");
-      return;
-    }
-    if (noOfAttendees <= 0 ){
-      toast.error("No of Attendees is not valid");
       return;
     }
     if (!isAvailabilityChecked){
@@ -102,32 +104,34 @@ const SeminarHallForm = () => {
     }
 
     //Check for unavailability of hall before sending request
-    const response = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}});
-    const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
+    const response = await axios.get("/guesthouse/checkAvailablity", {params: {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}});
+    const recentUnavailableRooms = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
 
-    if (recentUnavailableHalls.includes(hallRequired)){
-      toast.info(`${hallRequired} is not available for this date and time.`);
+    if (recentUnavailableRooms.includes(roomRequired)){
+      toast.info(`${roomRequired} is not available for this date and time.`);
       setIsLoading(false);
       return;
     }
     //Create booking
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`/seminar/create`,
+    const res = await axios.post(`/guesthouse/create`,
     {
       userName,
       coordinatorName,
       coordinatorPhoneNumber,
-      speakerName,
-      speakerPhoneNumber,
+      guestName, 
+      guestPhoneNumber,
       organizingDepartment,
-      topic,
+      purposeOfStay,
+      foodRequired,
+      menuRequired,
+      paymentDoneBy,
       startDateTime,
       endDateTime,
-      noOfAttendees,
-      equipmentsRequired,
+      noOfGuests,
+      roomRequired,
       specialRequirements,
-      hallRequired
     }
   );
     // console.log("Response:", res);
@@ -137,24 +141,26 @@ const SeminarHallForm = () => {
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {
-      console.log("not created seminar", postStatus)
+      console.log("not created guest house", postStatus)
       toast.error(postStatus)
     }
   }
 
 
   return (
-    <FormContainer title="Seminar Hall Form">
-      <CheckAvailability target={"seminar"}  />
+    <FormContainer title="Guest House Form">
+      <CheckAvailability target={"guesthouse"}  />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-      <TextInput label="Speaker Name *" value={speakerName} setValue={setSpeakerName} />
-      <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber}/>
+      <TextInput label="Guest Name *" value={guestName} setValue={setGuestName} />
+      <TextInput label="Guest Phone Number *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
-      <TextInput label="Topic *" value={topic} setValue={setTopic} />
-      <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls} />
-      <TextInput label="No. of Attendees *" type='number' value={noOfAttendees} setValue={setNoOfAttendees} />
-      <ChipsInput label="Equipments Required" value={equipmentsRequired} setValue={setEquipmentsRequired} options={allEquipments} />
+      <TextInput label="Purpose of Stay *" value={purposeOfStay} setValue={setPurposeOfStay} />
+      <TextInput label="Room Required *" select={true} value={roomRequired} setValue={setRoomRequired} options={allRooms} disabledOptions={unavailableGuestHouses} />
+      <TextInput label="No. of Guests *" type='number' value={noOfGuests} setValue={setNoOfGuests} disabled={true} />
+      <ChipsInput label="Food Required" value={foodRequired} setValue={setFoodRequired} options={allFoods} />
+      <TextInput label="Menu Required *" select={true} value={menuRequired} setValue={setMenuRequired} options={allMenu} />
+      <TextInput label="Payment Done By *" select={true} value={paymentDoneBy} setValue={setPaymentDoneBy} options={allPaymentOptions} />
       <TextInput label="Special Requirements *" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
       <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
         {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
@@ -163,4 +169,4 @@ const SeminarHallForm = () => {
   )
 }
 
-export default SeminarHallForm
+export default GuestHouseForm;
