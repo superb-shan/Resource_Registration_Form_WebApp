@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
-import FormContainer from './FormContainer';
-import { ChipsInput, TextInput } from './InteractionFields';
+import FormContainer from '../Containers/FormContainer';
+import { ChipsInput, TextInput } from '../Fields/InteractionFields';
 import { useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
@@ -11,7 +11,7 @@ import moment from 'moment';
 import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
-import CheckAvailability from './CheckAvailability';
+import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];

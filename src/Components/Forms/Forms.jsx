@@ -14,10 +14,12 @@ const Forms = () => {
 
   return (
     <>
-        {selectedForm === "Transport"? <TransportForm /> :
-         selectedForm === "Seminar Hall"? <SeminarHallForm /> : 
-         selectedForm === "Guest House"? <GuestHouseForm /> :
-         selectedForm === "Items"? <ItemsForm /> : null }
+      {
+        selectedForm === "Transport"? <TransportForm /> :
+        selectedForm === "Seminar Hall"? <SeminarHallForm /> : 
+        selectedForm === "Guest House"? <GuestHouseForm /> :
+        selectedForm === "Items"? <ItemsForm /> : null 
+      }
     </>
   )
 }

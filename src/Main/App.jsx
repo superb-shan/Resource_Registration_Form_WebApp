@@ -4,11 +4,11 @@ import axios from 'axios';
 import LayoutProvider from '../Layouts/LayoutProvider';
 
 //New -->
-import LoginPage from '../Components/NewComponents/LoginPage';
-import UserPage from '../Components/NewComponents/UserPage';
-import AdminPage from '../Components/NewComponents/AdminPage';
-import ChangePasswordPage from '../Components/NewComponents/ChangePasswordPage';
-import CreateUserPage from '../Components/NewComponents/CreateUserPage';
+import LoginPage from '../Pages/LoginPage';
+import UserPage from '../Pages/UserPage';
+import AdminPage from '../Pages/AdminPage';
+import ChangePasswordPage from '../Pages/ChangePasswordPage';
+import CreateUserPage from '../Pages/CreateUserPage';
 
 
 axios.defaults.baseURL = 'http://localhost:8000'

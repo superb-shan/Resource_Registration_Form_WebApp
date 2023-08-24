@@ -1,13 +1,13 @@
 import React, {useEffect } from 'react'
-import { Wrapper } from './Wrapper'
-import NavBar from './NavBar'
+import { Wrapper } from '../Components/Wrappers/Wrapper'
+import NavBar from '../Components/Navbar/NavBar'
 import { useContext } from 'react';
-import { LoginContext } from '../../Context/Login.Context';
+import { LoginContext } from '../Context/Login.Context';
 import { useNavigate } from 'react-router-dom';
-import Bookings from './Bookings';
-import { UserContext } from '../../Context/User.Context';
-import Forms from './Forms';
-import CheckAvailabilityView from './CheckAvailabilityView';
+import Bookings from '../Components/DataShow/Bookings';
+import { UserContext } from '../Context/User.Context';
+import Forms from '../Components/Forms/Forms';
+import CheckAvailabilityView from '../Components/CheckAvailability/CheckAvailabilityView';
 
  const UserPage = () => {
 

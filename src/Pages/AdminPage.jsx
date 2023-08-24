@@ -1,11 +1,11 @@
 import React, {useState, useEffect, useCallback } from 'react'
-import { Wrapper } from './Wrapper'
-import NavBar from './NavBar'
+import { Wrapper } from '../Components/Wrappers/Wrapper'
+import NavBar from '../Components/Navbar/NavBar'
 import { useContext } from 'react';
-import { LoginContext } from '../../Context/Login.Context';
+import { LoginContext } from '../Context/Login.Context';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import Bookings from './Bookings';
+import Bookings from '../Components/DataShow/Bookings';
 
 
  const AdminPage = () => {

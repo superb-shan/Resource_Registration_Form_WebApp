@@ -1,8 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Wrapper } from './Wrapper';
-import { AccountManagerContainer } from './AccountManagerContainer';
-import { TextInput, PasswordInput } from './InteractionFields';
-import { LoginContext } from '../../Context/Login.Context';
+import { Wrapper } from '../Components/Wrappers/Wrapper';
+import { AccountManagerContainer } from '../Components/Containers/AccountManagerContainer';
+import { TextInput, PasswordInput } from '../Components/Fields/InteractionFields';
+import { LoginContext } from '../Context/Login.Context';
 import { AccountCircle } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import axios from 'axios';

@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { DateTimeInput, Selector } from './InteractionFields';
+import { DateTimeInput, Selector } from '../Fields/InteractionFields';
 import { Box, Button, Divider, Grid, List, ListItemText, Typography } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';

@@ -1,10 +1,10 @@
 import React, { useContext } from 'react'
-import { Wrapper } from './Wrapper';
-import { AccountManagerContainer } from './AccountManagerContainer';
+import { Wrapper } from '../Components/Wrappers/Wrapper';
+import { AccountManagerContainer } from '../Components/Containers/AccountManagerContainer';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
-import { Selector, TextInput, PasswordInput } from './InteractionFields';
-import { LoginContext } from '../../Context/Login.Context';
+import { Selector, TextInput, PasswordInput } from '../Components/Fields/InteractionFields';
+import { LoginContext } from '../Context/Login.Context';
 import { AccountCircle } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { Button } from '@mui/material';

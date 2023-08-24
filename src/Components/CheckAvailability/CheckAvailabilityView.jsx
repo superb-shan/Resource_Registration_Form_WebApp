@@ -1,5 +1,5 @@
 import React from 'react'
-import FormContainer from './FormContainer';
+import FormContainer from '../Containers/FormContainer';
 import CheckAvailability from './CheckAvailability';
 
 const CheckAvailabilityView = () => {

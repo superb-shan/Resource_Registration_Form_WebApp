@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import DataViewContainer from './DataViewContainer';
+import DataViewContainer from '../Containers/DataViewContainer';
 import DataGridTable from './DataGridTable';
-import DataFilterContainer from './DataFilterContainer';
+import DataFilterContainer from '../Containers/DataFilterContainer';
 import { UserContext } from '../../Context/User.Context';
 import moment from 'moment';
 import axios from 'axios';
@@ -9,8 +9,8 @@ import { useContext } from 'react';
 import { useCallback } from 'react';
 import { LoginContext } from '../../Context/Login.Context';
 import { useEffect } from 'react';
-import UserDataModal from './UserDataModal';
-import AdminDataModal from './AdminDataModal';
+import UserDataModal from '../Modals/UserDataModal';
+import AdminDataModal from '../Modals/AdminDataModal';
 
 const Bookings = ({...props}) => {
 

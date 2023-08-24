@@ -16,7 +16,7 @@ import AccountCircle from '@mui/icons-material/AccountCircle';
 import LogoutIcon from '@mui/icons-material/Logout';
 import sriEshwarLogo from '../../Assets/Images/sriEshwarLogo.png'
 import { Link } from 'react-router-dom';
-import { Selector, DropDownSelector } from './InteractionFields';
+import { Selector, DropDownSelector } from '../Fields/InteractionFields';
 
 import { useState, useEffect, useContext} from 'react';
 

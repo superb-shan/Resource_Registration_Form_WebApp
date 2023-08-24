@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react'
-import FormContainer from './FormContainer'
-import { DateTimeInput, TextInput } from './InteractionFields';
+import FormContainer from '../Containers/FormContainer'
+import { DateTimeInput, TextInput } from '../Fields/InteractionFields';
 import { LoginContext } from '../../Context/Login.Context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
