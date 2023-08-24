@@ -87,7 +87,7 @@ const ItemsForm = () => {
         }
 
         const formattedDateTime = requisitionDateTime.toString();
-        const formatted1DateTime = requisitionDateTime.toString();
+        const formatted1DateTime = clearanceOfBill.toString();
         const res = await axios.post(`/items/create`, 
         {
             userName,
