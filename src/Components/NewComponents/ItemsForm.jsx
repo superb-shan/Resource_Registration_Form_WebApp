@@ -15,20 +15,20 @@ const ItemsForm = () => {
 
     const [requestorName, setRequestorName] = useState('');
     const [requestorEmpId, setRequestorEmpID] = useState('');
-    const [Department, setDepartment] = useState('');
+    const [department, setDepartment] = useState('');
     const [purposeOfRequisition, setPurposeOfRequisition] = useState('');
     const [requisitionDateTime, setRequisitionDateTime] = useState(null);
-    const[Designation,setDesignation]=useState('');
-    const[Printing,setPrinting]=useState('');
-    const[GuestMomento,setGuestMomento]=useState('');
-    const[StudentMomento,setStudentMomento]=useState('');
-    const[PrintedEnvelopes,setPrintedEnvelopes]=useState('');
-    const[AnswerBooklets,setAnswerBooklets]=useState('');
-    const[StudentNotebooks,setStudentNotebooks]=useState('');
-    const[RecordNoteWithGraph,setRecordNoteWithGraph]=useState('');
-    const[RecordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState('');
-    const[ObservationBook,setObservationBook]=useState('');
-    const [ClearanceOfBill, setClearanceOfBill] = useState(null);
+    const[designation,setDesignation]=useState('');
+    const[printing,setPrinting]=useState('');
+    const[guestMomento,setGuestMomento]=useState('');
+    const[studentMomento,setStudentMomento]=useState('');
+    const[printedEnvelopes,setPrintedEnvelopes]=useState('');
+    const[answerBooklets,setAnswerBooklets]=useState('');
+    const[studentNotebooks,setStudentNotebooks]=useState('');
+    const[recordNoteWithGraph,setRecordNoteWithGraph]=useState('');
+    const[recordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState('');
+    const[observationBook,setObservationBook]=useState('');
+    const [clearanceOfBill, setClearanceOfBill] = useState(null);
 
 
     const [postStatus, setPostStatus] = useState('');
@@ -63,11 +63,11 @@ const ItemsForm = () => {
     const fieldsToCheckForValidation = [
         requestorName,
         requestorEmpId,
-        Department,
+        department,
         purposeOfRequisition,
         requisitionDateTime,
-        Designation,
-        ClearanceOfBill
+        designation,
+        clearanceOfBill
       ];
 
     const handleSubmit = async() => {
@@ -93,20 +93,20 @@ const ItemsForm = () => {
             userName,
             requestorEmpId,
             requestorName,
-            Department,
+            department,
             purposeOfRequisition,
             requisitionDateTime: formattedDateTime,
-            Designation,
-            Printing,
-            GuestMomento,
-            StudentMomento,
-            PrintedEnvelopes,
-            AnswerBooklets,
-            StudentNotebooks,
-            RecordNoteWithGraph,
-            ObservationBook,
-            RecordNoteWithoutGraph,
-            ClearanceOfBill: formatted1DateTime
+            designation,
+            printing,
+            guestMomento,
+            studentMomento,
+            printedEnvelopes,
+            answerBooklets,
+            studentNotebooks,
+            recordNoteWithGraph,
+            observationBook,
+            recordNoteWithoutGraph,
+            clearanceOfBill: formatted1DateTime
 
 
         }
@@ -126,21 +126,21 @@ const ItemsForm = () => {
     <FormContainer title="Items Form">
         <TextInput label="Requestor Name *" value={requestorName} setValue={setRequestorName} />
         <TextInput label="Requestor EMP ID *" type="number" value={requestorEmpId} setValue={setRequestorEmpID} />
-        <TextInput label="Department *" select={true} value={Department} setValue={setDepartment} options={allDepartments} />
+        <TextInput label="Department *" select={true} value={department} setValue={setDepartment} options={allDepartments} />
         <TextInput label="Purpose of Requisition *"  value={purposeOfRequisition} setValue={setPurposeOfRequisition}  />
         <DateTimeInput label="Requisition Date Time *" value={requisitionDateTime} setValue={setRequisitionDateTime} />
-        <TextInput label="Designation *" value={Designation} setValue={setDesignation} />
+        <TextInput label="Designation *" value={designation} setValue={setDesignation} />
         <p>Enter the Required Quantity for the required field alone in below </p>
-        <TextInput label="Printing of books/Ledgers/Manual/Certificates " value={Printing} setValue={setPrinting} />
-        <TextInput label="Guest Momento " value={GuestMomento} setValue={setGuestMomento} />
-        <TextInput label="Student Momento " value={StudentMomento} setValue={setStudentMomento} />
-        <TextInput label="Printed Envelopes " value={PrintedEnvelopes} setValue={setPrintedEnvelopes} />
-        <TextInput label="Answer Booklets " value={AnswerBooklets} setValue={setAnswerBooklets} />
-        <TextInput label="Student Notebooks " value={StudentNotebooks} setValue={setStudentNotebooks} />
-        <TextInput label="Student Record Notebook with graph " value={RecordNoteWithGraph} setValue={setRecordNoteWithGraph} />
-        <TextInput label="Student Record Notebook without graph " value={RecordNoteWithoutGraph} setValue={setRecordNoteWithoutGraph} />
-        <TextInput label="Student Observation Book*" value={ObservationBook} setValue={setObservationBook} />
-        <DateTimeInput label="Clearance of Bill On or Before *" value={ClearanceOfBill} setValue={setClearanceOfBill} />
+        <TextInput label="Printing of books/Ledgers/Manual/Certificates " value={printing} setValue={setPrinting} />
+        <TextInput label="Guest Momento " value={guestMomento} setValue={setGuestMomento} />
+        <TextInput label="Student Momento " value={studentMomento} setValue={setStudentMomento} />
+        <TextInput label="Printed Envelopes " value={printedEnvelopes} setValue={setPrintedEnvelopes} />
+        <TextInput label="Answer Booklets " value={answerBooklets} setValue={setAnswerBooklets} />
+        <TextInput label="Student Notebooks " value={studentNotebooks} setValue={setStudentNotebooks} />
+        <TextInput label="Student Record Notebook with graph " value={recordNoteWithGraph} setValue={setRecordNoteWithGraph} />
+        <TextInput label="Student Record Notebook without graph " value={recordNoteWithoutGraph} setValue={setRecordNoteWithoutGraph} />
+        <TextInput label="Student Observation Book*" value={observationBook} setValue={setObservationBook} />
+        <DateTimeInput label="Clearance of Bill On or Before *" value={clearanceOfBill} setValue={setClearanceOfBill} />
 
         <Button variant="contained"  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
     </FormContainer>
