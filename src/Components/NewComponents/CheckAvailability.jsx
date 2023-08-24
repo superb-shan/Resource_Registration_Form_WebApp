@@ -6,7 +6,7 @@ import ReactLoading from 'react-loading';
 import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
-import { SeminorContext } from '../../Context/Seminor.Context';
+import { SeminarContext } from '../../Context/Seminar.Context';
 import { UserContext } from '../../Context/User.Context';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 
@@ -24,7 +24,7 @@ const CheckAvailability = ({...props}) => {
         unavailableHalls, 
         setUnavailableHalls,
         allHalls 
-      } = useContext(SeminorContext);
+      } = useContext(SeminarContext);
 
   const{
         setSelectedView,
@@ -41,7 +41,7 @@ const CheckAvailability = ({...props}) => {
 
 
   const {startDateTime, setStartDateTime,
-      endDateTime, setEndDateTime} = useContext(formType  === "Seminar Hall" || target === "seminar" ? SeminorContext :GuestHouseContext);
+      endDateTime, setEndDateTime} = useContext(formType  === "Seminar Hall" || target === "seminar" ? SeminarContext : GuestHouseContext);
 
   if(formType  === "Guest House" || target === "guesthouse"){
     isAvailabilityChecked  =  isGuestHouseAvailabilityChecked;

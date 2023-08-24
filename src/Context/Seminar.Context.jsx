@@ -3,9 +3,9 @@ import moment from "moment";
 import axios from "axios";
 import {toast} from "react-toastify";
 
-export const SeminorContext = createContext();
+export const SeminarContext = createContext();
 
-const SeminorProvider = ({ children }) => {
+const SeminarProvider = ({ children }) => {
 
   const [name, setName] = useState('');
   const [contactNumber, setContactNumber] = useState('');
@@ -147,7 +147,7 @@ const SeminorProvider = ({ children }) => {
   
   
     return (
-      <SeminorContext.Provider
+      <SeminarContext.Provider
         value={{
             //send all the created variables
             name, setName,
@@ -189,9 +189,9 @@ const SeminorProvider = ({ children }) => {
         }}
       >
         {children}
-      </SeminorContext.Provider>
+      </SeminarContext.Provider>
     );
   };
   
-  export default SeminorProvider;
+  export default SeminarProvider;
   

@@ -12,7 +12,7 @@ import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
 import CheckAvailability from './CheckAvailability';
-import { SeminorContext } from '../../Context/Seminor.Context';
+import { SeminarContext } from '../../Context/Seminar.Context';
 
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 const allEquipments = ['Audio', 'Video', 'Reception items', 'Power Back up', 'Others'];
@@ -35,7 +35,7 @@ const SeminarHallForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
-  const { allHalls, startDateTime,  endDateTime,  isAvailabilityChecked } = useContext(SeminorContext);
+  const { allHalls, startDateTime,  endDateTime,  isAvailabilityChecked } = useContext(SeminarContext);
 
   
 

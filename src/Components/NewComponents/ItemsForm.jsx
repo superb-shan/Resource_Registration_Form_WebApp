@@ -6,7 +6,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
 
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
@@ -18,16 +18,15 @@ const ItemsForm = () => {
     const [department, setDepartment] = useState('');
     const [purposeOfRequisition, setPurposeOfRequisition] = useState('');
     const [requisitionDateTime, setRequisitionDateTime] = useState(null);
-    const [designation,setDesignation]=useState('');
     const [printing,setPrinting]=useState('');
     const [guestMomento,setGuestMomento]=useState('');
     const [studentMomento,setStudentMomento]=useState('');
     const [printedEnvelopes,setPrintedEnvelopes]=useState('');
     const [answerBooklets,setAnswerBooklets]=useState('');
-    const[studentNotebooks,setStudentNotebooks]=useState('');
-    const[recordNoteWithGraph,setRecordNoteWithGraph]=useState('');
-    const[recordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState('');
-    const[observationBook,setObservationBook]=useState('');
+    const [studentNotebooks,setStudentNotebooks]=useState('');
+    const [recordNoteWithGraph,setRecordNoteWithGraph]=useState('');
+    const [recordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState('');
+    const [observationBook,setObservationBook]=useState('');
     const [clearanceOfBill, setClearanceOfBill] = useState(null);
 
 
@@ -66,7 +65,6 @@ const ItemsForm = () => {
         department,
         purposeOfRequisition,
         requisitionDateTime,
-        designation,
         clearanceOfBill
       ];
 
@@ -96,7 +94,6 @@ const ItemsForm = () => {
             department,
             purposeOfRequisition,
             requisitionDateTime: formattedDateTime,
-            designation,
             printing,
             guestMomento,
             studentMomento,
@@ -107,8 +104,6 @@ const ItemsForm = () => {
             observationBook,
             recordNoteWithoutGraph,
             clearanceOfBill: formatted1DateTime
-
-
         }
         );
         setPostStatus(res.data.message);
@@ -129,8 +124,7 @@ const ItemsForm = () => {
         <TextInput label="Department *" select={true} value={department} setValue={setDepartment} options={allDepartments} />
         <TextInput label="Purpose of Requisition *"  value={purposeOfRequisition} setValue={setPurposeOfRequisition}  />
         <DateTimeInput label="Requisition Date Time *" value={requisitionDateTime} setValue={setRequisitionDateTime} />
-        <TextInput label="Designation *" value={designation} setValue={setDesignation} />
-        <p>Enter the Required Quantity for the required field alone in below </p>
+        <Typography>Enter the Required Quantity for the required field alone in below </Typography>
         <TextInput label="Printing of books/Ledgers/Manual/Certificates " value={printing} setValue={setPrinting} />
         <TextInput label="Guest Momento " value={guestMomento} setValue={setGuestMomento} />
         <TextInput label="Student Momento " value={studentMomento} setValue={setStudentMomento} />
