@@ -12,19 +12,19 @@ import { useEffect } from 'react';
 import UserDataModal from '../Modals/UserDataModal';
 import AdminDataModal from '../Modals/AdminDataModal';
 
-const Bookings = ({...props}) => {
+const Bookings = () => {
 
-    const [gridData, setGridData] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(null);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedRow, setSelectedRow] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
-    const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
-    const {user, isLoggedIn} = useContext(LoginContext);
-    const {userName} = useContext(UserContext);
+  const [gridData, setGridData] = useState([]);
+  const [selectedDate, setSelectedDate] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
+  const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
+  const {user, isLoggedIn} = useContext(LoginContext);
+  const {userName} = useContext(UserContext);
 
-    const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
+  const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
 
   const fetchData = useCallback(async () => {
     const param = {}

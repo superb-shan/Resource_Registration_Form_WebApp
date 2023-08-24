@@ -13,7 +13,7 @@ import Bookings from '../Components/DataShow/Bookings';
   const navigate = useNavigate();
   const {user, isLoggedIn} = useContext(LoginContext);
 
-  
+  console.log("ad", user);
   useEffect(()=>{
     if (user !== 'admin') {
       toast.info("You are not an Admin");

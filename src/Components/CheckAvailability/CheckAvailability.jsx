@@ -71,24 +71,7 @@ const CheckAvailability = ({...props}) => {
       toast.error('Start date & time should be same or before End date & Time');
       return;
     }
-    // if(moment(endDate).isSame(moment(startDate)) && moment(endTime).isSameOrBefore(moment(startTime), 'hour')){
-    //   toast.error("Start Time Should Be Before End Time with at least 1 hour slot");
-    //   return;
-    // }
 
-    // const startDateTime = moment(`${startDate} ${startTime}`, 'DD-MM-YYYY HH:mm A');
-    // const endDateTime = moment(`${endDate} ${endTime}`, 'DD-MM-YYYY HH:mm A');
-    // if(moment(endDate).isSame(moment(startDate)) && moment(endDateTime).isSameOrBefore(moment(startDateTime), 'hour')){
-    //   toast.error("Start Time Should Be Before End Time with at least 1 hour slot");
-    //   return;
-    // }
-
-    // console.log("s:", startDateTime, "e:", endDateTime);
-    // if (endDateTime.isBefore(startDateTime)) {
-    //   console.log("s:", startDateTime, "e:", endDateTime);
-    //   toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
-    //   return;
-    // }
     if(!moment(endDateTime.toString()).isAfter(moment(startDateTime.toString()), 'hour')){
       toast.error('Start Time Should Be Before End Time with at least 1 hour slot');
       return;

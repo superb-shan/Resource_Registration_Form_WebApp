@@ -94,14 +94,8 @@ const TransportForm = () => {
         const res = await axios.post(`/transport/create`, 
         {
             userName,
-            coordinatorName,
-            coordinatorPhoneNumber,
-            guestName,
-            guestPhoneNumber,
-            purposeOfTravel,
+            ...fieldsToCheckForValidation,
             travelDateTime: formattedDateTime,
-            pickupLocation,
-            dropLocation,
             noOfPassengers: noOfPassengers.toString(),
             specialRequirements,
         }

@@ -8,19 +8,22 @@ import Bookings from '../Components/DataShow/Bookings';
 import { UserContext } from '../Context/User.Context';
 import Forms from '../Components/Forms/Forms';
 import CheckAvailabilityView from '../Components/CheckAvailability/CheckAvailabilityView';
+import { toast } from 'react-toastify';
 
  const UserPage = () => {
 
   const navigate = useNavigate();
-  const {isLoggedIn} = useContext(LoginContext);
+  const {user, isLoggedIn} = useContext(LoginContext);
   const {selectedView} = useContext(UserContext);
 
-    
+    console.log("user",user, "res", !user === "user" );
   useEffect(()=>{
-    if (!isLoggedIn) {
+    if (user !== "user") {
+      console.log("inside");
+      toast.warn("Your are not logged in as a user");
       navigate("/");
     } 
-  },[isLoggedIn, navigate]);
+  },[user, isLoggedIn, navigate]);
 
   return (
     <Wrapper alignment="start">

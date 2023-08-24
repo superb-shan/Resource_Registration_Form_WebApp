@@ -89,10 +89,7 @@ const ItemsForm = () => {
         const res = await axios.post(`/items/create`, 
         {
             userName,
-            requestorEmpId,
-            requestorName,
-            department,
-            purposeOfRequisition,
+            ...fieldsToCheckForValidation,
             requisitionDateTime: formattedDateTime,
             printing,
             guestMomento,

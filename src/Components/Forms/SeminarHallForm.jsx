@@ -116,18 +116,8 @@ const SeminarHallForm = () => {
     const res = await axios.post(`/seminar/create`,
     {
       userName,
-      coordinatorName,
-      coordinatorPhoneNumber,
-      speakerName,
-      speakerPhoneNumber,
-      organizingDepartment,
-      topic,
-      startDateTime,
-      endDateTime,
-      noOfAttendees,
-      equipmentsRequired,
+      ...fieldsToCheckForValidation, 
       specialRequirements,
-      hallRequired
     }
   );
     // console.log("Response:", res);

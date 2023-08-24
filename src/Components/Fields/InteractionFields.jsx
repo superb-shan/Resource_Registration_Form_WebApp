@@ -40,6 +40,8 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 const TextInput = ({...props}) => {
 
+  const endAdornment = props.endAdornment;
+
   const handleValueChange = (event) => props.setValue(event.target.value);
 
   return (
@@ -49,7 +51,7 @@ const TextInput = ({...props}) => {
         variant="outlined" 
         {...props} 
         InputProps={{
-          endAdornment: <InputAdornment position="end"> {props.endAdornment} </InputAdornment>
+          endAdornment: <InputAdornment position="end"> {endAdornment} </InputAdornment>
         }}
         value={props.value}
         onChange={handleValueChange}

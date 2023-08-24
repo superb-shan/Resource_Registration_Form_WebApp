@@ -118,19 +118,7 @@ const GuestHouseForm = () => {
     const res = await axios.post(`/guesthouse/create`,
     {
       userName,
-      coordinatorName,
-      coordinatorPhoneNumber,
-      guestName, 
-      guestPhoneNumber,
-      organizingDepartment,
-      purposeOfStay,
-      foodRequired,
-      menuRequired,
-      paymentDoneBy,
-      startDateTime,
-      endDateTime,
-      noOfGuests,
-      roomRequired,
+      ...fieldsToCheckForValidation,
       specialRequirements,
     }
   );

@@ -55,9 +55,6 @@ const AdminDataModal = ({...props}) => {
       pdf.setFontSize(16);
       pdf.text("Sri Eshwar College of Engineering", 60, 25);
     
-      // const logoPath = "/Users/jeethula/Desktop/project_sece/download.png";
-      // pdf.addImage(logoPath, "png", 20, 10, 30, 30);
-    
       if (props.selectedRow) {
         pdf.setFontSize(14);
         pdf.text("The Details of the Bookings are below , ", 20, 40);
