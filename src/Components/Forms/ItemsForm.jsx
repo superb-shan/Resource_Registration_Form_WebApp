@@ -130,7 +130,7 @@ const ItemsForm = () => {
         <TextInput label="Student Notebooks " value={studentNotebooks} setValue={setStudentNotebooks} />
         <TextInput label="Student Record Notebook with graph " value={recordNoteWithGraph} setValue={setRecordNoteWithGraph} />
         <TextInput label="Student Record Notebook without graph " value={recordNoteWithoutGraph} setValue={setRecordNoteWithoutGraph} />
-        <TextInput label="Student Observation Book*" value={observationBook} setValue={setObservationBook} />
+        <TextInput label="Student Observation Book" value={observationBook} setValue={setObservationBook} />
         <DateTimeInput label="Clearance of Bill On or Before *" value={clearanceOfBill} setValue={setClearanceOfBill} />
 
         <Button variant="contained"  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
