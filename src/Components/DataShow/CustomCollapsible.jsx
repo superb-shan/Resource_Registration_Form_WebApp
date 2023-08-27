@@ -14,7 +14,7 @@ const CustomCollapsible = ({ title, children }) => {
                     <Typography sx={{ mb: 0.5 }}>
                         {title}
                     </Typography>
-                    <KeyboardArrowDown style={{ marginLeft: 'auto', transform: `rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s' }} />
+                    <KeyboardArrowDown sx={{ marginLeft: 'auto', color: "text.main", transform: `rotate(${isOpen ? 180 : 0}deg)`, transition: 'transform 0.3s' }} />
                 </div>
             }
             onOpening={() => setIsOpen(true)}
