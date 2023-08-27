@@ -107,9 +107,9 @@ function NavBar({...props}) {
 
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
             {
-              selectedView==="Add Bookings" 
-              &&
-              <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
+             
+             selectedView==="Add Bookings" && 
+               <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
             }
           </Box>
 
