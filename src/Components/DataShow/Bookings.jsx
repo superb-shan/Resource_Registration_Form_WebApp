@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DataViewContainer from '../Containers/DataViewContainer';
 import DataGridTable from './DataGridTable';
-import DataFilterContainer from '../Containers/DataFilterContainer';
+import DataFilterComponent from './DataFilterComponent';
 import { UserContext } from '../../Context/User.Context';
 import moment from 'moment';
 import axios from 'axios';
@@ -21,7 +21,7 @@ const Bookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
   const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
-  const {user, isLoggedIn} = useContext(LoginContext);
+  const {user} = useContext(LoginContext);
   const {userName} = useContext(UserContext);
 
   const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
@@ -95,7 +95,7 @@ const Bookings = () => {
                     />
           }
         />
-        <DataFilterContainer 
+        <DataFilterComponent 
           setSelectedDate={setSelectedDate} 
           selectedDate={selectedDate} 
           filterData = {[

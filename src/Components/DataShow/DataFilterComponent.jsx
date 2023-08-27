@@ -3,9 +3,9 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { SettingsBackupRestore } from '@mui/icons-material';
-import Calendar from '../DataShow/Calendar';
+import Calendar from './Calendar';
 
-const DataFilterContainer = ({...props}) => {
+const DataFilterComponent = ({...props}) => {
 
   const filterData = props.filterData;
   const handleAllButton = () => {
@@ -58,4 +58,4 @@ const DataFilterContainer = ({...props}) => {
   )
 }
 
-export default DataFilterContainer
+export default DataFilterComponent
