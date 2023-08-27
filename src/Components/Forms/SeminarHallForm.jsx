@@ -45,7 +45,7 @@ const SeminarHallForm = () => {
     }
 
     if (typeof value === "string" || Array.isArray(value)) {
-      return value.trim() !== "";
+      return value !== "";
     }
 
     if (typeof value === "object" && value instanceof Date) {
@@ -87,7 +87,7 @@ const SeminarHallForm = () => {
       setIsLoading(false);
       return;
     }
-    if(coordinatorPhoneNumber.length !=='10' || speakerPhoneNumber.length !=='10'){
+    if(coordinatorPhoneNumber.length !==10 || speakerPhoneNumber.length !==10){
       toast.error("Enter 10 digit Phone Number");
       return;
     }
@@ -102,7 +102,7 @@ const SeminarHallForm = () => {
     }
 
     //Check for unavailability of hall before sending request
-    const response = await axios.get("/seminar/checkAvailability", {params: {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}});
+    const response = await axios.get("/seminar/checkAvailability", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
 
     if (recentUnavailableHalls.includes(hallRequired)){
@@ -111,25 +111,50 @@ const SeminarHallForm = () => {
       return;
     }
     //Create booking
-
+    console.log({
+      userName,
+      coordinatorName,
+      coordinatorPhoneNumber,
+      speakerName,
+      speakerPhoneNumber,
+      organizingDepartment,
+      topic,
+      startDateTime,
+      endDateTime,
+      noOfAttendees,
+      equipmentsRequired: equipmentsRequired.join(", "),
+      hallRequired, 
+      specialRequirements,
+    })
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`/seminar/create`,
     {
       userName,
-      ...fieldsToCheckForValidation, 
+      coordinatorName,
+      coordinatorPhoneNumber,
+      speakerName,
+      speakerPhoneNumber,
+      organizingDepartment,
+      topic,
+      startDateTime,
+      endDateTime,
+      noOfAttendees,
+      equipmentsRequired: equipmentsRequired.join(", "),
+      hallRequired, 
       specialRequirements,
     }
   );
     // console.log("Response:", res);
     setPostStatus(res.data.message);
-    setSelectedView('My Bookings');
     setIsLoading(false);
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {
-      console.log("not created seminar", postStatus)
-      toast.error(postStatus)
+      console.log("not created seminar", res)
+      toast.error(postStatus);
+      return;
     }
+    setSelectedView('My Bookings');
   }
 
 

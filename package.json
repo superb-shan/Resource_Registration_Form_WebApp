@@ -25,6 +25,7 @@
     "print-js": "^1.6.0",
     "react": "^18.2.0",
     "react-burger-menu": "^3.0.9",
+    "react-collapsible": "^2.10.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
     "react-loading": "^2.0.3",

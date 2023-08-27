@@ -9,6 +9,7 @@ import moment from 'moment';
 import { SeminarContext } from '../../Context/Seminar.Context';
 import { UserContext } from '../../Context/User.Context';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
+import CustomCollapsible from '../DataShow/CustomCollapsible';
 
 
 const CheckAvailability = ({...props}) => {
@@ -16,6 +17,7 @@ const CheckAvailability = ({...props}) => {
 
   const target = props.target
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+  const [unavailableHallsObject, setUnavailableHallsObject] = useState([]);
   const [formType, setFormType] = useState('Seminar Hall');
 
   let {
@@ -40,8 +42,12 @@ const CheckAvailability = ({...props}) => {
   } = useContext(GuestHouseContext);
 
 
-  const {startDateTime, setStartDateTime,
-      endDateTime, setEndDateTime} = useContext(formType  === "Seminar Hall" || target === "seminar" ? SeminarContext : GuestHouseContext);
+  const {
+    startDateTime,
+    setStartDateTime,
+    endDateTime, 
+    setEndDateTime
+  } = useContext(target === "guesthouse" ? GuestHouseContext : SeminarContext);
 
   if(formType  === "Guest House" || target === "guesthouse"){
     isAvailabilityChecked  =  isGuestHouseAvailabilityChecked;
@@ -63,6 +69,7 @@ const CheckAvailability = ({...props}) => {
   };
   
   const handleCheckAvailability = async () => {
+    console.log(formType, target);
     if (!startDateTime || !endDateTime){
       toast.warn("Please select a start and end time");
       return;
@@ -82,12 +89,15 @@ const CheckAvailability = ({...props}) => {
     }
 
     setIsAvailabilityLoading(true);
+    //console.log({params: formType  === "Seminar Hall" || target === "seminar" ? {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}})
     //console.log(`/${target ? target : formType === "Seminar Hall"? "seminar": "guesthouse"}/checkAvailability`);
-    const res = await axios.get((target === "seminar" || formType === "Seminar Hall" ? "/seminar/checkAvailability": "/guesthouse/checkAvailablity") + "", {params: formType  === "Seminar Hall" || target === "seminar" ? {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
+    const res = await axios.get((target === "seminar" || formType === "Seminar Hall" ? "/seminar/checkAvailability": "/guesthouse/checkAvailablity") + "", {params: formType  === "Seminar Hall" || target === "seminar" ? {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     console.log(res);
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
-    setUnavailableHalls(res.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || []);
+    console.log(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
+    setUnavailableHalls(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired) || []);
+    setUnavailableHallsObject(res.data?.overlappingSeminarHalls || []);
   }
 
   const handleProceed = () => {
@@ -135,8 +145,19 @@ const CheckAvailability = ({...props}) => {
             Not Available
           </Typography>
           <Box>
+            {console.log(unavailableHallsObject)}
             <List>
-              {unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : unavailableHalls.map((hall) => <ListItemText primary={hall}/>)}  
+              {
+                unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : 
+                // unavailableHallsObject.map((hall) => <ListItemText primary={hall}/>)
+                unavailableHallsObject.map((hall) => 
+                  <CustomCollapsible title={hall.hallRequired} >
+                    <Box sx={{textAlign: "left"}}>
+                    {Object.keys(hall).filter((item) => item !== "hallRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> {item + "  :  " + hall[item]}</Box>)}
+                    </Box>
+                  </CustomCollapsible>
+                )
+              }  
             </List>
           </Box>
         </Grid>

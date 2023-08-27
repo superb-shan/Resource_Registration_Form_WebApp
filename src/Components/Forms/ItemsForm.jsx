@@ -89,7 +89,10 @@ const ItemsForm = () => {
         const res = await axios.post(`/items/create`, 
         {
             userName,
-            ...fieldsToCheckForValidation,
+            requestorName,
+            requestorEmpId,
+            department,
+            purposeOfRequisition,
             requisitionDateTime: formattedDateTime,
             printing,
             guestMomento,
@@ -104,12 +107,14 @@ const ItemsForm = () => {
         }
         );
         setPostStatus(res.data.message);
-        setSelectedView('My Bookings');
+        console.log(res);
         if(res.data.message===true){
             toast.success("Submitted");
         }else{
-            toast.error("Please fill the form correctly")
+            toast.error("Please fill the form correctly");
+            return;
         }
+        setSelectedView('My Bookings');
     };
 
     
