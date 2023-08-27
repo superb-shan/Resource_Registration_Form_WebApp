@@ -71,7 +71,7 @@ const DateTimeInput = ({...props}) => {
 
   const handleValueChange = (dateTime) => {
     props.setValue(dateTime);
-    props?.unCheck(false);
+    typeof props.unCheck === 'function' && props.unCheck(false);
   };
 
   return (

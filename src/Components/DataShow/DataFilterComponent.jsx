@@ -1,9 +1,9 @@
 import React from 'react'
 import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import { SettingsBackupRestore } from '@mui/icons-material';
 import Calendar from './Calendar';
+import CustomCollapsible from './CustomCollapsible';
 
 const DataFilterComponent = ({...props}) => {
 
@@ -31,25 +31,25 @@ const DataFilterComponent = ({...props}) => {
       
       <Calendar selectedDate= {props.selectedDate} setSelectedDate= {props.setSelectedDate} />
         
-      <Box sx={{ width: 400, borderRadius: 3, display: "flex", justifyContent: "space-evenly" }}>
+      <Box sx={{ width: 400, borderRadius: 3, display: "flex", flexDirection: "column", height: 300, overflowY: "auto", overflowX: "clip" }}>
         {filterData.map((filterGroup, index) => (
-          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }} key={index}>
-            <Typography sx={{ mb: 0.5 }} fontSize={14}>
-              {filterGroup.title}
-            </Typography>
-            <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-              {filterGroup.filters.map((filter) => (
-                <Button
-                  key={filter}
-                  variant={filterGroup.value === filter ? "contained" : "outlined"}
-                  sx={{ height: "30px" }}
-                  name={filter}
-                  onClick={() => filterGroup.setValue(filter)}
-                >
-                  {filter}
-                </Button>
-              ))}
-            </Box>
+          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", mb:2 }} key={index}>
+            <CustomCollapsible title={filterGroup.title} isOpen={filterGroup.isOpen} toggle={() => filterGroup.isOpen = !filterGroup.isOpen}>
+              {/* Content to display when the collapsible section is expanded */}
+              <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>
+                {filterGroup.filters.map((filter) => (
+                  <Button
+                    key={filter}
+                    variant={filterGroup.value === filter ? 'contained' : 'outlined'}
+                    sx={{ height: '30px' }}
+                    name={filter}
+                    onClick={() => filterGroup.setValue(filter)}
+                  >
+                    {filter}
+                  </Button>
+                ))}
+              </Box>
+            </CustomCollapsible>
           </Box>
         ))}
       </Box>

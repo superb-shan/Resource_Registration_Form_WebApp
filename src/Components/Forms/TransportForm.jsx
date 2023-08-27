@@ -73,7 +73,7 @@ const TransportForm = () => {
             toast.warning('Fill all the Required fields');
             return;
         }
-        if(coordinatorPhoneNumber.length!=='10' || guestPhoneNumber.length!=='10'){
+        if(coordinatorPhoneNumber.length!==10 || guestPhoneNumber.length!==10){
             toast.error("Enter 10 digit Phone Number");
             return;
         }
@@ -91,22 +91,43 @@ const TransportForm = () => {
         }
 
         const formattedDateTime = travelDateTime.toString();
+        console.log({
+            userName,
+            coordinatorName,
+            coordinatorPhoneNumber,
+            guestName,
+            guestPhoneNumber,
+            purposeOfTravel,
+            pickupLocation,
+            dropLocation,
+            travelDateTime: formattedDateTime,
+            noOfPassengers: noOfPassengers.toString(),
+            specialRequirements,
+        })
         const res = await axios.post(`/transport/create`, 
         {
             userName,
-            ...fieldsToCheckForValidation,
+            coordinatorName,
+            coordinatorPhoneNumber,
+            guestName,
+            guestPhoneNumber,
+            purposeOfTravel,
+            pickupLocation,
+            dropLocation,
             travelDateTime: formattedDateTime,
             noOfPassengers: noOfPassengers.toString(),
             specialRequirements,
         }
         );
         setPostStatus(res.data.message);
-        setSelectedView('My Bookings');
-        if(res.data.message===true){
+        console.log(res.data);
+        if(res.data.message==="Transport created successfully"){
             toast.success("Submitted");
         }else{
-            toast.error("Please fill the form correctly")
+            toast.error("Please fill the form correctly");
+            return;
         }
+        setSelectedView('My Bookings');
     };
 
     

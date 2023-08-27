@@ -11,6 +11,9 @@ const theme = createTheme({
     secondary: {
       main: '#ffd966',
     },
+    text: {
+      main: '#374151',
+    },
   },
   typography: {
     fontFamily: 'Poppins, sans-serif',

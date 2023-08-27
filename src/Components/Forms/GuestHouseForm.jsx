@@ -49,7 +49,7 @@ const GuestHouseForm = () => {
     }
 
     if (typeof value === "string" || Array.isArray(value)) {
-      return value.trim() !== "";
+      return value !== "";
     }
 
     if (typeof value === "object" && value instanceof Date) {
@@ -90,10 +90,11 @@ const GuestHouseForm = () => {
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
     if (!allFieldsNotEmpty){ 
       toast.warning('Fill all the Required fields');
+      console.log(fieldsToCheckForValidation);
       setIsLoading(false);
       return;
     }
-    if(coordinatorPhoneNumber.length !=='10' || guestPhoneNumber.length !=='10'){
+    if(coordinatorPhoneNumber.length !==10 || guestPhoneNumber.length !==10){
       toast.error("Enter 10 digit Phone Number");
       return;
     }
@@ -116,22 +117,35 @@ const GuestHouseForm = () => {
 
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`/guesthouse/create`,
-    {
-      userName,
-      ...fieldsToCheckForValidation,
-      specialRequirements,
-    }
-  );
-    // console.log("Response:", res);
+      {
+        userName,
+        coordinatorName,
+        coordinatorPhoneNumber,
+        guestName, 
+        guestPhoneNumber,
+        organizingDepartment,
+        purposeOfStay,
+        foodRequired,
+        menuRequired,
+        paymentDoneBy,
+        startDateTime,
+        endDateTime,
+        noOfGuests,
+        roomRequired,
+        specialRequirements,
+      }
+    );
+    console.log("Response:", res);
     setPostStatus(res.data.message);
-    setSelectedView('My Bookings');
     setIsLoading(false);
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {
       console.log("not created guest house", postStatus)
-      toast.error(postStatus)
+      toast.error(postStatus);
+      return;
     }
+    setSelectedView('My Bookings');
   }
 
 

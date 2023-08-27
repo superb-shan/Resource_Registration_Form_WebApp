@@ -89,7 +89,10 @@ const ItemsForm = () => {
         const res = await axios.post(`/items/create`, 
         {
             userName,
-            ...fieldsToCheckForValidation,
+            requestorName,
+            requestorEmpId,
+            department,
+            purposeOfRequisition,
             requisitionDateTime: formattedDateTime,
             printing,
             guestMomento,
@@ -104,12 +107,14 @@ const ItemsForm = () => {
         }
         );
         setPostStatus(res.data.message);
-        setSelectedView('My Bookings');
+        console.log(res);
         if(res.data.message===true){
             toast.success("Submitted");
         }else{
-            toast.error("Please fill the form correctly")
+            toast.error("Please fill the form correctly");
+            return;
         }
+        setSelectedView('My Bookings');
     };
 
     
@@ -130,7 +135,7 @@ const ItemsForm = () => {
         <TextInput label="Student Notebooks " value={studentNotebooks} setValue={setStudentNotebooks} />
         <TextInput label="Student Record Notebook with graph " value={recordNoteWithGraph} setValue={setRecordNoteWithGraph} />
         <TextInput label="Student Record Notebook without graph " value={recordNoteWithoutGraph} setValue={setRecordNoteWithoutGraph} />
-        <TextInput label="Student Observation Book*" value={observationBook} setValue={setObservationBook} />
+        <TextInput label="Student Observation Book" value={observationBook} setValue={setObservationBook} />
         <DateTimeInput label="Clearance of Bill On or Before *" value={clearanceOfBill} setValue={setClearanceOfBill} />
 
         <Button variant="contained"  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
