@@ -104,8 +104,9 @@ const GuestHouseForm = () => {
       return;
     }
 
+    console.log({params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     //Check for unavailability of hall before sending request
-    const response = await axios.get("/guesthouse/checkAvailablity", {params: {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}});
+    const response = await axios.get("/guesthouse/checkAvailability", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     const recentUnavailableRooms = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
 
     if (recentUnavailableRooms.includes(roomRequired)){
@@ -114,9 +115,25 @@ const GuestHouseForm = () => {
       return;
     }
     //Create booking
-
+    console.log({
+      userName,
+      coordinatorName,
+      coordinatorPhoneNumber,
+      guestName, 
+      guestPhoneNumber,
+      organizingDepartment,
+      purposeOfStay,
+      foodRequired: foodRequired.toString(),
+      menuRequired,
+      paymentDoneBy,
+      startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+      endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+      noOfGuests,
+      roomRequired,
+      specialRequirements,
+    })
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
-    const res = await axios.post(`/guesthouse/create`,
+    const res = await axios.post("/guesthouse/create",
       {
         userName,
         coordinatorName,
@@ -125,11 +142,11 @@ const GuestHouseForm = () => {
         guestPhoneNumber,
         organizingDepartment,
         purposeOfStay,
-        foodRequired,
+        foodRequired: foodRequired.toString(),
         menuRequired,
         paymentDoneBy,
-        startDateTime,
-        endDateTime,
+        startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+        endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
         noOfGuests,
         roomRequired,
         specialRequirements,
@@ -138,7 +155,7 @@ const GuestHouseForm = () => {
     console.log("Response:", res);
     setPostStatus(res.data.message);
     setIsLoading(false);
-    if (res.data.message === "true") {
+    if (res.data.message === 'GuestHouse created successfully') {
       toast.success("Submitted");
     } else {
       console.log("not created guest house", postStatus)

@@ -13,6 +13,7 @@ const DataFilterComponent = ({...props}) => {
     filterData.forEach((filterGroup) => {
       filterGroup.setValue(null);
     });
+    props.fetchData();
   };
 
     
@@ -27,7 +28,6 @@ const DataFilterComponent = ({...props}) => {
       <span>Reset Data</span>
       <SettingsBackupRestore sx={{width:"18px"}} />
       </Button>
-      
       
       <Calendar selectedDate= {props.selectedDate} setSelectedDate= {props.setSelectedDate} />
         

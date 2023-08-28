@@ -106,7 +106,7 @@ const UserDataModal = ({...props}) => {
                     <TableBody>
                     {Object.keys(props.selectedRow).map((key) => {
                         // List of keys to exclude
-                        const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt'];
+                        const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
                         if (excludedKeys.includes(key)) {
                         return null; // Skip rendering this key
                         }

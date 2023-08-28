@@ -36,11 +36,12 @@ const Bookings = () => {
     }
     try {
       const transportResponse = await axios.get('/transport/get',{params:param})
+      console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get',{params:param})
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
       const itemResponse = await axios.get('/items/get',{params:param})
-      console.log(seminarResponse);
       const fullData=[...transportResponse?.data?.data,...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data,...itemResponse?.data?.data];
+      // const fullData=[...transportResponse?.data?.data,...seminarResponse?.data?.data,...itemResponse?.data?.data];
       setGridData(fullData)
       setIsLoading(false)
     }
@@ -98,6 +99,7 @@ const Bookings = () => {
         <DataFilterComponent 
           setSelectedDate={setSelectedDate} 
           selectedDate={selectedDate} 
+          fetchData={fetchData}
           filterData = {[
             {
               title: "Type Filters",

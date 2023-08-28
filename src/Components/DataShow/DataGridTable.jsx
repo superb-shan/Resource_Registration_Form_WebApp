@@ -6,6 +6,7 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 import 'react-toastify/dist/ReactToastify.css';
+import moment from 'moment';
 
 const DataGridTable = ({...props}) => {
 
@@ -68,18 +69,24 @@ const DataGridTable = ({...props}) => {
     };
   });
 
+  console.log(props.gridData.filter((a) => a.type==="GuestHouse"))
   return (
     <>
       <DataGrid
         rows={
           props.gridData.map(
-            (obj) => obj.type === "Seminar" 
+            (obj) => 
+            obj.type === "Transport" 
             ? 
-            {...obj, date: obj.startDate + " to " + obj.endDate, time: obj.startTime + " to " + obj.endTime} 
+            {...obj, name: obj.coordinatorName, date: moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") } 
+            : 
+            obj.type === "Seminar" 
+            ? 
+            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")} 
             : 
             obj.type === "GuestHouse" 
             ? 
-            {...obj, date: obj.ArrivialDateTime.split(" ")[0] + " to " + obj.DepartureDateTime.split(" ")[0], time: obj.ArrivialDateTime.split(" ")[1] + " to " + obj.DepartureDateTime.split(" ")[0]}
+            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")}
             :
             obj.type==="Item" 
             ?
