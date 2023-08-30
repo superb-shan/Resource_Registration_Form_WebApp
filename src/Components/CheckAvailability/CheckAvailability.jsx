@@ -47,7 +47,7 @@ const CheckAvailability = ({...props}) => {
     setStartDateTime,
     endDateTime, 
     setEndDateTime
-  } = useContext(target === "guesthouse" ? GuestHouseContext : SeminarContext);
+  } = useContext(target === "guesthouse" || formType === "Guest House" ? GuestHouseContext : SeminarContext);
 
   if(formType  === "Guest House" || target === "guesthouse"){
     isAvailabilityChecked  =  isGuestHouseAvailabilityChecked;
