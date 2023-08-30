@@ -39,7 +39,7 @@ const Bookings = () => {
       console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get',{params:param})
       const guestHouseResponse = await axios.get('/guesthouse/get',{params:param})
-      const itemResponse = await axios.get('/items/get',{params:param})
+      const itemResponse = await axios.get('/Items/get',{params:param})
       const fullData=[...transportResponse?.data?.data,...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data,...itemResponse?.data?.data];
       // const fullData=[...transportResponse?.data?.data,...seminarResponse?.data?.data,...itemResponse?.data?.data];
       setGridData(fullData)

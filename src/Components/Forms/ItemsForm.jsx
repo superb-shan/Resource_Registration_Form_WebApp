@@ -18,15 +18,15 @@ const ItemsForm = () => {
     const [department, setDepartment] = useState('');
     const [purposeOfRequisition, setPurposeOfRequisition] = useState('');
     const [requisitionDateTime, setRequisitionDateTime] = useState(null);
-    const [printing,setPrinting]=useState('');
-    const [guestMomento,setGuestMomento]=useState('');
-    const [studentMomento,setStudentMomento]=useState('');
-    const [printedEnvelopes,setPrintedEnvelopes]=useState('');
-    const [answerBooklets,setAnswerBooklets]=useState('');
-    const [studentNotebooks,setStudentNotebooks]=useState('');
-    const [recordNoteWithGraph,setRecordNoteWithGraph]=useState('');
-    const [recordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState('');
-    const [observationBook,setObservationBook]=useState('');
+    const [printing,setPrinting]=useState(0);
+    const [guestMomento,setGuestMomento]=useState(0);
+    const [studentMomento,setStudentMomento]=useState(0);
+    const [printedEnvelopes,setPrintedEnvelopes]=useState(0);
+    const [answerBooklets,setAnswerBooklets]=useState(0);
+    const [studentNotebooks,setStudentNotebooks]=useState(0);
+    const [recordNoteWithGraph,setRecordNoteWithGraph]=useState(0);
+    const [recordNoteWithoutGraph,setRecordNoteWithoutGraph]=useState(0);
+    const [observationBook,setObservationBook]=useState(0);
     const [clearanceOfBill, setClearanceOfBill] = useState(null);
 
 
@@ -79,10 +79,10 @@ const ItemsForm = () => {
             toast.error("Name should be greater than three characters")
             return;
         }
-        if(requisitionDateTime.format("DD-MM-YYYY") === moment().format("DD-MM-YYYY")){
-            toast.error("cannot book transport for today");
-            return;
-        }
+        // if(requisitionDateTime.format("DD-MM-YYYY") === moment().format("DD-MM-YYYY")){
+        //     toast.error("cannot book item for today");
+        //     return;
+        // }
 
         const formattedDateTime = requisitionDateTime.toString();
         const formatted1DateTime = clearanceOfBill.toString();
@@ -122,7 +122,7 @@ const ItemsForm = () => {
   return (
     <FormContainer title="Items Form">
         <TextInput label="Requestor Name *" value={requestorName} setValue={setRequestorName} />
-        <TextInput label="Requestor EMP ID *" type="number" value={requestorEmpId} setValue={setRequestorEmpID} />
+        <TextInput label="Requestor EMP ID *" value={requestorEmpId} setValue={setRequestorEmpID} />
         <TextInput label="Department *" select={true} value={department} setValue={setDepartment} options={allDepartments} />
         <TextInput label="Purpose of Requisition *"  value={purposeOfRequisition} setValue={setPurposeOfRequisition}  />
         <DateTimeInput label="Requisition Date Time *" value={requisitionDateTime} setValue={setRequisitionDateTime} />

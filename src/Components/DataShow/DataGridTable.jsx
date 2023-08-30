@@ -69,7 +69,7 @@ const DataGridTable = ({...props}) => {
     };
   });
 
-  console.log(props.gridData.filter((a) => a.type==="GuestHouse"))
+  console.log(props.gridData.filter((a) => a.type==="Item"))
   return (
     <>
       <DataGrid
@@ -90,7 +90,7 @@ const DataGridTable = ({...props}) => {
             :
             obj.type==="Item" 
             ?
-            {...obj,date:obj.selectedDate}
+            {...obj, name: obj.requestorName, date: moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("HH:mm A") } 
             :obj
             )
             .filter(
