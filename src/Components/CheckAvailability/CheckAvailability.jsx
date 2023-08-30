@@ -89,15 +89,17 @@ const CheckAvailability = ({...props}) => {
     }
 
     setIsAvailabilityLoading(true);
+    console.log("target", target);
     //console.log({params: formType  === "Seminar Hall" || target === "seminar" ? {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}})
     //console.log(`/${target ? target : formType === "Seminar Hall"? "seminar": "guesthouse"}/checkAvailability`);
-    const res = await axios.get((target === "seminar" || formType === "Seminar Hall" ? "/seminar/checkAvailability": "/guesthouse/checkAvailability") + "", {params: formType  === "Seminar Hall" || target === "seminar" ? {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
-    console.log(res);
+    const res = await axios.get((target === "guesthouse" ? "/guesthouse/checkAvailability": "/seminar/checkAvailability") + "", {params: formType  === "Seminar Hall" || target === "seminar" ? {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
+    console.log("result", res);
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
-    console.log(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
-    setUnavailableHalls(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired) || []);
-    setUnavailableHallsObject(res.data?.overlappingSeminarHalls || []);
+    console.log(target === "guesthouse", res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired))
+    // console.log(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
+    setUnavailableHalls(target === "guesthouse" ? res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired) : res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
+    setUnavailableHallsObject(target === "guesthouse" ? res.data?.overlappingGuestHouses : res.data?.overlappingSeminarHalls);
   }
 
   const handleProceed = () => {
@@ -146,14 +148,14 @@ const CheckAvailability = ({...props}) => {
           </Typography>
           <Box>
             {console.log(unavailableHallsObject)}
-            <List>
+            <List sx={{width: "320px"}}>
               {
                 unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : 
                 // unavailableHallsObject.map((hall) => <ListItemText primary={hall}/>)
                 unavailableHallsObject.map((hall) => 
-                  <CustomCollapsible title={hall.hallRequired} >
+                  <CustomCollapsible title={target === "guesthouse"? hall.roomRequired : hall.hallRequired} >
                     <Box sx={{textAlign: "left"}}>
-                    {Object.keys(hall).filter((item) => item !== "hallRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> {item + "  :  " + hall[item]}</Box>)}
+                    {Object.keys(hall).filter((item) => item !== "hallRequired" || item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> {item + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item].toString()).format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
                     </Box>
                   </CustomCollapsible>
                 )
