@@ -59,9 +59,8 @@ const CheckAvailability = ({...props}) => {
   
   const isWithinNextTwoMonths = (givenDate) => {
     if (!givenDate) {
-      return false;
+      return;
     }
-
     //moment() -> gives current DateTime
     const twoMonthsFromNow = moment().add(2, 'months');
 
@@ -89,17 +88,17 @@ const CheckAvailability = ({...props}) => {
     }
 
     setIsAvailabilityLoading(true);
-    console.log("target", target);
+    console.log("target", target, "formType" , formType);
     //console.log({params: formType  === "Seminar Hall" || target === "seminar" ? {startDate: moment(startDateTime.toString()).format("YYYY-MM-DD"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD"), startTime: moment(startDateTime.toString()).format("HH:mm:ss"), endTime: moment(endDateTime.toString()).format("HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}})
     //console.log(`/${target ? target : formType === "Seminar Hall"? "seminar": "guesthouse"}/checkAvailability`);
-    const res = await axios.get((target === "guesthouse" ? "/guesthouse/checkAvailability": "/seminar/checkAvailability") + "", {params: formType  === "Seminar Hall" || target === "seminar" ? {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}: {DepartureDateTime : moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), ArrivialDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
+    const res = await axios.get((target === "guesthouse" || formType === "Guest House" ? "/guesthouse/checkAvailability": "/seminar/checkAvailability") + "", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     console.log("result", res);
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
     console.log(target === "guesthouse", res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired))
     // console.log(res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
-    setUnavailableHalls(target === "guesthouse" ? res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired) : res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
-    setUnavailableHallsObject(target === "guesthouse" ? res.data?.overlappingGuestHouses : res.data?.overlappingSeminarHalls);
+    setUnavailableHalls(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired) : res.data?.overlappingSeminarHalls?.map(seminar => seminar.hallRequired));
+    setUnavailableHallsObject(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses : res.data?.overlappingSeminarHalls);
   }
 
   const handleProceed = () => {
@@ -153,9 +152,9 @@ const CheckAvailability = ({...props}) => {
                 unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : 
                 // unavailableHallsObject.map((hall) => <ListItemText primary={hall}/>)
                 unavailableHallsObject.map((hall) => 
-                  <CustomCollapsible title={target === "guesthouse"? hall.roomRequired : hall.hallRequired} >
+                  <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} >
                     <Box sx={{textAlign: "left"}}>
-                    {Object.keys(hall).filter((item) => item !== "hallRequired" || item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> {item + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item].toString()).format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
+                    {Object.keys(hall).filter((item) => item !== "hallRequired" || item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> {item + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
                     </Box>
                   </CustomCollapsible>
                 )
