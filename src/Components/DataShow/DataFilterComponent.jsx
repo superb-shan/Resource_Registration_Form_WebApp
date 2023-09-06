@@ -4,6 +4,7 @@ import Box from '@mui/material/Box';
 import { SettingsBackupRestore } from '@mui/icons-material';
 import Calendar from './Calendar';
 import CustomCollapsible from './CustomCollapsible';
+import { Typography } from '@mui/material';
 
 const DataFilterComponent = ({...props}) => {
 
@@ -18,7 +19,7 @@ const DataFilterComponent = ({...props}) => {
 
     
   return (
-    <div className='flex flex-col items-center gap-4 p-2 py-0 justify-center mx-auto'>
+    <div className='flex flex-col items-center gap-4 p-2 py-0 justify-start mx-auto'>
       <Button 
       variant="contained"
       size="small" 
@@ -28,12 +29,15 @@ const DataFilterComponent = ({...props}) => {
       <span>Reset Data</span>
       <SettingsBackupRestore sx={{width:"18px"}} />
       </Button>
-      
-      <Calendar selectedDate= {props.selectedDate} setSelectedDate= {props.setSelectedDate} />
+
+      {/* Filter data */}
         
-      <Box sx={{ width: 400, borderRadius: 3, display: "flex", flexDirection: "column", height: 300, overflowY: "auto", overflowX: "clip" }}>
+      <Box sx={{ width: 400, borderRadius: 3, gap: 1, display: "flex", flexDirection: "column", height: "full", overflowY: "auto", overflowX: "clip" }}>
+        <CustomCollapsible title={"Filter by Date"} isOpen={true} isCalendar={true} >
+          <Calendar selectedDate= {props.selectedDate} setSelectedDate= {props.setSelectedDate} />
+        </CustomCollapsible>
         {filterData.map((filterGroup, index) => (
-          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", mb:2 }} key={index}>
+          <Box sx={{ display: "flex", flexDirection: "column", justifyContent: "flex-start" }} key={index}>
             <CustomCollapsible title={filterGroup.title} isOpen={filterGroup.isOpen} toggle={() => filterGroup.isOpen = !filterGroup.isOpen}>
               {/* Content to display when the collapsible section is expanded */}
               <Box sx={{ display: 'flex', gap: 2, flexWrap: 'wrap' }}>

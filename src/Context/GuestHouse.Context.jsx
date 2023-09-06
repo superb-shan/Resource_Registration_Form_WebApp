@@ -46,7 +46,6 @@ const GuestHouseProvider = ({ children }) => {
   return (
     <GuestHouseContext.Provider
       value={{
-
         //send all the created variables
         startDateTime, setStartDateTime,
         endDateTime, setEndDateTime,

@@ -26,7 +26,7 @@ const Bookings = () => {
 
   const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions','remarks'];
 
-  const fetchData = useCallback(async () => {
+  const fetchData = async () => {
     const param = {}
     if (user === "user")
         param["name"] = userName;
@@ -49,7 +49,7 @@ const Bookings = () => {
       console.log("Error", error)
     };
 
-  }, [selectedDate]);
+  };
 
   const handleModalOpen = (rowData) => {
     setSelectedRow(rowData);
@@ -106,12 +106,14 @@ const Bookings = () => {
               filters: ["Transport", "Seminar", "GuestHouse", "Items", "Event/poster", "Food"],
               value: customActiveTypeFilter,
               setValue: setCustomActiveTypeFilter,
+              isOpen : false,
             },
             {
               title: "Status Filters",
               filters: ["Pending", "Accepted", "Rejected"],
               value: customActiveStatusFilter,
               setValue: setCustomActiveStatusFilter,
+              isOpen : false,
             },
           ] }          
         />
