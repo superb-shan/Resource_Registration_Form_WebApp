@@ -80,11 +80,11 @@ const UserDataModal = ({...props}) => {
     
         for (const key of Object.keys(selectedRow)) {
          
-          if (key == 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type') {
+          if (key == 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime') {
             continue;
           }
     
-          const formattedKey = key[0].toUpperCase() + key.slice(1);
+          const formattedKey = terms[key[0].toUpperCase() + key.slice(1)];
           let formattedValue = ""; // Initialize formattedValue as an empty string
          if(selectedRow[key] === null){
                      continue ;
@@ -93,7 +93,7 @@ const UserDataModal = ({...props}) => {
           printData.push([formattedKey,"Nil"]) ;
           continue;
   }
-          if (typeof selectedRow[key] === "object") {
+          if (moment.isDate(moment(selectedRow[key]))) {
             
             formattedValue = moment(selectedRow[key]).format("YYYY-MM-DD HH:mm:ss");
             printData.push([formattedKey,formattedValue])
@@ -104,7 +104,7 @@ const UserDataModal = ({...props}) => {
     
           
         }
-        printData.push(["BookID",selectedRow["id"]])
+        printData.push(["Book ID",selectedRow["id"]])
       // pdf.autoPrint();
       autoTable(pdf, {
         margin: { top: 65 }, // Adjust top margin to create space above the table
@@ -144,7 +144,7 @@ const UserDataModal = ({...props}) => {
         pdf.addImage(accepted,'png',lastRowX+70,lastRowY+10,40,40)
       }
       else if(selectedRow["isapproved"] == 0){
-        pdf.addImage(rejected,'png',lastRowX+70,lastRowY-20,40,40)
+        pdf.addImage(rejected,'png',lastRowX+70,lastRowY-25,40,40)
       }
     //watermark
     pdf.saveGraphicsState();
@@ -190,7 +190,7 @@ const UserDataModal = ({...props}) => {
                 </TableContainer>
             </Typography>
             <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                <Button variant="contained" color="error" style={{ width: "90px" }} disabled={props.selectedRow.isapproved !== null} onClick={() => { deleted(props.selectedRow.id) }}>
+                <Button variant="contained" color="error" style={{ width: "90px" }} onClick={() => {if(window.confirm("Are you sure want to delete ?")){ deleted(props.selectedRow.id)} }}>
                 Cancel
                 </Button>
                 {/* <Button variant="contained" color="warning" style={{ width: "90px" }}> */}

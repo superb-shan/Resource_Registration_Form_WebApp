@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -22,10 +22,12 @@ import accepted from '../../Assets/Images/accepted.png'
 import rejected from '../../Assets/Images/rejected.png'
 import pending  from '../../Assets/Images/pending.png'
 import autoTable from 'jspdf-autotable'
+import { DataContext } from '../../Context/Data.Context';
 
 const AdminDataModal = ({...props}) => {
  const selectedRow = props.selectedRow
   const [remarks, setRemarks] = useState('');
+  const {terms}=useContext(DataContext)
 
     const style = {
         position: 'absolute',
@@ -209,7 +211,7 @@ const AdminDataModal = ({...props}) => {
                       }
                       return (
                         <TableRow key={key}>
-                          <TableCell>{key[0].toUpperCase() + key.slice(1)}</TableCell>
+                          <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
                           <TableCell>{props.selectedRow[key]}</TableCell>
                         </TableRow>
                       );
