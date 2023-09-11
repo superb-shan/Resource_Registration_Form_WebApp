@@ -180,7 +180,7 @@ const GuestHouseForm = () => {
       <ChipsInput label="Food Required" value={foodRequired} setValue={setFoodRequired} options={allFoods} />
       <TextInput label="Menu Required *" select={true} value={menuRequired} setValue={setMenuRequired} options={allMenu} />
       <TextInput label="Payment Done By *" select={true} value={paymentDoneBy} setValue={setPaymentDoneBy} options={allPaymentOptions} />
-      <TextInput label="Special Requirements *" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
+      <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
       <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
         {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
       </Button>

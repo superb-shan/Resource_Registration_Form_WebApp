@@ -56,10 +56,7 @@ const UserDataModal = ({...props}) => {
       const pdf = new jsPDF();
     const printData = []
       pdf.setFontSize(16);
-      // pdf.text("Sri Eshwar College of Engineering", 60, 25);
-      // var img = new Image()
-      // img.src = '../../Images/download.png'
-      // const logoPath = "/Users/jeethula/Desktop/project_sece/download.png";
+      
       pdf.addImage(logo, "png", 50, 15, 100, 30);
     
       if (selectedRow) {

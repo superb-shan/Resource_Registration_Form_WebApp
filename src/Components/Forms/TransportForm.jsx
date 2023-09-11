@@ -144,7 +144,7 @@ const TransportForm = () => {
         <TextInput label="Pick-up Location *" value={pickupLocation} setValue={setPickupLocation} />
         <TextInput label="Drop Location *" value={dropLocation} setValue={setDropLocation} />
         <TextInput label="No. of Passengers *" type="number" value={noOfPassengers} setValue={setNoOfPassengers}/>
-        <TextInput label="Special Requirements *" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>    
+        <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>    
         <Button variant="contained"  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
     </FormContainer>
   )
