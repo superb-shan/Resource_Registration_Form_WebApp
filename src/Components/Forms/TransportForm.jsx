@@ -59,6 +59,7 @@ const TransportForm = () => {
         coordinatorPhoneNumber,
         guestName,
         guestPhoneNumber,
+        organizingDepartment,
         purposeOfTravel,
         travelDateTime,
         pickupLocation,
@@ -91,19 +92,19 @@ const TransportForm = () => {
         }
 
         const formattedDateTime = travelDateTime.toString();
-        console.log({
-            userName,
-            coordinatorName,
-            coordinatorPhoneNumber,
-            guestName,
-            guestPhoneNumber,
-            purposeOfTravel,
-            pickupLocation,
-            dropLocation,
-            travelDateTime: formattedDateTime,
-            noOfPassengers: noOfPassengers.toString(),
-            specialRequirements,
-        })
+        // console.log({
+        //     userName,
+        //     coordinatorName,
+        //     coordinatorPhoneNumber,
+        //     guestName,
+        //     guestPhoneNumber,
+        //     purposeOfTravel,
+        //     pickupLocation,
+        //     dropLocation,
+        //     travelDateTime: formattedDateTime,
+        //     noOfPassengers: noOfPassengers.toString(),
+        //     specialRequirements,
+        // })
         const res = await axios.post(`/transport/create`, 
         {
             userName,
@@ -112,6 +113,7 @@ const TransportForm = () => {
             guestName,
             guestPhoneNumber,
             purposeOfTravel,
+            organizingDepartment,
             pickupLocation,
             dropLocation,
             travelDateTime: formattedDateTime,

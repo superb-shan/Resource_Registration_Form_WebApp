@@ -26,7 +26,7 @@ const DataFilterComponent = ({...props}) => {
       sx={{ height: '30px',width:'350px', display:"flex", gap: 1, fontSize: "14px"}}
       onClick={handleAllButton}
       >
-      <span>Reset Data</span>
+      <span>Reset Filters</span> 
       <SettingsBackupRestore sx={{width:"18px"}} />
       </Button>
 
