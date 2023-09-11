@@ -175,7 +175,7 @@ const GuestHouseForm = () => {
       <TextInput label="Guest Phone Number *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Purpose of Stay *" value={purposeOfStay} setValue={setPurposeOfStay} />
-      <TextInput label="Room Required *" select={true} value={roomRequired} setValue={setRoomRequired} options={allRooms} disabledOptions={unavailableGuestHouses} />
+      <TextInput label="Room Required *" select={true} value={roomRequired} setValue={setRoomRequired} options={allRooms} disabledOptions={unavailableGuestHouses} disabled={!isAvailabilityChecked} />
       <TextInput label="No. of Guests *" type='number' value={noOfGuests} setValue={setNoOfGuests} disabled={true} />
       <ChipsInput label="Food Required" value={foodRequired} setValue={setFoodRequired} options={allFoods} />
       <TextInput label="Menu Required *" select={true} value={menuRequired} setValue={setMenuRequired} options={allMenu} />

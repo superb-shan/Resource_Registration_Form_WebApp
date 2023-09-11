@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -15,6 +15,7 @@ import axios from 'axios';
 import jsPDF from "jspdf";
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import { DataContext } from '../../Context/Data.Context';
 import watermark from '../../Assets/Images/sriEshwarLogo.png'
 import logo from '../../Assets/Images/logo.png'
 import accepted from '../../Assets/Images/accepted.png'
@@ -22,7 +23,9 @@ import rejected from '../../Assets/Images/rejected.png'
 import pending  from '../../Assets/Images/pending.png'
 import autoTable from 'jspdf-autotable'
 const UserDataModal = ({...props}) => {
-   const selectedRow = props.selectedRow
+
+    const { terms } = useContext(DataContext);
+    const selectedRow = props.selectedRow;
     const style = {
         position: 'absolute',
         top: '50%',
@@ -177,7 +180,7 @@ const UserDataModal = ({...props}) => {
                         }
                         return (
                         <TableRow key={key}>
-                            <TableCell>{key[0].toUpperCase() + key.slice(1)}</TableCell>
+                            <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
                             <TableCell>{props.selectedRow[key]}</TableCell>
                         </TableRow>
                         );
