@@ -78,17 +78,17 @@ const DataGridTable = ({...props}) => {
             (obj) => 
             obj.type === "Transport" 
             ? 
-            {...obj, name: obj.coordinatorName, date: moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") } 
+            {...obj, name: obj.coordinatorName, date: moment(obj.travelDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") } 
             : 
             obj.type === "Seminar" 
             ? 
-            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")} 
+            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")} 
             : 
             obj.type === "GuestHouse" 
             ? 
             {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")}
             :
-            obj.type==="Item" 
+            obj.type==="Items" 
             ?
             {...obj, name: obj.requestorName, date: moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("HH:mm A") } 
             :obj

@@ -65,7 +65,7 @@ const Bookings = () => {
 
   useEffect(() => {
     fetchData();
-  },[selectedDate, fetchData]);
+  },[selectedDate]);
 
   return (
     <DataViewContainer>
