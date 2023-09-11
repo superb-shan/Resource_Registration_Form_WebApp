@@ -20,6 +20,7 @@ const Bookings = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
   const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
+  const [customActiveDepartmentFilter, setCustomActiveDepartmentFilter] = useState(null);
   const {user} = useContext(LoginContext);
   const {userName} = useContext(UserContext);
 
@@ -76,6 +77,7 @@ const Bookings = () => {
             fetchData={fetchData} 
             customActiveTypeFilter={customActiveTypeFilter} 
             customActiveStatusFilter ={customActiveStatusFilter}
+            customActiveDepartmentFilter = {customActiveDepartmentFilter}
             selectedDate={selectedDate}
             handleModalOpen={handleModalOpen} 
             modal={
@@ -101,7 +103,7 @@ const Bookings = () => {
           fetchData={fetchData}
           filterData = {[
             {
-              title: "Type Filters",
+              title: "Resource Filters",
               filters: ["Transport", "Seminar", "GuestHouse", "Items", "Event/poster", "Food"],
               value: customActiveTypeFilter,
               setValue: setCustomActiveTypeFilter,
@@ -112,6 +114,13 @@ const Bookings = () => {
               filters: ["Pending", "Accepted", "Rejected"],
               value: customActiveStatusFilter,
               setValue: setCustomActiveStatusFilter,
+              isOpen : false,
+            },
+            {
+              title: "Department Filters",
+              filters: ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'],
+              value: customActiveDepartmentFilter,
+              setValue: setCustomActiveDepartmentFilter,
               isOpen : false,
             },
           ] }          
