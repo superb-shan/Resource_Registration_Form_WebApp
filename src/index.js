@@ -9,23 +9,26 @@ import UserProvider from './Context/User.Context';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './Main/theme';
 import GuestHouseProvider from './Context/GuestHouse.Context';
+import DataProvider from './Context/Data.Context';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <>
-    <LoginProvider>
-      <SeminarProvider>
-        <UserProvider>
-          <GuestHouseProvider>
-            <ThemeProvider theme={theme}>
-               <App />
-              <ToastContainer /> 
-            </ThemeProvider>
-          </GuestHouseProvider>
-        </UserProvider>
-      </SeminarProvider>
-    </LoginProvider>
+    <DataProvider>
+      <LoginProvider>
+        <SeminarProvider>
+          <UserProvider>
+            <GuestHouseProvider>
+              <ThemeProvider theme={theme}>
+                <App />
+                <ToastContainer /> 
+              </ThemeProvider>
+            </GuestHouseProvider>
+          </UserProvider>
+        </SeminarProvider>
+      </LoginProvider>
+    </DataProvider>
   </>
 );
 

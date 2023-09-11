@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Button from '@mui/material/Button';
 import Modal from '@mui/material/Modal';
 import Typography from '@mui/material/Typography';
@@ -15,8 +15,11 @@ import axios from 'axios';
 import jsPDF from "jspdf";
 import { toast } from 'react-toastify';
 import moment from 'moment';
+import { DataContext } from '../../Context/Data.Context';
 
 const UserDataModal = ({...props}) => {
+
+    const { terms } = useContext(DataContext);
 
     const style = {
         position: 'absolute',
@@ -112,7 +115,7 @@ const UserDataModal = ({...props}) => {
                         }
                         return (
                         <TableRow key={key}>
-                            <TableCell>{key[0].toUpperCase() + key.slice(1)}</TableCell>
+                            <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
                             <TableCell>{props.selectedRow[key]}</TableCell>
                         </TableRow>
                         );

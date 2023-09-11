@@ -6,7 +6,6 @@ import { UserContext } from '../../Context/User.Context';
 import moment from 'moment';
 import axios from 'axios';
 import { useContext } from 'react';
-import { useCallback } from 'react';
 import { LoginContext } from '../../Context/Login.Context';
 import { useEffect } from 'react';
 import UserDataModal from '../Modals/UserDataModal';
@@ -65,7 +64,7 @@ const Bookings = () => {
 
   useEffect(() => {
     fetchData();
-  },[selectedDate, fetchData]);
+  },[selectedDate]);
 
   return (
     <DataViewContainer>
