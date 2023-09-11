@@ -24,6 +24,8 @@ import pending  from '../../Assets/Images/pending.png'
 import autoTable from 'jspdf-autotable'
 const UserDataModal = ({...props}) => {
 
+    const { terms } = useContext(DataContext);
+    const selectedRow = props.selectedRow;
     const style = {
         position: 'absolute',
         top: '50%',
