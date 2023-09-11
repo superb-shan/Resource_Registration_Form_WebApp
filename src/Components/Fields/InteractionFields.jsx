@@ -23,7 +23,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
  const Selector = ({ ...props }) => {
 
-  const handleChange = (event, newValue) => props.setValue(newValue);
+  const handleChange = (event, newValue) => {if (newValue !== null) props.setValue(newValue)};
 
   return (
       <ToggleButtonGroup
