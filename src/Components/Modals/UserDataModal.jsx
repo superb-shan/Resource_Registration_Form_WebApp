@@ -190,7 +190,7 @@ const UserDataModal = ({...props}) => {
                 </TableContainer>
             </Typography>
             <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                <Button variant="contained" color="error" style={{ width: "90px" }} onClick={() => {if(window.confirm("Are you sure want to delete ?")){ deleted(props.selectedRow.id)} }}>
+                <Button variant="contained" color="error" style={{ width: "90px" }} onClick={() => {if(window.confirm("Are you sure want to delete the request?")){ deleted(props.selectedRow.id)} }}>
                 Cancel
                 </Button>
                 {/* <Button variant="contained" color="warning" style={{ width: "90px" }}> */}

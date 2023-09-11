@@ -96,11 +96,12 @@ const DataGridTable = ({...props}) => {
             .filter(
               item => (
                 (!props.customActiveTypeFilter || item.type === props.customActiveTypeFilter) &&
-                (   props.customActiveStatusFilter === "Pending" ? item.isapproved === null :
-                    props.customActiveStatusFilter === "Accepted" ? item.isapproved :
-                    props.customActiveStatusFilter === "Rejected" ? item.isapproved === false :
-                true
-                )
+                (!props.customActiveStatusFilter || (
+                  (props.customActiveStatusFilter === "Pending" && item.isapproved === null) ||
+                  (props.customActiveStatusFilter === "Accepted" && item.isapproved) ||
+                  (props.customActiveStatusFilter === "Rejected" && item.isapproved === false)
+                )) &&
+                (!props.customActiveDepartmentFilter || item.organizingDepartment === props.customActiveDepartmentFilter)
               )
             )
         }

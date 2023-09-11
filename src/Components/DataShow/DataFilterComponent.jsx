@@ -19,7 +19,7 @@ const DataFilterComponent = ({...props}) => {
 
     
   return (
-    <div className='flex flex-col items-center gap-4 p-2 py-0 justify-start mx-auto'>
+    <div className='flex flex-col items-center gap-4 pl-2 py-0 justify-start mx-auto'>
       <Button 
       variant="contained"
       size="small" 

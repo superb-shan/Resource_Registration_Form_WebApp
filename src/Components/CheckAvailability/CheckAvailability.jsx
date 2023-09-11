@@ -29,6 +29,8 @@ const CheckAvailability = ({...props}) => {
         allHalls 
       } = useContext(SeminarContext);
 
+  allHalls = allHalls.map(hall => hall.name);
+
   const{
         setSelectedView,
         setSelectedForm
@@ -137,7 +139,7 @@ const CheckAvailability = ({...props}) => {
             <List>
               {
                 isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} />  :
-               (unavailableHalls.length === allHalls.length ? <ListItemText primary={"None"} />  : allHalls.filter(hall => !unavailableHalls.includes(hall)).map((hall) => <ListItemText primary={hall} />))
+               (unavailableHalls.length === allHalls.length ? <ListItemText primary={"None"} />  : allHalls.filter(hall => !unavailableHalls.includes(hall)).map((hall) => <ListItemText key={hall} primary={hall} />))
               }
             </List>
           </Box>
@@ -148,14 +150,14 @@ const CheckAvailability = ({...props}) => {
             Not Available
           </Typography>
           <Box>
-            {console.log(unavailableHallsObject)}
+            {console.log("unavailableHallsObject",unavailableHallsObject, "unavailableHalls", unavailableHalls)}
             <List sx={{width: "320px"}}>
               {
                 unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : 
                 unavailableHallsObject.map((hall) => 
                   <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} >
                     <Box sx={{textAlign: "left"}}>
-                    {Object.keys(hall).filter((item) => item !== "hallRequired" || item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
+                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={2} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
                     </Box>
                   </CustomCollapsible>
                 )

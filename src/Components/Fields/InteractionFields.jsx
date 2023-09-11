@@ -57,8 +57,8 @@ const TextInput = ({...props}) => {
         onChange={handleValueChange}
       >
         {props.options?.map((option) => (
-            <MenuItem key={option} value={option} disabled={props.disabledOptions?.includes(option)}>
-              {option}
+            <MenuItem key={option?.name || option} value={option?.name || option} disabled={props.disabledOptions?.includes(option?.name || option)}>
+              {typeof option === "object" ? option.name + " : Max. " + option.maxCapacity : option}
             </MenuItem>
           ))}
       </TextField>

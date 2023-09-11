@@ -9,7 +9,17 @@ const SeminarProvider = ({ children }) => {
   const [isAvailabilityChecked, setIsAvailabilityChecked] = useState(false);
   const [unavailableHalls, setUnavailableHalls] = useState([]);
 
-  const allHalls = ['Board Room', 'Ignite', 'GF-07', 'Placement Lab', 'IT center', 'Seminar Hall 1st Floor', 'Seminar Hall 2nd Floor', 'Others'];
+  const allHalls = [
+    { name: 'Board Room', maxCapacity: 15 },
+    { name: 'Ignite', maxCapacity: 15 },
+    { name: 'GF-07', maxCapacity: 15 },
+    { name: 'Placement Lab', maxCapacity: 15 },
+    { name: 'IT center', maxCapacity: 15 },
+    { name: 'Seminar Hall 1st Floor', maxCapacity: 15 },
+    { name: 'Seminar Hall 2nd Floor', maxCapacity: 15 },
+    { name: 'Others', maxCapacity: 15 }
+  ]
+  ;
 
     return (
       <SeminarContext.Provider
