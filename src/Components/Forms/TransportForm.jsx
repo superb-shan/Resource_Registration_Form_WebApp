@@ -136,17 +136,17 @@ const TransportForm = () => {
 
   return (
     <FormContainer title="Transportation Form">
-        <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
+        <TextInput label="Coordinator Name *"  value={coordinatorName} setValue={setCoordinatorName} />
         <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-        <TextInput label="Guest Name(s) *" value={guestName} setValue={setGuestName} />
-        <TextInput label="Guest Phone Number(s) *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
+        <TextInput label="Guest Name(s) *" placeholder="Enter all the guest names" value={guestName} setValue={setGuestName} />
+        <TextInput label="Guest Phone Number(s) *" placeholder="Enter all the guests contact numbers" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
         <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
         <TextInput label="Purpose of Travel *" select={true} value={purposeOfTravel} setValue={setPurposeOfTravel} options={['Events', 'Seminar', 'Chief Guest', 'Placement', 'Session/Lectures', 'Others']} />
         <DateTimeInput label="Travel Date Time *" value={travelDateTime} setValue={setTravelDateTime} />
-        <TextInput label="No. of Passengers *" type="number" value={noOfPassengers} setValue={setNoOfPassengers}/>
-        <TextInput label="Pick-up Location *" value={pickupLocation} setValue={setPickupLocation} />
-        <TextInput label="Drop Location *" value={dropLocation} setValue={setDropLocation} />
-        <TextInput label="Special Requirements" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>    
+        <TextInput label="No. of Passengers *" placeholder="Max passenger count is 6" type="number" value={noOfPassengers} setValue={setNoOfPassengers}/>
+        <TextInput label="Pick-up Location *" placeholder="Pick-up Location" value={pickupLocation} setValue={setPickupLocation} />
+        <TextInput label="Drop Location *" placeholder="Drop Location" value={dropLocation} setValue={setDropLocation} />
+        <TextInput label="Special Requirements" placeholder="Special requirements if any" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>    
         <Button variant="contained" onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
     </FormContainer>
   )
