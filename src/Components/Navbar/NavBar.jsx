@@ -23,8 +23,8 @@ import { useState, useEffect, useContext} from 'react';
 
 
 const views = [{name: 'Check Availability'}, { name: 'Add Bookings' }, {name: 'My Bookings'}];
-const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
-
+const forms = ['Seminar Hall', 'Guest House', 'Transport','Items',];
+// const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
 function NavBar({...props}) {
 

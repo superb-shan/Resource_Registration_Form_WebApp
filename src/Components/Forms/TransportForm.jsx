@@ -138,7 +138,7 @@ const TransportForm = () => {
     <FormContainer title="Transportation Form">
         <TextInput label="Coordinator Name *"  value={coordinatorName} setValue={setCoordinatorName} />
         <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-        <TextInput label="Guest Name(s) *" placeholder="Enter all the guest names" value={guestName} setValue={setGuestName} />
+        <TextInput label="Guest Name(s) *" placeholder="Enter all the guests names" value={guestName} setValue={setGuestName} />
         <TextInput label="Guest Phone Number(s) *" placeholder="Enter all the guests contact numbers" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
         <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
         <TextInput label="Purpose of Travel *" select={true} value={purposeOfTravel} setValue={setPurposeOfTravel} options={['Events', 'Seminar', 'Chief Guest', 'Placement', 'Session/Lectures', 'Others']} />

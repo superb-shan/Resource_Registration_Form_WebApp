@@ -104,7 +104,8 @@ const Bookings = () => {
           filterData = {[
             {
               title: "Resource Filters",
-              filters: ["Transport", "Seminar", "GuestHouse", "Items", "Event/poster", "Food"],
+              filters: ["Transport", "Seminar", "GuestHouse", "Items"],
+              // filters: ["Transport", "Seminar", "GuestHouse", "Items", "Event/poster", "Food"],
               value: customActiveTypeFilter,
               setValue: setCustomActiveTypeFilter,
               isOpen : false,
