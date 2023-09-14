@@ -82,11 +82,11 @@ const DataGridTable = ({...props}) => {
             : 
             obj.type === "Seminar" 
             ? 
-            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")} 
+            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")} 
             : 
             obj.type === "GuestHouse" 
             ? 
-            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")}
+            {...obj, name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MMM-YYYY HH:mm:ss').format("HH:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("HH:mm A")}
             :
             obj.type==="Items" 
             ?
