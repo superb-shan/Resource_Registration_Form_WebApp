@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Collapsible from 'react-collapsible';
 import { Typography } from '@mui/material';
 import { KeyboardArrowDown } from '@mui/icons-material';
 import { useState } from 'react';
 
-const CustomCollapsible = ({ title, children, isOpen: incomingIsOpen, isCalendar }) => {
+const CustomCollapsible = ({ title, children, isOpen: incomingIsOpen, isCalendar, backgroundColor }) => {
     const [isOpen, setIsOpen] = useState(incomingIsOpen);
 
+    console.log("isOpen at start", isOpen);
+    useEffect(()=>{
+        console.log("trigger", isOpen);
+    }, [isOpen]);
     return (
         <Collapsible
             trigger={
@@ -20,6 +24,8 @@ const CustomCollapsible = ({ title, children, isOpen: incomingIsOpen, isCalendar
             open={isCalendar}
             onOpening={() => setIsOpen(true)}
             onClosing={() => setIsOpen(false)}
+            openedClassName='bg-gray-100 p-[10px] pb-0 rounded-[12px] mb-[10px]'
+            contentInnerClassName= "border-t-[1px] border-t-[gray]"
         >
             <div className='p-3'>
                 {children}
