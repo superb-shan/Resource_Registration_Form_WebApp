@@ -13,6 +13,7 @@ import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
 import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { SeminarContext } from '../../Context/Seminar.Context';
+import { DataContext } from '../../Context/Data.Context';
 
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 const allEquipments = ['Audio', 'Video', 'Reception items', 'Power Back up', 'Others'];
@@ -35,9 +36,9 @@ const SeminarHallForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
-  const { allHalls, startDateTime,  endDateTime,  isAvailabilityChecked, unavailableHalls } = useContext(SeminarContext);
+  const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked } = useContext(SeminarContext);
+  const { setIsAvailabilityLoading } = useContext(DataContext)
 
-  
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -82,37 +83,36 @@ const SeminarHallForm = () => {
 
     setIsLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
-    if (!allFieldsNotEmpty){ 
+    if (!allFieldsNotEmpty) {
       toast.warning('Fill all the Required fields');
       setIsLoading(false);
       return;
     }
-    if(coordinatorPhoneNumber.length !==10 || speakerPhoneNumber.length !==10){
+    if (coordinatorPhoneNumber.length !== 10 || speakerPhoneNumber.length !== 10) {
       toast.error("Enter 10 digit Phone Number");
       return;
     }
-    if (noOfAttendees <= 0 ){
+    if (noOfAttendees <= 0) {
       toast.error("No of Attendees is not valid");
       return;
     }
-    if (!isAvailabilityChecked){
+    if (!isAvailabilityChecked) {
       toast.error(`Please check Availability`);
       setIsLoading(false);
       return;
     }
 
     //Check for unavailability of hall before sending request
-    const response = await axios.get("/seminar/checkAvailability", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
+    const response = await axios.get("/seminar/checkAvailability", { params: { startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss") } });
     const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
 
-    if (recentUnavailableHalls.includes(hallRequired)){
+    if (recentUnavailableHalls.includes(hallRequired)) {
       toast.info(`${hallRequired} is not available for this date and time.`);
       setIsLoading(false);
       return;
     }
-    if (noOfAttendees > allHalls.find(hall => hall.name === hallRequired)?.maxCapacity){
-      if (!window.confirm("Entered capacity exceed maximum capacity, do you still want to continue?"))  
-      {  
+    if (noOfAttendees > allHalls.find(hall => hall.name === hallRequired)?.maxCapacity) {
+      if (!window.confirm("Entered capacity exceed maximum capacity, do you still want to continue?")) {
         setIsLoading(false);
         return;
       }
@@ -131,27 +131,27 @@ const SeminarHallForm = () => {
       endDateTime,
       noOfAttendees,
       equipmentsRequired: equipmentsRequired.join(", "),
-      hallRequired, 
+      hallRequired,
       specialRequirements,
     })
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post(`/seminar/create`,
-    {
-      userName,
-      coordinatorName,
-      coordinatorPhoneNumber,
-      speakerName,
-      speakerPhoneNumber,
-      organizingDepartment,
-      topic,
-      startDateTime,
-      endDateTime,
-      noOfAttendees,
-      equipmentsRequired: equipmentsRequired.join(", "),
-      hallRequired, 
-      specialRequirements,
-    }
-  );
+      {
+        userName,
+        coordinatorName,
+        coordinatorPhoneNumber,
+        speakerName,
+        speakerPhoneNumber,
+        organizingDepartment,
+        topic,
+        startDateTime,
+        endDateTime,
+        noOfAttendees,
+        equipmentsRequired: equipmentsRequired.join(", "),
+        hallRequired,
+        specialRequirements,
+      }
+    );
     // console.log("Response:", res);
     setPostStatus(res.data.message);
     setIsLoading(false);
@@ -162,26 +162,27 @@ const SeminarHallForm = () => {
       toast.error(postStatus);
       return;
     }
+    setIsAvailabilityChecked(false);
     setSelectedView('My Bookings');
   }
 
 
   return (
     <FormContainer title="Seminar Hall Form">
-      <CheckAvailability target={"seminar"}  />
+      <CheckAvailability target={"seminar"} />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
       <TextInput label="Speaker Name *" value={speakerName} setValue={setSpeakerName} />
-      <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber}/>
+      <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber} />
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Topic *" value={topic} setValue={setTopic} />
       {console.log("unav", unavailableHalls)}
-      <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked}/>
+      <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked} />
       <TextInput label="No. of Attendees *" type='number' value={noOfAttendees} setValue={setNoOfAttendees} />
       <ChipsInput label="Equipments Required" value={equipmentsRequired} setValue={setEquipmentsRequired} options={allEquipments} />
-      <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
-      <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
-        {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
+      <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements} />
+      <Button variant="contained" sx={{ display: "flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
+        {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>}
       </Button>
     </FormContainer>
   )
