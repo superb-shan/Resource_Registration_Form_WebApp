@@ -146,7 +146,7 @@ const CheckAvailability = ({ ...props }) => {
         </Grid>
         <Divider orientation="vertical" flexItem />
         <Grid item xs={12} md={5}>
-          <Typography variant="h6" component="div">
+          <Typography variant="h6" component="div" sx={{textAlign: "center"}}>
             Not Available
           </Typography>
           <Box>
