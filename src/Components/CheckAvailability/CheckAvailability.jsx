@@ -158,7 +158,7 @@ const CheckAvailability = ({ ...props }) => {
                 unavailableHallsObject.map((hall) => 
                   <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} backgroundColor="#e5e9ec">
                     <Box sx={{textAlign: "left"}}>
-                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "DD-MM-YYYY HH:mm:ss").format("DD MMM YYYY HH:mm A") : hall[item])}</Box>)}
+                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD HH:mm A") : hall[item])}</Box>)}
                     </Box>
                   </CustomCollapsible>
                 )

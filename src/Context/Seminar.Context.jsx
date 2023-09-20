@@ -33,6 +33,8 @@ const SeminarProvider = ({ children }) => {
     { name: 'Ignite', maxCapacity: 100 },
     { name: 'Iot laboratory', maxCapacity: 100 },
     { name: 'Board Room', maxCapacity: 100 },
+    { name: 'IT Auditorium', maxCapacity: 120 },
+    
 
 
 

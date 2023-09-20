@@ -22,10 +22,10 @@ const Bookings = () => {
   const [customActiveTypeFilter, setCustomActiveTypeFilter] = useState(null);
   const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
   const [customActiveDepartmentFilter, setCustomActiveDepartmentFilter] = useState(null);
-  const { user } = useContext(LoginContext);
-  const { userName } = useContext(UserContext);
+  const { user,userName  } = useContext(LoginContext);
 
-  const VISIBLE_FIELDS = ['type', 'name', 'date', 'time', 'status', 'actions', 'remarks'];
+  const VISIBLE_FIELDS = [ 'type','name', 'date', 'time', 'status', 'actions', 'remarks'];
+
 
   const fetchData = async () => {
     setIsLoading(true)
