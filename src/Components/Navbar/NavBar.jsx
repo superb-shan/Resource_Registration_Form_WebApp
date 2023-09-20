@@ -1,6 +1,6 @@
 
 import * as React from 'react';
-import {useNavigate} from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
@@ -9,7 +9,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
-import { BsMenuButtonFill} from "react-icons/bs";
+import { BsMenuButtonFill } from "react-icons/bs";
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
 import AccountCircle from '@mui/icons-material/AccountCircle';
@@ -18,20 +18,20 @@ import sriEshwarLogo from '../../Assets/Images/sriEshwarLogo.png'
 import { Link } from 'react-router-dom';
 import { Selector, DropDownSelector } from '../Fields/InteractionFields';
 
-import { useState, useEffect, useContext} from 'react';
+import { useState, useEffect, useContext } from 'react';
 
 
 
-const views = [{name: 'Check Availability'}, { name: 'Add Bookings' }, {name: 'My Bookings'}];
-const forms = ['Seminar Hall', 'Guest House', 'Transport','Items',];
+const views = [{ name: 'Calender' }, { name: 'Check Availability' }, { name: 'Add Bookings' }, { name: 'My Bookings' }];
+const forms = ['Seminar Hall', 'Guest House', 'Transport', 'Items',];
 // const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
-function NavBar({...props}) {
+function NavBar({ ...props }) {
 
   const navigate = useNavigate();
 
   const [anchorElNav, setAnchorElNav] = useState(null);
-  const { selectedForm, setSelectedForm, selectedView, setSelectedView} = useContext(UserContext);
+  const { selectedForm, setSelectedForm, selectedView, setSelectedView } = useContext(UserContext);
   const { user, userName, setIsLoggedIn } = useContext(LoginContext);
 
   const [anchorEl, setAnchorEl] = useState(null);
@@ -57,33 +57,33 @@ function NavBar({...props}) {
     setAnchorElNav(null);
   };
 
-  useEffect(()=> {
+  useEffect(() => {
     setSelectedForm(selectedForm);
   }, [selectedForm, setSelectedForm]);
 
   return (
     <AppBar position="relative" color='secondary'>
       <Container maxWidth="xl" >
-        <Toolbar disableGutters sx={{justifyContent:'end'}}>
+        <Toolbar disableGutters sx={{ justifyContent: 'end' }}>
           <Link to="/">
-            <Box sx={{display: "flex", alignItems: "center"}}>
-                <Box
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Box
                 component="img"
                 sx={{
-                    height: 50,
-                    width: 50,
+                  height: 50,
+                  width: 50,
                 }}
                 alt="Sri Eshwar Logo"
                 src={sriEshwarLogo}
-                />
-                <Typography variant='h6' component='span' fontWeight="600" sx={{ml: 1, mr: {xs:0, md:5}}} lineHeight={"1.2"} >{props.title}</Typography>
+              />
+              <Typography variant='h6' component='span' fontWeight="600" sx={{ ml: 1, mr: { xs: 0, md: 5 } }} lineHeight={"1.2"} >{props.title}</Typography>
             </Box>
           </Link>
-          
+
           {/* <ViewSelector/> */}
-          <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {
-              user === "user" && 
+              user === "user" &&
               <Selector
                 list={views}
                 value={selectedView}
@@ -93,29 +93,29 @@ function NavBar({...props}) {
             }
           </Box>
 
-          <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
             {
-              user === "user" && 
-              <DropDownSelector 
+              user === "user" &&
+              <DropDownSelector
                 list={views.map(view => view.name)}
                 value={selectedView}
-                setValue={setSelectedView} 
+                setValue={setSelectedView}
               />
             }
           </Box>
 
 
-          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' ,marginLeft:'auto',justifyContent:"end" } }}>
+          <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: 'auto', justifyContent: "end" } }}>
             {
-             
-             selectedView==="Add Bookings" && 
-               <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
+
+              selectedView === "Add Bookings" &&
+              <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
             }
           </Box>
 
-           {/* for phone  size */}
-          <Box sx={{ width: 10 , flexGrow: 1, display: { xs: 'flex', md: 'none' , justifyContent:"end"} }}>
-            {selectedView === "Add Bookings" && 
+          {/* for phone  size */}
+          <Box sx={{ width: 10, flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: "end" } }}>
+            {selectedView === "Add Bookings" &&
               <div>
                 <IconButton
                   size="large"
@@ -125,11 +125,11 @@ function NavBar({...props}) {
                   onClick={handleOpenNavMenu}
                   color="inherit"
                 >
-                <BsMenuButtonFill />
+                  <BsMenuButtonFill />
                 </IconButton>
                 <Menu
                   id="menu-appbar"
-                  anchorEl={()=>anchorElNav}
+                  anchorEl={() => anchorElNav}
                   anchorOrigin={{
                     vertical: 'bottom',
                     horizontal: 'right',
@@ -146,7 +146,7 @@ function NavBar({...props}) {
                   }}
                 >
                   {forms.map((page) => (
-                    <MenuItem key={page} onClick={()=>{ setSelectedForm(page) }}>
+                    <MenuItem key={page} onClick={() => { setSelectedForm(page) }}>
                       <Typography textAlign="center">{page}</Typography>
                     </MenuItem>
                   ))}
@@ -155,20 +155,20 @@ function NavBar({...props}) {
             }
           </Box>
 
-          <Box sx={{ml: {xs:"10px", md:"20px"}}}>
+          <Box sx={{ ml: { xs: "10px", md: "20px" } }}>
             {userName && (
               <IconButton
                 size="large"
                 onClick={handleMenu}
                 color="inherit"
-                sx={{borderRadius: "5px", border: "1px #374151 solid", padding: 1}}
+                sx={{ borderRadius: "5px", border: "1px #374151 solid", padding: 1 }}
               >
                 <AccountCircle />
-                <Typography textAlign="center" sx={{marginLeft: 1, fontWeight: "medium"}}>
+                <Typography textAlign="center" sx={{ marginLeft: 1, fontWeight: "medium" }}>
                   {userName[0].toUpperCase() + userName.slice(1)}
                 </Typography>
               </IconButton>
-              )
+            )
             }
             <Menu
               id="menu-appbar"
@@ -187,7 +187,7 @@ function NavBar({...props}) {
             >
               <MenuItem onClick={() => navigate('/change-password')}>Change Password</MenuItem>
               {user === "admin" ? <MenuItem onClick={() => navigate('/create-user')}>Create User</MenuItem> : null}
-              <MenuItem onClick={handleLogOut} sx={{display: "flex", justifyContent: "space-between"}}> <span>Log Out</span> <LogoutIcon/></MenuItem>
+              <MenuItem onClick={handleLogOut} sx={{ display: "flex", justifyContent: "space-between" }}> <span>Log Out</span> <LogoutIcon /></MenuItem>
             </Menu>
           </Box>
         </Toolbar>
