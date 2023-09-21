@@ -9,8 +9,8 @@ import { UserContext } from '../Context/User.Context';
 import Forms from '../Components/Forms/Forms';
 import CheckAvailabilityView from '../Components/CheckAvailability/CheckAvailabilityView';
 import { toast } from 'react-toastify';
-import DataViewContainer from '../Components/Containers/DataViewContainer';
 import CalendarView from '../Components/Calender/CalendarView';
+
 
 const UserPage = () => {
 
@@ -35,15 +35,13 @@ const UserPage = () => {
         selectedView === "My Bookings" ?
           <Bookings />
           :
-          selectedView === "Add Bookings" ?
-            <Forms />
-            :
-            selectedView === "Calender" ?
-              (
-                <CalendarView />
-              )
-              :
-              <CheckAvailabilityView />
+        selectedView === "Add Bookings" ?
+          <Forms />
+          :
+        selectedView === "Calender" ?
+          <CalendarView />
+          :
+        <CheckAvailabilityView />
       }
     </Wrapper>
   )

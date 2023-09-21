@@ -83,9 +83,16 @@ function NavBar({ ...props }) {
           {/* <ViewSelector/> */}
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex' } }}>
             {
-              user === "user" &&
+              user === "user" ?
               <Selector
                 list={views}
+                value={selectedView}
+                setValue={setSelectedView}
+                color="secondary"
+              />
+                :
+              <Selector
+                list={[{name: "Calendar"}, {name: "Bookings"}]}
                 value={selectedView}
                 setValue={setSelectedView}
                 color="secondary"
