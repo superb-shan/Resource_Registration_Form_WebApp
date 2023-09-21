@@ -10,6 +10,7 @@ import { ThemeProvider } from '@mui/material/styles';
 import theme from './Main/theme';
 import GuestHouseProvider from './Context/GuestHouse.Context';
 import DataProvider from './Context/Data.Context';
+import { NoPrint } from 'react-easy-print';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -21,7 +22,9 @@ root.render(
           <UserProvider>
             <GuestHouseProvider>
               <ThemeProvider theme={theme}>
-                <App />
+                <NoPrint>
+                 <App />
+                </NoPrint>
                 <ToastContainer /> 
               </ThemeProvider>
             </GuestHouseProvider>

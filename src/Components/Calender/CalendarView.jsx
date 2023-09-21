@@ -8,6 +8,10 @@ import { Selector } from '../Fields/InteractionFields';
 import CalendarContainer from '../Containers/CalendarContainer';
 import UserDataModal from '../Modals/UserDataModal';
 import AdminDataModal from '../Modals/AdminDataModal';
+import { Button } from '@mui/material';
+
+import printJS from "print-js";
+import PrintProvider, { Print, NoPrint } from "react-easy-print";
 
 const localizer = momentLocalizer(moment);
 
@@ -18,6 +22,7 @@ const CalendarView = (props) => {
   const [formType, setFormType] = useState('Seminar');
   const [selectedRow, setSelectedRow] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
+
 
   const modalHandler = (row) => {
     setSelectedRow(row);
@@ -74,26 +79,13 @@ const CalendarView = (props) => {
   };
   function generateRandomColors() {
    
-  
-   
-      // Generate random RGB values
-      const r = Math.floor(Math.random() * 256);
-      const g = Math.floor(Math.random() * 256);
-      const b = Math.floor(Math.random() * 256);
-  
-      // Calculate brightness of the randomized color
-      const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  
-      // Calculate brightness of white and black text
-      const lightText = (255 * 299 + 255 * 587 + 255 * 114) / 1000;
-      const darkText = (0 * 299 + 0 * 587 + 0 * 114) / 1000;
-  
-      // Determine contrast of color for text
-      const textColor = Math.abs(brightness - lightText) > Math.abs(brightness - darkText) ? 'rgb(255, 255, 255)' : 'rgb(0, 0, 0)';
+    const r = Math.floor(Math.random() * 128) + 128; // Red component
+    const g = Math.floor(Math.random() * 128) + 128; // Green component
+    const b = Math.floor(Math.random() * 128) + 128; // Blue component   
   
       return({
         backgroundColor: `rgb(${r}, ${g}, ${b})`,
-        textColor: textColor,
+        textColor: 'rgb(0,0,0)',
       });
     
   
@@ -128,16 +120,21 @@ const CalendarView = (props) => {
 
   return (
     <div className='flex flex-col items-center p-5 gap-5'>
-        <div className='bg-white p-1 rounded-[5px]'>
-            <Selector value={formType} setValue={setFormType} list={[{name: "Seminar"}, {name: "Guest House"}]}/>
+
+    <div className='flex justify-evenly w-[3300px]'>        
+        <div className='bg-white p-1 rounded-[5px] '>
+           <Selector value={formType} setValue={setFormType} list={[{name: "Seminar"}, {name: "Guest House"}]}/>
         </div>
+       <Button  variant="contained" color="warning" onClick={() => window.print()} sx={{width:'80px',height:'40px'}}>Print</Button  >    
+    </div>
+    <Print>
         <CalendarContainer>
             <BigCalendar
                 localizer={localizer}
                 events={events}
                 startAccessor="start"
                 endAccessor="end"
-                style={{ height: 600, width: 1000 }}
+                style={{ height: 700, width: 1300 }}
                 BackgroundWrapper="red"
                 onSelectEvent={(e)=>{modalHandler(e.val)}}
                 eventPropGetter={(myEvent) => {
@@ -146,7 +143,7 @@ const CalendarView = (props) => {
                 return { style: { backgroundColor, color } };
                 }}
             />
-
+<NoPrint>
             {user === "user" ? 
             
                 <UserDataModal
@@ -166,8 +163,8 @@ const CalendarView = (props) => {
                 />
             
             }
-            
-        </CalendarContainer>
+            </NoPrint>
+        </CalendarContainer></Print>
     </div>
   );
 };

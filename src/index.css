@@ -43,3 +43,13 @@ input::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
+
+/* Example CSS for print styles */
+@media print {
+  /* Add styles for the calendar when printing */
+  .rbc-event {
+    border: 1px solid black !important;
+    color: black !important;
+  }
+}
+
