@@ -1,0 +1,17 @@
+.rbc-header{
+    background: #79b8e4;
+    color:white;
+    padding: 0.5rem;
+    font-size: 12px;
+}
+
+ .rbc-events-container{
+    width: 100% !important;
+ }
+
+ .rbc-timeslot-group{
+    min-width: 100px !important;
+ }
+.rbc-event{
+    content: inherit;
+}
