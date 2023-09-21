@@ -12,7 +12,7 @@ import { Button } from '@mui/material';
 
 import printJS from "print-js";
 import PrintProvider, { Print, NoPrint } from "react-easy-print";
-
+import './bigCustomStyles.css'
 const localizer = momentLocalizer(moment);
 
 const CalendarView = (props) => {
@@ -37,44 +37,44 @@ const CalendarView = (props) => {
   const fetchData = async (user, userName, formType) => {
     setIsLoading(true)
     console.log("formtype", formType)
-    
+
     const param = {};
     if (user === "user") param["name"] = userName;
     param["isapproved"] = true
     try {
-        
+
       let Data = [];
-        let seminarResponse = await axios.get(`/${formType === 'Seminar'? "seminar" : "guesthouse"}/get`, { params: param });
-        seminarResponse = seminarResponse.data.data;
-        console.log(seminarResponse);
-        console.log("events", events);
+      let seminarResponse = await axios.get(`/${formType === 'Seminar' ? "seminar" : "guesthouse"}/get`, { params: param });
+      seminarResponse = seminarResponse.data.data;
+      console.log(seminarResponse);
+      console.log("events", events);
 
-        if (seminarResponse.length > 0) {
-          Data = seminarResponse.map((event) => {
-            // Generate a random background color
-            let color = generateRandomColors()
-            // const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-            
-            // // Calculate text color for better contrast
-            // const textColor = getContrastColor(randomColor);
+      if (seminarResponse.length > 0) {
+        Data = seminarResponse.map((event) => {
+          // Generate a random background color
+          let color = generateRandomColors()
+          // const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
 
-            return {
-              title: formType === 'Seminar' ? event.hallRequired : event.roomRequired,
-              start: new Date(formType === 'Seminar' ? Date.parse(event.startDateTime): moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
-              end: new Date(formType === 'Seminar' ? Date.parse(event.endDateTime): moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
-              colorEvento: color.backgroundColor,
-              val:event,
-              color: color.textColor,
-            };
-          });
-        }
-        console.log(Data, 'data');
-       // setIsLoading(false)
-        return Data;
+          // // Calculate text color for better contrast
+          // const textColor = getContrastColor(randomColor);
+
+          return {
+            title: formType === 'Seminar' ? `${event.hallRequired} (${moment(event.startDateTime).format('hh:mm A')} - ${moment(event.endDateTime).format('hh:mm A')})`: `${event.roomRequired} (${formatTime(event.startDateTime,"DD-MM-YYYY HH:mm:ss")} - ${formatTime(event.endDateTime,"DD-MM-YYYY HH:mm:ss")})`,
+            start: new Date(formType === 'Seminar' ? Date.parse(event.startDateTime) : moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
+            end: new Date(formType === 'Seminar' ? Date.parse(event.endDateTime) : moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
+            colorEvento: color.backgroundColor,
+            val: event,
+            color: color.textColor,
+          };
+        });
+      }
+      console.log(Data, 'data');
+      // setIsLoading(false)
+      return Data;
 
     } catch (error) {
       console.log("Error", error);
-    } 
+    }
     setIsLoading(false)
   };
   function generateRandomColors() {
@@ -93,30 +93,33 @@ const CalendarView = (props) => {
   }
 
   // Function to calculate text color based on background color
-//   const getContrastColor = (hexColor) => {
-//     const r = parseInt(hexColor.slice(1, 3), 16);
-//     const g = parseInt(hexColor.slice(3, 5), 16);
-//     const b = parseInt(hexColor.slice(5, 7), 16);
-//     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+  //   const getContrastColor = (hexColor) => {
+  //     const r = parseInt(hexColor.slice(1, 3), 16);
+  //     const g = parseInt(hexColor.slice(3, 5), 16);
+  //     const b = parseInt(hexColor.slice(5, 7), 16);
+  //     const brightness = (r * 299 + g * 587 + b * 114) / 1000;
 
-//     return brightness > 128 ? 'black' : 'white';
-//   };
-//  setInterval(()=>{fetchData(user, userName,formType).then((data) => {
-//     console.log(data);
-//     setEvent(data);
-//   });},1000*60)
+  //     return brightness > 128 ? 'black' : 'white';
+  //   };
+  //  setInterval(()=>{fetchData(user, userName,formType).then((data) => {
+  //     console.log(data);
+  //     setEvent(data);
+  //   });},1000*60)
 
   useEffect(() => {
     console.log(formType)
-    
+
     if (isLoading) {
-      fetchData(user, userName,formType).then((data) => {
+      fetchData(user, userName, formType).then((data) => {
         console.log(data);
         setEvent(data);
       });
     }
-    
+
   }, [formType]);
+  function formatTime(dateTime,format ) {
+    return moment(dateTime,format).format('hh:mm A'); // Customize the format as needed
+  }
 
   return (
     <div className='flex flex-col items-center p-5 gap-5'>
