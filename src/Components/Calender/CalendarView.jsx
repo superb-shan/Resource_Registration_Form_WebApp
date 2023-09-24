@@ -167,7 +167,8 @@ const CalendarView = (props) => {
             
             }
             </NoPrint>
-        </CalendarContainer></Print>
+        </CalendarContainer>
+        </Print>
     </div>
   );
 };
