@@ -36,7 +36,7 @@ const SeminarHallForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
-  const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked } = useContext(SeminarContext);
+  const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked, hallCategory } = useContext(SeminarContext);
   const { setIsAvailabilityLoading } = useContext(DataContext)
 
 
@@ -111,7 +111,7 @@ const SeminarHallForm = () => {
       setIsLoading(false);
       return;
     }
-    if (noOfAttendees > allHalls.find(hall => hall.name === hallRequired)?.maxCapacity) {
+    if (noOfAttendees > allHalls[hallCategory].find(hall => hall.name === hallRequired)?.maxCapacity) {
       if (!window.confirm("Entered capacity exceed maximum capacity, do you still want to continue?")) {
         setIsLoading(false);
         return;
@@ -150,6 +150,7 @@ const SeminarHallForm = () => {
         equipmentsRequired: equipmentsRequired.join(", "),
         hallRequired,
         specialRequirements,
+        category: hallCategory
       }
     );
     // console.log("Response:", res);
@@ -176,8 +177,8 @@ const SeminarHallForm = () => {
       <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber} />
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Topic *" value={topic} setValue={setTopic} />
-      {console.log("unav", unavailableHalls)}
-      <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked} />
+      {/* {console.log("unav", unavailableHalls)} */}
+      <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls[hallCategory]} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked} />
       <TextInput label="No. of Attendees *" type='number' value={noOfAttendees} setValue={setNoOfAttendees} />
       <ChipsInput label="Equipments Required" value={equipmentsRequired} setValue={setEquipmentsRequired} options={allEquipments} />
       <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements} />

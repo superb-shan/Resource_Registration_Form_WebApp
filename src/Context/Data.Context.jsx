@@ -63,8 +63,9 @@ const DataProvider = ({ children }) => {
             RecordNoteWithGraph: 'Record Note With Graph',
             ObservationBook: 'Observation Book',
             RecordNoteWithoutGraph: 'Record Note Without Graph',
-            ClearanceOfBill: 'Clearance Of Bill'
-
+            ClearanceOfBill: 'Clearance Of Bill',
+            category: 'Category',
+            Category: 'Category',
           }
         }}
 

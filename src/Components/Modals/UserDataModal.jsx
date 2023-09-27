@@ -174,12 +174,13 @@ const UserDataModal = ({...props}) => {
                     <TableBody>
                     {Object.keys(props.selectedRow).map((key) => {
                         // List of keys to exclude
-                        const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime'];
+                        const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
 
                         // const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
                         if (excludedKeys.includes(key)) {
                         return null; // Skip rendering this key
                         }
+                        {console.log(terms[key[0].toUpperCase() + key.slice(1)], props.selectedRow[key], typeof props.selectedRow[key], moment(props.selectedRow[key], "YYYY-MM-DD HH:mm:ss", true).isValid())}
                         return (
                         <TableRow key={key}>
                             <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>

@@ -9,9 +9,7 @@ import CalendarContainer from '../Containers/CalendarContainer';
 import UserDataModal from '../Modals/UserDataModal';
 import AdminDataModal from '../Modals/AdminDataModal';
 import { Button } from '@mui/material';
-
-import printJS from "print-js";
-import PrintProvider, { Print, NoPrint } from "react-easy-print";
+import  { Print, NoPrint } from "react-easy-print";
 import './bigCustomStyles.css'
 const localizer = momentLocalizer(moment);
 
@@ -19,7 +17,7 @@ const CalendarView = (props) => {
   const { user, userName } = useContext(LoginContext);
   const [events, setEvent] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [formType, setFormType] = useState('Seminar');
+  const [formType, setFormType] = useState('Guest House');
   const [selectedRow, setSelectedRow] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -41,10 +39,14 @@ const CalendarView = (props) => {
     const param = {};
     if (user === "user") param["name"] = userName;
     param["isapproved"] = true
+    
+    if (formType !== 'Guest House')
+    param['category'] = formType;
+
     try {
 
       let Data = [];
-      let seminarResponse = await axios.get(`/${formType === 'Seminar' ? "seminar" : "guesthouse"}/get`, { params: param });
+      let seminarResponse = await axios.get(`/${formType === 'Guest House' ? "guesthouse": "seminar"}/get`, { params: param });
       seminarResponse = seminarResponse.data.data;
       console.log(seminarResponse);
       console.log("events", events);
@@ -54,14 +56,11 @@ const CalendarView = (props) => {
           // Generate a random background color
           let color = generateRandomColors()
           // const randomColor = `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-
-          // // Calculate text color for better contrast
           // const textColor = getContrastColor(randomColor);
-
           return {
-            title: formType === 'Seminar' ? `${event.hallRequired} (${moment(event.startDateTime).format('hh:mm A')} - ${moment(event.endDateTime).format('hh:mm A')})`: `${event.roomRequired} (${formatTime(event.startDateTime,"DD-MM-YYYY HH:mm:ss")} - ${formatTime(event.endDateTime,"DD-MM-YYYY HH:mm:ss")})`,
-            start: new Date(formType === 'Seminar' ? Date.parse(event.startDateTime) : moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
-            end: new Date(formType === 'Seminar' ? Date.parse(event.endDateTime) : moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD HH:mm:ss")),
+            title: formType === 'Guest House' ?`${event.roomRequired} (${formatTime(event.startDateTime,"DD-MM-YYYY HH:mm:ss")} - ${formatTime(event.endDateTime,"DD-MM-YYYY HH:mm:ss")})`: `${event.hallRequired} (${moment(event.startDateTime).format('hh:mm A')} - ${moment(event.endDateTime).format('hh:mm A')})`,
+            start: new Date(formType === 'Guest House' ?  moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD hh:mm:ss"): Date.parse(event.startDateTime)),
+            end: new Date(formType === 'Guest House' ?  moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD hh:mm:ss"):Date.parse(event.endDateTime)),
             colorEvento: color.backgroundColor,
             val: event,
             color: color.textColor,
@@ -124,9 +123,12 @@ const CalendarView = (props) => {
   return (
     <div className='flex flex-col items-center p-5 gap-5'>
 
-    <div className='flex justify-evenly w-[3300px]'>        
+    <div className='flex justify-evenly w-[2500px]'>        
         <div className='bg-white p-1 rounded-[5px] '>
-           <Selector value={formType} setValue={setFormType} list={[{name: "Seminar"}, {name: "Guest House"}]}/>
+           <Selector value={formType} setValue={setFormType} list={[  { name: "Auditorium/Training Halls" },
+              { name: "Special Labs" },
+              { name: "Academic Labs" },
+              { name: "Guest House" },]}/>
         </div>
        <Button  variant="contained" color="warning" onClick={() => window.print()} sx={{width:'80px',height:'40px'}}>Print</Button  >    
     </div>
@@ -153,7 +155,7 @@ const CalendarView = (props) => {
                     isModalOpen={isModalOpen}
                     handleModalClose={handleModalClose}
                     selectedRow={selectedRow}
-                    fetchData={()=>{}}
+                    fetchData={fetchData}
                 />
                 
             :
@@ -162,7 +164,7 @@ const CalendarView = (props) => {
                     isModalOpen={isModalOpen}
                     handleModalClose={handleModalClose}
                     selectedRow={selectedRow}
-                    fetchData={()=>{}}
+                    fetchData={fetchData}
                 />
             
             }
