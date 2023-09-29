@@ -65,7 +65,7 @@ const CheckAvailability = ({ ...props }) => {
     setUnavailableHalls = setUnavailableGuestHouses;
     allHalls = allRooms;
   }
-
+  
   const isWithinNextTwoMonths = (givenDate) => {
     if (!givenDate) {
       return;
@@ -96,9 +96,11 @@ const CheckAvailability = ({ ...props }) => {
     }
 
     setIsAvailabilityLoading(true);
-    const res = await axios.get((target === "guesthouse" || formType === "Guest House" ? "/guesthouse/checkAvailability" : "/seminar/checkAvailability") + "", { params: { startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD hh:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD hh:mm:ss") } });
+    const res = await axios.get((target === "guesthouse" || formType === "Guest House" ? "/guesthouse/checkAvailability" : "/seminar/checkAvailability") + "", { params: { startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss") } });
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
+    console.log("date time", startDateTime, endDateTime);
+    console.log("res", res.data)
     setUnavailableHalls(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired) : res.data?.overlappingSeminarHalls?.filter(hall => hall.category === hallCategory).map(seminar => seminar.hallRequired));
     setUnavailableHallsObject(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses : res.data?.overlappingSeminarHalls?.filter(hall => hall.category === hallCategory));
   }
@@ -122,6 +124,7 @@ const CheckAvailability = ({ ...props }) => {
             ]}
             value={hallCategory}
             setValue={setHallCategory}
+            setIsAvailabilityChecked={setIsAvailabilityChecked}
           />
         </Box>
       }
@@ -159,7 +162,7 @@ const CheckAvailability = ({ ...props }) => {
                 unavailableHallsObject.map((hall) => 
                   <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} backgroundColor="#e5e9ec">
                     <Box sx={{textAlign: "left"}}>
-                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "YYYY-MM-DD HH:mm:ss").format("YYYY-MM-DD hh:mm A") : hall[item])}</Box>)}
+                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "YYYY-MM-DD HH:mm:ss").format("DD MMM YYYY hh:mm A") : hall[item])}</Box>)}
                     </Box>
                   </CustomCollapsible>
                 )

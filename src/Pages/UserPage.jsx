@@ -38,7 +38,7 @@ const UserPage = () => {
         selectedView === "Add Bookings" ?
           <Forms />
           :
-        selectedView === "Calender" ?
+        selectedView === "Calendar" ?
           <CalendarView />
           :
         <CheckAvailabilityView />

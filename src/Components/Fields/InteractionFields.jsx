@@ -23,7 +23,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
  const Selector = ({ ...props }) => {
 
-  const handleChange = (event, newValue) => {if (newValue !== null) props.setValue(newValue)};
+  const handleChange = (event, newValue) => {if (newValue !== null) props.setValue(newValue); props.setIsAvailabilityChecked && props.setIsAvailabilityChecked(false)}; 
 
   return (
       <ToggleButtonGroup
@@ -31,8 +31,22 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
         value = {props.value}
         exclusive
         onChange = {handleChange}
+        sx={{border: '1px solid #374151'}}
       >
-        {props.list.map((option) => < ToggleButton value={option.name} key={option.name} sx={{fontWeight: "bold"}} > {option?.adornment}  <span className='ml-1'> {option.name} </span> </ToggleButton> )}
+        {props.list.map((option) => 
+        < ToggleButton 
+        value={option.name} 
+        key={option.name} 
+        sx={{
+          fontWeight: "bold", 
+          border: '1px solid #374151',
+          "&.Mui-selected, &.Mui-selected:hover": {
+            color: "white",
+            backgroundColor: 'primary.main'
+          }
+        }} > 
+          {option?.adornment}  
+        <span className='ml-1'> {option.name} </span> </ToggleButton> )}
       </ToggleButtonGroup>
   );
 }

@@ -22,7 +22,7 @@ import { useState, useEffect, useContext } from 'react';
 
 
 
-const views = [{ name: 'Calender' }, { name: 'Check Availability' }, { name: 'Add Bookings' }, { name: 'My Bookings' }];
+const views = [{ name: 'Calendar' }, { name: 'Check Availability' }, { name: 'Add Bookings' }, { name: 'My Bookings' }];
 const forms = ['Seminar Hall', 'Guest House', 'Transport', 'Items',];
 // const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 

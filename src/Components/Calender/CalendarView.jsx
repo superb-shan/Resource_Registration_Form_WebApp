@@ -17,7 +17,7 @@ const CalendarView = (props) => {
   const { user, userName } = useContext(LoginContext);
   const [events, setEvent] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [formType, setFormType] = useState('Guest House');
+  const [formType, setFormType] = useState('Auditorium/Training Halls');
   const [selectedRow, setSelectedRow] = useState({});
   const [isModalOpen, setIsModalOpen] = useState(false);
 
@@ -125,7 +125,8 @@ const CalendarView = (props) => {
 
     <div className='flex justify-evenly w-[2500px]'>        
         <div className='bg-white p-1 rounded-[5px] '>
-           <Selector value={formType} setValue={setFormType} list={[  { name: "Auditorium/Training Halls" },
+           <Selector value={formType} setValue={setFormType} list={[  
+              { name: "Auditorium/Training Halls" },
               { name: "Special Labs" },
               { name: "Academic Labs" },
               { name: "Guest House" },]}/>
