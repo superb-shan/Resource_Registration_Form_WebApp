@@ -19,8 +19,11 @@ export default function App() {
       <Router>
         <LayoutProvider>
           {isMobile ? (
-            <div className='bg-[#e7eff2]'>
-              <img src={underConstruction} alt='Under Construction for mobile version.' className='pb-[100px]' />
+            <div className='h-[88vh] bg-[#e7eff2] flex flex-col justify-center items-center'>
+              <p>Sri Eshwar's Resource Registration</p>
+              <img src={underConstruction} alt='Under Construction for mobile version.'/>
+              <p>Mobile Version is currently not available.</p>
+              <p>Kindly use a wide screen device.</p>
             </div>
           ) : (
             <Routes>
