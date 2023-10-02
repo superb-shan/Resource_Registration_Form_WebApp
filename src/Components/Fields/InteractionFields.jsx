@@ -31,7 +31,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
         value = {props.value}
         exclusive
         onChange = {handleChange}
-        sx={{border: '1px solid #374151'}}
+        sx={{border: '0.5px solid #374151',  boxShadow: 3,}}
       >
         {props.list.map((option) => 
         < ToggleButton 
@@ -39,11 +39,11 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
         key={option.name} 
         sx={{
           fontWeight: "bold", 
-          border: '1px solid #374151',
+          border: '0.5px solid #374151',
           "&.Mui-selected, &.Mui-selected:hover": {
             color: "white",
             backgroundColor: 'primary.main'
-          }
+          },
         }} > 
           {option?.adornment}  
         <span className='ml-1'> {option.name} </span> </ToggleButton> )}
@@ -210,7 +210,7 @@ const ChipsInput = ({...props}) => {
 
 }
 
-const DropDownSelector = ({...props}) => {
+const DropDownSelector = ({ buttonSide = 'left', ...props}) => {
 
   const [open, setOpen] = useState(false);
   const anchorRef = useRef(null);
@@ -221,6 +221,7 @@ const DropDownSelector = ({...props}) => {
   const handleMenuItemClick = (event, index) => {
     setSelectedIndex(index);
     props.setValue(props.list[index]);
+    props.setSubListAll && props.setSubListAll('All');
     setOpen(false);
   };
 
@@ -239,29 +240,41 @@ const DropDownSelector = ({...props}) => {
   return (
     <React.Fragment>
       <ButtonGroup variant="outlined" ref={anchorRef} aria-label="split button">
-        <Button
-          size="small"
-          aria-controls={open ? 'split-button-menu' : undefined}
-          aria-expanded={open ? 'true' : undefined}
-          aria-label="select merge strategy"
-          aria-haspopup="menu"
-          onClick={handleToggle}
-          style={{backgroundColor: "white"}}
-          
-        >
-          <ArrowDropDownIcon />
-        </Button>
-        <Button onClick={null} style={{backgroundColor: "white", fontWeight: "bold"}}  >{props.list[selectedIndex]}</Button>
+        {buttonSide === 'left' && 
+          <Button
+            size="small"
+            onClick={handleToggle}
+            style={{backgroundColor: "white"}}
+            
+          >
+            <ArrowDropDownIcon />
+          </Button>
+        }
+        <Button onClick={null} onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)} style={{backgroundColor: "white", fontWeight: "bold"}}  >{props.list[selectedIndex]}</Button>
+        {buttonSide === 'right' && 
+          <Button
+            size="small"
+            onClick={handleToggle}
+            style={{backgroundColor: "white"}}
+          >
+            <ArrowDropDownIcon />
+          </Button>
+        }
       </ButtonGroup>
       <Popper
         sx={{
-          zIndex: 1,
+          zIndex: 5,
+          maxHeight: '60vh',
+          overflow: 'auto',
+          boxShadow: 3,
         }}
         open={open}
         anchorEl={anchorRef.current}
         role={undefined}
         transition
         disablePortal
+        onMouseEnter={() => setOpen(true)} 
+        onMouseLeave={() => setOpen(false)}
       >
         {({ TransitionProps, placement }) => (
           <Grow
@@ -296,6 +309,4 @@ const DropDownSelector = ({...props}) => {
 
 
 
-
-
-export { Selector, TextInput, DateTimeInput, PasswordInput, ChipsInput, DropDownSelector };
+export { Selector, TextInput, DateTimeInput, PasswordInput, ChipsInput, DropDownSelector};
