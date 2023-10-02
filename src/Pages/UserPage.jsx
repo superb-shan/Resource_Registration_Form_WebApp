@@ -35,7 +35,7 @@ const UserPage = () => {
         selectedView === "My Bookings" ?
           <Bookings />
           :
-        selectedView === "Add Bookings" ?
+        selectedView === "Book" ?
           <Forms />
           :
         selectedView === "Calendar" ?

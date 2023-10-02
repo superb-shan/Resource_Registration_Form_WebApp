@@ -8,8 +8,8 @@ import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
 import { Button, Typography } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
+import { DataContext } from '../../Context/Data.Context';
 
-const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 
 const ItemsForm = () => {
 
@@ -32,6 +32,7 @@ const ItemsForm = () => {
 
     const [postStatus, setPostStatus] = useState('');
     const {userName} = useContext(LoginContext);
+    const { allDepartments } = useContext(DataContext);
     const {setSelectedView} = useContext(UserContext);
 
     function isNotEmpty(value) {

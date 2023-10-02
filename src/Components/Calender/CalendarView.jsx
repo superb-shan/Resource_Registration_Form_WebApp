@@ -111,7 +111,7 @@ const CalendarView = (props) => {
       <div className='flex gap-[20px] items-center'>
         <DropDownSelector buttonSide='right' value={formType} setValue={setFormType} setSubListAll={setRequiredHallRoom}
           list={[ 
-            "Auditorium/Training Halls", "Special Labs", "Academic Labs", "Guest House"
+            ...Object.keys(allHalls), "Guest House"
             ]} 
         />
         {

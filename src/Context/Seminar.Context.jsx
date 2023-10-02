@@ -22,11 +22,8 @@ const SeminarProvider = ({ children }) => {
       { name: 'Makerspace', maxCapacity: 100 },
       { name: 'Ignite', maxCapacity: 100 },
       { name: 'Iot laboratory', maxCapacity: 100 },
-      { name: 'Ignite Board Room', maxCapacity: 10 },
-      { name: 'IQAC Board Room', maxCapacity: 10 },
-      { name: 'Office Board Room', maxCapacity: 10 },
       { name: 'GF-07', maxCapacity: 40 },
-      { name: 'Cyber Security & Hypernet ', maxCapacity: 75 },
+      { name: 'Cyber Security & Hypernet', maxCapacity: 75 },
       { name: 'AI Robo Space', maxCapacity: 75 },
     ],
     'Academic Labs': [
@@ -42,6 +39,11 @@ const SeminarProvider = ({ children }) => {
       { name: 'AI laboratory', maxCapacity: 67 },
       { name: 'Business Analytics laboratory', maxCapacity: 74 },
       { name: 'PLC Automation laboratory', maxCapacity: 44 },
+    ],
+    'Board Rooms': [
+      { name: 'Ignite Board Room', maxCapacity: 10 },
+      { name: 'IQAC Board Room', maxCapacity: 10 },
+      { name: 'Office Board Room', maxCapacity: 10 },
     ],
   };
 

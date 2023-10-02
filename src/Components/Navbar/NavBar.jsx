@@ -22,7 +22,7 @@ import { useState, useEffect, useContext } from 'react';
 
 
 
-const views = [{ name: 'Calendar' }, { name: 'Check Availability' }, { name: 'Add Bookings' }, { name: 'My Bookings' }];
+const views = [{ name: 'Calendar' }, { name: 'Check Availability' }, { name: 'Book' }, { name: 'My Bookings' }];
 const forms = ['Seminar Hall', 'Guest House', 'Transport', 'Items',];
 // const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
@@ -115,14 +115,14 @@ function NavBar({ ...props }) {
           <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', marginLeft: 'auto', justifyContent: "end" } }}>
             {
 
-              selectedView === "Add Bookings" &&
+              selectedView === "Book" &&
               <DropDownSelector value={selectedForm} setValue={setSelectedForm} list={forms} />
             }
           </Box>
 
           {/* for phone  size */}
           <Box sx={{ width: 10, flexGrow: 1, display: { xs: 'flex', md: 'none', justifyContent: "end" } }}>
-            {selectedView === "Add Bookings" &&
+            {selectedView === "Book" &&
               <div>
                 <IconButton
                   size="large"

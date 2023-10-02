@@ -8,8 +8,8 @@ import moment from 'moment';
 import { UserContext } from '../../Context/User.Context';
 import { Button } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
+import { DataContext } from '../../Context/Data.Context';
 
-const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 
 const TransportForm = () => {
 
@@ -28,6 +28,8 @@ const TransportForm = () => {
     const [postStatus, setPostStatus] = useState('');
     const {userName} = useContext(LoginContext);
     const {setSelectedView} = useContext(UserContext);
+    const { allDepartments } = useContext(DataContext);
+
 
     function isNotEmpty(value) {
         if (value === null || value === undefined) {

@@ -30,6 +30,8 @@ const CheckAvailability = ({ ...props }) => {
     setHallCategory
   } = useContext(SeminarContext);
 
+  const hallKeys = Object.keys(allHalls);
+
   allHalls = hallCategory === "Guest House"? [] : allHalls[hallCategory].map(hall => hall.name);
   
   useEffect(()=> {
@@ -106,20 +108,19 @@ const CheckAvailability = ({ ...props }) => {
   }
 
   const handleProceed = () => {
-    setSelectedView("Add Bookings");
+    setSelectedView("Book");
     setSelectedForm(formType);
     setIsAvailabilityChecked(false)
   }
 
   return (
     <>
+    {console.log('allHalls', hallKeys)}
       {!target &&
         <Box marginX={"100px"}>
           <Selector
             list={[
-              { name: "Auditorium/Training Halls" },
-              { name: "Special Labs" },
-              { name: "Academic Labs" },
+              ...hallKeys.map((hall) => ({ name: hall })),
               { name: "Guest House" },
             ]}
             value={hallCategory}
