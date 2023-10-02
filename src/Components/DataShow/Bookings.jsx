@@ -26,9 +26,7 @@ const Bookings = () => {
   const { user,userName  } = useContext(LoginContext);
   const { allDepartments } = useContext(DataContext);
 
-
-  const VISIBLE_FIELDS = [ 'type','name', 'date', 'time', 'status', 'actions', 'remarks'];
-
+  const VISIBLE_FIELDS = ['type','name', 'date', 'time', 'status', 'actions', 'remarks'];
 
   const fetchData = async () => {
     setIsLoading(true)

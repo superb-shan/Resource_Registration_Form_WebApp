@@ -39,7 +39,7 @@ const UserDataModal = ({...props}) => {
         borderRadius: 3,
         overflow:"auto",
         paddingTop:'5px',
-        height:800
+        height:700,
       };
 
     const deleted = async (id) => {
@@ -80,15 +80,15 @@ const UserDataModal = ({...props}) => {
     
         for (const key of Object.keys(selectedRow)) {
          
-          if (key == 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime') {
+          if (key === 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime') {
             continue;
           }
     
           const formattedKey = terms[key[0].toUpperCase() + key.slice(1)];
           let formattedValue = ""; // Initialize formattedValue as an empty string
-         if(selectedRow[key] === null){
-                     continue ;
-         }
+          if(selectedRow[key] === null){
+            continue ;
+          }
          if(selectedRow[key] === ""){
           printData.push([formattedKey,"Nil"]) ;
           continue;
@@ -137,20 +137,20 @@ const UserDataModal = ({...props}) => {
       const lastRowWidth = 180;
       
       // Apply the background color as a rectangle
-      if(selectedRow["isapproved"] == null){
+      if(selectedRow["isapproved"] === null){
         pdf.addImage(pending,'png',lastRowX +70,lastRowY-10,40,40)
       }
-      else if(selectedRow["isapproved"] == 1){
+      else if(selectedRow["isapproved"] === 1){
         pdf.addImage(accepted,'png',lastRowX+70,lastRowY+10,40,40)
       }
-      else if(selectedRow["isapproved"] == 0){
+      else if(selectedRow["isapproved"] === 0){
         pdf.addImage(rejected,'png',lastRowX+70,lastRowY-25,40,40)
       }
     //watermark
     pdf.saveGraphicsState();
     pdf.setGState(new pdf.GState({opacity: 0.05}));
-    pdf.addImage(watermark,'png',60,100,80,80)
-    pdf.restoreGraphicsState();;
+    pdf.addImage(watermark,'png',60,100,80,80);
+    pdf.restoreGraphicsState();
     }
   
   window.open(pdf.output("bloburl"), "_blank","toolbar=no,status=no,menubar=no,scrollbars=no,resizable=no,modal=yes,top=200,left=350,width=600,height=400");
@@ -180,7 +180,6 @@ const UserDataModal = ({...props}) => {
                         if (excludedKeys.includes(key)) {
                         return null; // Skip rendering this key
                         }
-                        {console.log(terms[key[0].toUpperCase() + key.slice(1)], props.selectedRow[key], typeof props.selectedRow[key], moment(props.selectedRow[key], "YYYY-MM-DD HH:mm:ss", true).isValid())}
                         return (
                         <TableRow key={key}>
                             <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
