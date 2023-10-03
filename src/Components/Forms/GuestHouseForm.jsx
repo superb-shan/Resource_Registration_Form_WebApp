@@ -14,10 +14,26 @@ import { Button } from '@mui/material';
 import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Modal from '@mui/material/Modal';
+
 const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks'];
 const allPaymentOptions = ["Paid by institution", "Department", "Guest"];
 const allMenu = ["Elite", "Special", "Normal"];
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  boxShadow: 24,
+  p: 4,
+};
 
 const GuestHouseForm = () => {
 
@@ -34,6 +50,7 @@ const GuestHouseForm = () => {
   const [specialRequirements, setSpecialRequirements] = useState('');
   const [roomRequired, setRoomRequired] = useState('');
 
+  const [open, setOpen] = React.useState(false);
 
   const [postStatus, setPostStatus] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +58,8 @@ const GuestHouseForm = () => {
   const { userName } = useContext(LoginContext);
   const { allRooms, startDateTime,  endDateTime,  isGuestHouseAvailabilityChecked: isAvailabilityChecked, unavailableGuestHouses } = useContext(GuestHouseContext);
 
-  
+  const handleClose = () => setOpen(false);
+  const handleOpen = () => setOpen(true);
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -114,6 +132,7 @@ const GuestHouseForm = () => {
       setIsLoading(false);
       return;
     }
+
     //Create booking
     console.log({
       userName,
@@ -152,6 +171,7 @@ const GuestHouseForm = () => {
         specialRequirements,
       }
     );
+
     console.log("Response:", res);
     setPostStatus(res.data.message);
     setIsLoading(false);
@@ -162,11 +182,18 @@ const GuestHouseForm = () => {
       toast.error(postStatus);
       return;
     }
+
+   
+
     setSelectedView('My Bookings');
+
+   
+
   }
 
 
   return (
+    <>
     <FormContainer title="Guest House Form">
       <CheckAvailability target={"guesthouse"}  />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
@@ -181,10 +208,29 @@ const GuestHouseForm = () => {
       <TextInput label="Menu Required *" select={true} value={menuRequired} setValue={setMenuRequired} options={allMenu} />
       <TextInput label="Payment Done By *" select={true} value={paymentDoneBy} setValue={setPaymentDoneBy} options={allPaymentOptions} />
       <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
-      <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
+      <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={()=>{handleOpen();handleSubmit();}} color={postStatus ? 'success' : 'primary'}>
         {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
       </Button>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        {/* <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2">
+            Text in a modal
+          </Typography>
+          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
+          </Typography>
+        </Box> */}
+      </Modal>
     </FormContainer>
+
+   
+
+    </>
   )
 }
 

@@ -17,6 +17,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import sriEshwarLogo from '../../Assets/Images/sriEshwarLogo.png'
 import { Link } from 'react-router-dom';
 import { Selector, DropDownSelector } from '../Fields/InteractionFields';
+import FeedbackIcon from '@mui/icons-material/Feedback';
 
 import { useState, useEffect, useContext } from 'react';
 
@@ -194,6 +195,7 @@ function NavBar({ ...props }) {
             >
               <MenuItem onClick={() => navigate('/change-password')}>Change Password</MenuItem>
               {user === "admin" ? <MenuItem onClick={() => navigate('/create-user')}>Create User</MenuItem> : null}
+              <MenuItem onClick={() => navigate('/feedback')} sx={{ display: "flex", justifyContent: "space-between" }}><span> Feedback </span>  <FeedbackIcon /></MenuItem>
               <MenuItem onClick={handleLogOut} sx={{ display: "flex", justifyContent: "space-between" }}> <span>Log Out</span> <LogoutIcon /></MenuItem>
             </Menu>
           </Box>
