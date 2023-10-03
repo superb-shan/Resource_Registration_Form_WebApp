@@ -112,7 +112,13 @@ const DataGridTable = ({...props}) => {
         components={{
           Toolbar: GridToolbar,
         }}
-        sx={{ maxWidth: {xs: "100%", md:'70%'}, m: {xs: 2, md: 0}  }}
+        sx={{ 
+          maxWidth: {xs: "100%", md:'70%'},
+          m: {xs: 2, md: 0}, 
+          "& .MuiDataGrid-row:nth-child(even)": {
+          backgroundColor: '#f0f0f0', 
+          },  
+        }}
       />
       {props.modal}
     </>

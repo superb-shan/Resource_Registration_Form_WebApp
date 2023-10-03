@@ -135,18 +135,16 @@ const CheckAvailability = ({ ...props }) => {
       <Button variant="contained" sx={{ width: "300px", height: "40px", mb: '1rem', mx: { xs: 0, md: "200px" } }} onClick={handleCheckAvailability} color={isAvailabilityChecked ? "success" : "primary"} >{isAvailabilityLoading ? <ReactLoading height={"20%"} width={"10%"} /> : isAvailabilityChecked ? <Done /> : <>Check Availability</>}</Button>
 
       { isAvailabilityChecked && 
-      <Grid container spacing={2} sx={{textAlign: "", backgroundColor: "secondary.main",  width: {xs:"400px", md:"720px"}, borderRadius: "10px", ml: {xs:0,md:1}, maxHeight: {md: "365px"}, overflow: "auto"}}>
+      <Grid container spacing={2} sx={{textAlign: "", mx: 'auto', backgroundColor: "secondary.main",  width: {xs:"400px", md:"750px"}, borderRadius: "10px", maxHeight: {md: "365px"}, overflow: "auto"}}>
         <Grid item xs={12} md={6} >
           <Typography variant="h6" component="div" sx={{textAlign: "center"}} >
             Available
           </Typography>
-          <Box>
-            <List>
+          <Box >
+            <List sx={{mr: '15px'}}>
               {
                 isAvailabilityLoading? <ReactLoading height={"20%"} width={"10%"} />  :
-               ( 
-                (unavailableHalls.length ===allHalls.length ? <ListItemText primary={"None"} />  : allHalls.filter(hall => !unavailableHalls.includes(hall)).map((hall) => <ListItemText key={hall} primary={hall} />)) //:
-              )
+                (unavailableHalls.length === allHalls.length ? <ListItemText primary={"None"} />  : allHalls.filter(hall => !unavailableHalls.includes(hall)).map((hall, index) => <ListItemText key={hall} primary={hall} sx={{backgroundColor: '#fef08a', pl: '5px', borderRadius: '5px'}} />)) 
               }
             </List>
           </Box>
@@ -157,13 +155,13 @@ const CheckAvailability = ({ ...props }) => {
             Not Available
           </Typography>
           <Box>
-            <List sx={{width: "320px"}}>
+            <List sx={{width: "340px"}}>
               {
                 unavailableHalls.length === 0 ? <ListItemText primary={"None"} />  : 
                 unavailableHallsObject.map((hall) => 
-                  <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} backgroundColor="#e5e9ec">
+                  <CustomCollapsible title={target === "guesthouse" || formType === "Guest House" ? hall.roomRequired : hall.hallRequired} backgroundColor="#e5e9ec" isAvailability={true}>
                     <Box sx={{textAlign: "left"}}>
-                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  " + (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "YYYY-MM-DD HH:mm:ss").format("DD MMM YYYY hh:mm A") : hall[item])}</Box>)}
+                      {Object.keys(hall).filter((item) => item !== "hallRequired" && item !== "roomRequired").map((item) => <Box fontSize={13} marginLeft={1} sx={{color: "text.main"}}> { terms[item] + "  :  "} <strong>{ (item === "startDateTime" || item === "endDateTime"? moment(hall[item], "YYYY-MM-DD HH:mm:ss").format("DD MMM YYYY hh:mm A") : hall[item]) }</strong></Box>)}
                     </Box>
                   </CustomCollapsible>
                 )

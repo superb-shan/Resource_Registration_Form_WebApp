@@ -212,12 +212,12 @@ const GuestHouseForm = () => {
       <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={()=>{handleOpen();handleSubmit();}} color={postStatus ? 'success' : 'primary'}>
         {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
       </Button>
-      <Modal
+      {/* <Modal
         open={open}
         onClose={handleClose}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
-      >
+      > */}
         {/* <Box sx={style}>
           <Typography id="modal-modal-title" variant="h6" component="h2">
             Text in a modal
@@ -226,7 +226,7 @@ const GuestHouseForm = () => {
             Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
           </Typography>
         </Box> */}
-      </Modal>
+      {/* </Modal> */}
     </FormContainer>
 
    

@@ -168,7 +168,7 @@ const SeminarHallForm = () => {
 
 
   return (
-    <FormContainer title="Seminar Hall Form">
+    <FormContainer title="Seminar Hall Form" >
       <CheckAvailability target={"seminar"} />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
