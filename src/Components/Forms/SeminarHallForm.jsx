@@ -15,7 +15,6 @@ import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { SeminarContext } from '../../Context/Seminar.Context';
 import { DataContext } from '../../Context/Data.Context';
 
-const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 const allEquipments = ['Audio', 'Video', 'Reception items', 'Power Back up', 'Others'];
 
 const SeminarHallForm = () => {
@@ -37,7 +36,7 @@ const SeminarHallForm = () => {
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
   const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked, hallCategory } = useContext(SeminarContext);
-  const { setIsAvailabilityLoading } = useContext(DataContext)
+  const { setIsAvailabilityLoading, allDepartments } = useContext(DataContext);
 
 
   function isNotEmpty(value) {

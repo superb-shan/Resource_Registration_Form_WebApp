@@ -17,8 +17,8 @@ import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { DataContext } from '../../Context/Data.Context';
 
-const allDepartments = ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'];
 const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks'];
 const allPaymentOptions = ["Paid by institution", "Department", "Guest"];
 const allMenu = ["Elite", "Special", "Normal"];
@@ -56,6 +56,7 @@ const GuestHouseForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
+  const { allDepartments } = useContext(DataContext);
   const { allRooms, startDateTime,  endDateTime,  isGuestHouseAvailabilityChecked: isAvailabilityChecked, unavailableGuestHouses } = useContext(GuestHouseContext);
 
   const handleClose = () => setOpen(false);

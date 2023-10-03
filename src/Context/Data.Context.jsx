@@ -5,12 +5,14 @@ export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
+  const allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MECH', 'PLAC', 'SLC', 'SnH'];
   return (
     <DataContext.Provider
       value={
 
         {
           isAvailabilityLoading, setIsAvailabilityLoading,
+          allDepartments,
           terms:
           {
             startDateTime: 'Start Date and Time',

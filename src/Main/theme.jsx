@@ -9,7 +9,7 @@ const theme = createTheme({
       //! wont be applied for the overall bg, because it needs to have opacity reduced, which is done with rgba
     },
     secondary: {
-      main: '#ffd966',
+      main: '#ffe600',
     },
     text: {
       main: '#374151',

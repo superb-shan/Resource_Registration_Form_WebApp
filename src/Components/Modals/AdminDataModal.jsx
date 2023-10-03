@@ -42,7 +42,7 @@ const AdminDataModal = ({...props}) => {
         borderRadius: 3,
         overflow:"auto",
         paddingTop:'5px',
-        height:800
+        height:700
       };
 
     // const deleted = async (id) => {
@@ -86,15 +86,15 @@ const AdminDataModal = ({...props}) => {
     
         for (const key of Object.keys(selectedRow)) {
          
-          if (key == 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type') {
+          if (key === 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type') {
             continue;
           }
     
           const formattedKey = key[0].toUpperCase() + key.slice(1);
           let formattedValue = ""; // Initialize formattedValue as an empty string
-         if(selectedRow[key] === null){
-                     continue ;
-         }
+          if(selectedRow[key] === null){
+            continue ;
+          }
          if(selectedRow[key] === ""){
           printData.push([formattedKey,"Nil"]) ;
           continue;
@@ -143,13 +143,13 @@ const AdminDataModal = ({...props}) => {
       const lastRowWidth = 180;
       
       // Apply the background color as a rectangle
-      if(selectedRow["isapproved"] == null){
+      if(selectedRow["isapproved"] === null){
         pdf.addImage(pending,'png',lastRowX +70,lastRowY-10,40,40)
       }
-      else if(selectedRow["isapproved"] == 1){
+      else if(selectedRow["isapproved"] === 1){
         pdf.addImage(accepted,'png',lastRowX+70,lastRowY+10,40,40)
       }
-      else if(selectedRow["isapproved"] == 0){
+      else if(selectedRow["isapproved"] === 0){
         pdf.addImage(rejected,'png',lastRowX+70,lastRowY-20,40,40)
       }
     //watermark

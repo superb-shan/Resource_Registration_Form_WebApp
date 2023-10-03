@@ -11,6 +11,7 @@ import { useEffect } from 'react';
 import UserDataModal from '../Modals/UserDataModal';
 import AdminDataModal from '../Modals/AdminDataModal';
 import ReactLoading from 'react-loading';
+import { DataContext } from '../../Context/Data.Context';
 
 const Bookings = () => {
 
@@ -23,9 +24,9 @@ const Bookings = () => {
   const [customActiveStatusFilter, setCustomActiveStatusFilter] = useState(null);
   const [customActiveDepartmentFilter, setCustomActiveDepartmentFilter] = useState(null);
   const { user,userName  } = useContext(LoginContext);
+  const { allDepartments } = useContext(DataContext);
 
-  const VISIBLE_FIELDS = [ 'type','name', 'date', 'time', 'status', 'actions', 'remarks'];
-
+  const VISIBLE_FIELDS = ['type','name', 'date', 'time', 'status', 'actions', 'remarks'];
 
   const fetchData = async () => {
     setIsLoading(true)
@@ -122,7 +123,7 @@ const Bookings = () => {
           },
           {
             title: "Department Filters",
-            filters: ['CSE', 'ECE', 'EEE', 'AI&DS/ML', 'IT', 'MECH', 'CCE', 'CSBS', 'PLAC', 'SH', 'SLC'],
+            filters: allDepartments,
             value: customActiveDepartmentFilter,
             setValue: setCustomActiveDepartmentFilter,
             isOpen: false,
