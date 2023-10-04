@@ -76,7 +76,7 @@ const Feedback = () => {
   const handleUpdate = async (event) => {
     event.preventDefault();
     console.log(selectedRating)
-    const res = await axios.post(`/user/update`, { name: userName,feedback:feedback,rating:selectedRating } );
+    const res = await axios.post(`/feedback`, { userName,feedback,contactNumber:selectedRating,department:'SECE' } );
     console.log(res)
     setIsUpdated(true)
     toast.success("Thanks for your valuable feedback");
