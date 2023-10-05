@@ -9,7 +9,7 @@ function AreaSplineChart({ data }) {
     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
   ];
 
-  // Extract data for the chart series
+  // Extract data  for the chart series
   const seriesData = data.map((graphData) => ({
     name: graphData.name,
     data: graphData.data.map((point) => [point.month - 1, point.value]), // Subtract 1 to match monthNames array
@@ -61,7 +61,7 @@ function AreaSplineChart({ data }) {
     setOptions((previousOptions) => ({
       ...previousOptions,
       xAxis: {
-        categories: data[0].data.map((point) => monthNames[point.month -1]), // Subtract 1 to match monthNames array
+        categories: data[0].data.map((point) => monthNames[point.month - 1]), // Subtract 1 to match monthNames array
       },
     }));
   }, [data]);
