@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react';
 import FormContainer from '../Containers/FormContainer';
-import { ChipsInput, TextInput } from '../Fields/InteractionFields';
+import { ChipsInput, Selector, TextInput } from '../Fields/InteractionFields';
 import { useContext } from 'react';
 import { UserContext } from '../../Context/User.Context';
 import { LoginContext } from '../../Context/Login.Context';
@@ -10,7 +10,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { Done, Send } from '@mui/icons-material';
 import ReactLoading from 'react-loading';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { SeminarContext } from '../../Context/Seminar.Context';
 import { DataContext } from '../../Context/Data.Context';
@@ -35,9 +35,9 @@ const SeminarHallForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const { setSelectedView } = useContext(UserContext);
   const { userName } = useContext(LoginContext);
-  const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked, hallCategory } = useContext(SeminarContext);
+  const { allHalls, startDateTime, endDateTime, isAvailabilityChecked, unavailableHalls, setIsAvailabilityChecked, hallCategory, setHallCategory } = useContext(SeminarContext);
   const { setIsAvailabilityLoading, allDepartments } = useContext(DataContext);
-
+  const hallKeys = Object.keys(allHalls);
 
   function isNotEmpty(value) {
     if (value === null || value === undefined) {
@@ -167,6 +167,14 @@ const SeminarHallForm = () => {
 
   return (
     <FormContainer title="Hall/Lab Booking Form" >
+      <Box marginX={"100px"}>
+          <Selector
+            list={hallKeys.map((hall) => ({ name: hall }))}
+            value={hallCategory}
+            setValue={setHallCategory}
+            setIsAvailabilityChecked={setIsAvailabilityChecked}
+          />
+        </Box>
       <CheckAvailability target={"seminar"} />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
