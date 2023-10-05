@@ -11,6 +11,7 @@ import { toast } from 'react-toastify';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import Rating from '@mui/material/Rating';
+import ReactLoading from 'react-loading';
 import SentimentVeryDissatisfiedIcon from '@mui/icons-material/SentimentVeryDissatisfied';
 import SentimentDissatisfiedIcon from '@mui/icons-material/SentimentDissatisfied';
 import SentimentSatisfiedIcon from '@mui/icons-material/SentimentSatisfied';
@@ -62,7 +63,8 @@ const Feedback = () => {
   const navigate = useNavigate();
   const [isUpdated, setIsUpdated] = useState(false);
   const [feedback, setFeedback] = useState('');
-  const [selectedRating, setSelectedRating] = useState(0)
+  const [selectedRating, setSelectedRating] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
 
   const { 
           userName, 
@@ -74,14 +76,14 @@ const Feedback = () => {
   }
 
   const handleUpdate = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     console.log(selectedRating)
     const res = await axios.post(`/feedback`, { userName,feedback,contactNumber:selectedRating,department:'SECE' } );
     console.log(res)
     setIsUpdated(true)
     toast.success("Thanks for your valuable feedback");
-    
-
+    setIsLoading(false);
   }
   
   useEffect(()=>{
@@ -106,7 +108,7 @@ const Feedback = () => {
         size="small"
             />
         
-        <Button variant="contained" sx={{ width: "100px" }} type="submit" color={isUpdated ? "success" : "primary"}>Submit</Button>
+        <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isUpdated ? "success" : "primary"}>{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Submit"}</Button>
         <h3 className='text-orange-600'>Every Feedback and Suggestion Matters !</h3>
         </AccountManagerContainer>
     </Wrapper>

@@ -8,6 +8,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading'
 
 const ChangePasswordPage = () => {
 
@@ -15,6 +16,7 @@ const ChangePasswordPage = () => {
   const [isUpdated, setIsUpdated] = useState(false);
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { 
           userName, 
@@ -39,6 +41,7 @@ const ChangePasswordPage = () => {
 
   const handleUpdate = async (event) => {
 
+    setIsLoading(true);
     event.preventDefault();
     if (newPassword !== confirmPassword){
         toast.info('Please enter the same password');
@@ -66,6 +69,7 @@ const ChangePasswordPage = () => {
     }else{
         console.log("not updated", loginStatus);
     }
+    setIsLoading(false);
 
   }
   
@@ -79,7 +83,7 @@ const ChangePasswordPage = () => {
         <TextInput label={"User Name"} value={userName} disabled={true} endAdornment={<AccountCircle/>} />
         <PasswordInput label={"New Password"} value={newPassword} setValue={setNewPassword} />
         <PasswordInput label={"Confirm Password"} value={confirmPassword} setValue={setConfirmPassword} />
-        <Button variant="contained" sx={{ width: "100px" }} type="submit" color={isUpdated ? "success" : "primary"}>Update</Button>
+        <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isUpdated ? "success" : "primary"}>{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Update"}</Button>
       </AccountManagerContainer>
     </Wrapper>
   )}catch(err){

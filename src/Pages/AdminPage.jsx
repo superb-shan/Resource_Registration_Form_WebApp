@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import Bookings from '../Components/DataShow/Bookings';
 import { UserContext } from '../Context/User.Context';
 import CalendarView from '../Components/Calender/CalendarView';
+import Analytics from '../Components/Analytics/Analytics';
 
 
  const AdminPage = () => {
@@ -29,10 +30,12 @@ import CalendarView from '../Components/Calender/CalendarView';
       <NavBar title={'Resource Registration'} />
       {
         selectedView === "Calendar"?
-
-        <CalendarView />
+          <CalendarView />
         :
-        <Bookings />
+        selectedView === "Bookings" ?
+          <Bookings />
+        :
+          <Analytics />
       }
       
     </Wrapper>

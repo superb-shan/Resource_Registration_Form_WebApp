@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Wrapper } from '../Components/Wrappers/Wrapper';
 import { AccountManagerContainer } from '../Components/Containers/AccountManagerContainer';
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
@@ -11,9 +11,11 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading';
 
 const LoginPage = () => {
 
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const { user,
           setUser,
@@ -27,6 +29,7 @@ const LoginPage = () => {
 
   const handleLogin = async (event) => {
 
+    setIsLoading(true);
     event.preventDefault();
     const res = await axios.get(`/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
@@ -41,7 +44,7 @@ const LoginPage = () => {
       toast.success(`Logged in as ${user.toUpperCase()}` )
       navigate(`/${user}`);
     }
-
+    setIsLoading(false);
   }
   
   useEffect(()=>{
@@ -61,7 +64,7 @@ const LoginPage = () => {
           />
           <TextInput label={"User Name"} value={userName} setValue={setUserName} endAdornment={<AccountCircle/>} />
           <PasswordInput label={"Password"} value={password} setValue={setPassword} />
-          <Button variant="contained" sx={{ width: "100px" }} type="submit" color={isLoggedIn ? "success" : "primary"}>Login</Button>
+          <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isLoggedIn ? "success" : "primary"} >{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Login"}</Button>
       </AccountManagerContainer>
     </Wrapper>
   )}catch(err){

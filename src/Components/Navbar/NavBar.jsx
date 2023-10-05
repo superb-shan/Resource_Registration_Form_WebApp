@@ -93,7 +93,7 @@ function NavBar({ ...props }) {
               />
                 :
               <Selector
-                list={[{name: "Calendar"}, {name: "Bookings"}]}
+                list={[{name: "Calendar"}, {name: "Bookings"}, {name: "Analytics"}]}
                 value={selectedView}
                 setValue={setSelectedView}
                 color="secondary"

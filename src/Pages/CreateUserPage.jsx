@@ -8,6 +8,7 @@ import { Button } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import ReactLoading from 'react-loading';
 
 const CreateUserPage = () => {
 
@@ -17,6 +18,7 @@ const CreateUserPage = () => {
   const [newEmail, setNewEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const { user, isLoggedIn } = useContext(LoginContext);
 
@@ -44,6 +46,7 @@ const CreateUserPage = () => {
 
   const handleCreate = async (event) => {
 
+    setIsLoading(true);
     event.preventDefault();
     console.log(newPassword, confirmPassword);
     if (newPassword !== confirmPassword){
@@ -81,6 +84,7 @@ const CreateUserPage = () => {
     }else{
       toast.warn(loginStatus);
     }
+    setIsLoading(false);
 
   }
   
@@ -93,7 +97,7 @@ const CreateUserPage = () => {
         <TextInput label={"New Email"} value={newEmail} setValue={setNewEmail} endAdornment={<Mail/>} />
         <PasswordInput label={"New Password"} value={newPassword} setValue={setNewPassword} />
         <PasswordInput label={"Confirm Password"} value={confirmPassword} setValue={setConfirmPassword} />
-        <Button variant="contained" sx={{ width: "100px" }} type="submit" color={isCreated? "success": "primary"} endIcon={isCreated?<Done />:<></>}>{isCreated? "Created" : "Create"}</Button>
+        <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isCreated? "success": "primary"} endIcon={isCreated && !isLoading?<Done />:<></>}>{isLoading? <ReactLoading type="spin" width={25} height={25}/> : isCreated? "Created" : "Create"}</Button>
       </AccountManagerContainer>
     </Wrapper>
   )}catch(err){

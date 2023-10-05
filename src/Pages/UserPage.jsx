@@ -11,7 +11,6 @@ import CheckAvailabilityView from '../Components/CheckAvailability/CheckAvailabi
 import { toast } from 'react-toastify';
 import CalendarView from '../Components/Calender/CalendarView';
 
-
 const UserPage = () => {
 
   const navigate = useNavigate();
