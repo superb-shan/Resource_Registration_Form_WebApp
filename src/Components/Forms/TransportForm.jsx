@@ -9,6 +9,7 @@ import { UserContext } from '../../Context/User.Context';
 import { Button } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
 import { DataContext } from '../../Context/Data.Context';
+import ReactLoading from 'react-loading';
 
 
 const TransportForm = () => {
@@ -26,6 +27,7 @@ const TransportForm = () => {
     const [specialRequirements, setSpecialRequirements] = useState('');
 
     const [postStatus, setPostStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const {userName} = useContext(LoginContext);
     const {setSelectedView} = useContext(UserContext);
     const { allDepartments } = useContext(DataContext);
@@ -93,20 +95,8 @@ const TransportForm = () => {
             return;
         }
 
+        setIsLoading(true);
         const formattedDateTime = travelDateTime.toString();
-        // console.log({
-        //     userName,
-        //     coordinatorName,
-        //     coordinatorPhoneNumber,
-        //     guestName,
-        //     guestPhoneNumber,
-        //     purposeOfTravel,
-        //     pickupLocation,
-        //     dropLocation,
-        //     travelDateTime: formattedDateTime,
-        //     noOfPassengers: noOfPassengers.toString(),
-        //     specialRequirements,
-        // })
         const res = await axios.post(`/transport/create`, 
         {
             userName,
@@ -125,6 +115,7 @@ const TransportForm = () => {
         );
         setPostStatus(res.data.message);
         console.log(res.data);
+        setIsLoading(false);
         if(res.data.message==="Transport created successfully"){
             toast.success("Submitted");
         }else{
@@ -149,7 +140,7 @@ const TransportForm = () => {
         <TextInput label="Pick-up Location *" placeholder="Pick-up Location" value={pickupLocation} setValue={setPickupLocation} />
         <TextInput label="Drop Location *" placeholder="Drop Location" value={dropLocation} setValue={setDropLocation} />
         <TextInput label="Special Requirements" placeholder="Special requirements if any" multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>    
-        <Button variant="contained" onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
+        <Button variant="contained" disabled={isLoading} onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{isLoading? <ReactLoading width={25} height={25} type="spin" /> : postStatus?"Submitted":"Submit"}</Button>
     </FormContainer>
   )
 }

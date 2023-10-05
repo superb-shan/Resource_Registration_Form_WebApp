@@ -80,7 +80,6 @@ const SeminarHallForm = () => {
 
   const handleSubmit = async () => {
 
-    setIsLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
     if (!allFieldsNotEmpty) {
       toast.warning('Fill all the Required fields');
@@ -101,6 +100,7 @@ const SeminarHallForm = () => {
       return;
     }
 
+    setIsLoading(true);
     //Check for unavailability of hall before sending request
     const response = await axios.get("/seminar/checkAvailability", { params: { startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss") } });
     const recentUnavailableHalls = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];
@@ -176,13 +176,12 @@ const SeminarHallForm = () => {
       <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber} />
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Topic *" value={topic} setValue={setTopic} />
-      {/* {console.log("unav", unavailableHalls)} */}
       <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls[hallCategory]} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked} />
       <TextInput label="No. of Attendees *" type='number' value={noOfAttendees} setValue={setNoOfAttendees} />
       <ChipsInput label="Equipments Required" value={equipmentsRequired} setValue={setEquipmentsRequired} options={allEquipments} />
       <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements} />
-      <Button variant="contained" sx={{ display: "flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
-        {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>}
+      <Button variant="contained" disabled={isLoading} sx={{ display: "flex", gap: 1 }} onClick={handleSubmit} color={postStatus ? 'success' : 'primary'}>
+        {isLoading ? <ReactLoading height={25} width={25} type='spin' /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>}
       </Button>
     </FormContainer>
   )

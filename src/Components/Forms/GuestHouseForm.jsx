@@ -105,12 +105,10 @@ const GuestHouseForm = () => {
 
   const handleSubmit = async () => {
 
-    setIsLoading(true);
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
     if (!allFieldsNotEmpty){ 
       toast.warning('Fill all the Required fields');
       console.log(fieldsToCheckForValidation);
-      setIsLoading(false);
       return;
     }
     if(coordinatorPhoneNumber.length !==10 || guestPhoneNumber.length !==10){
@@ -119,10 +117,10 @@ const GuestHouseForm = () => {
     }
     if (!isAvailabilityChecked){
       toast.error(`Please check Availability`);
-      setIsLoading(false);
       return;
     }
 
+    setIsLoading(true);
     console.log({params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     //Check for unavailability of hall before sending request
     const response = await axios.get("/guesthouse/checkAvailability", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
@@ -183,18 +181,11 @@ const GuestHouseForm = () => {
       toast.error(postStatus);
       return;
     }
-
-   
-
     setSelectedView('My Bookings');
-
-   
-
   }
 
 
   return (
-    <>
     <FormContainer title="Guest House Form">
       <CheckAvailability target={"guesthouse"}  />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
@@ -209,29 +200,10 @@ const GuestHouseForm = () => {
       <TextInput label="Menu Required *" select={true} value={menuRequired} setValue={setMenuRequired} options={allMenu} />
       <TextInput label="Payment Done By *" select={true} value={paymentDoneBy} setValue={setPaymentDoneBy} options={allPaymentOptions} />
       <TextInput label="Special Requirements " multiline={true} value={specialRequirements} setValue={setSpecialRequirements}/>        
-      <Button variant="contained" sx={{ display:"flex", gap: 1 }} onClick={()=>{handleOpen();handleSubmit();}} color={postStatus ? 'success' : 'primary'}>
-        {isLoading ? <ReactLoading height={"20%"} width={"70%"} /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
+      <Button variant="contained" disabled={isLoading} sx={{ display:"flex", gap: 1 }} onClick={()=>{handleOpen();handleSubmit();}} color={postStatus ? 'success' : 'primary'}>
+        {isLoading ? <ReactLoading height={25} width={25} type='spin' /> : postStatus ? <><span>Submitted</span> <Done /></> : <><span>Submit</span> <Send /></>  }
       </Button>
-      {/* <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      > */}
-        {/* <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Text in a modal
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-          </Typography>
-        </Box> */}
-      {/* </Modal> */}
     </FormContainer>
-
-   
-
-    </>
   )
 }
 

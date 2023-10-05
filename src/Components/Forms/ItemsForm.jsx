@@ -4,7 +4,7 @@ import { DateTimeInput, TextInput } from '../Fields/InteractionFields';
 import { LoginContext } from '../../Context/Login.Context';
 import axios from 'axios';
 import { toast } from 'react-toastify';
-import moment from 'moment';
+import ReactLoading from 'react-loading';
 import { UserContext } from '../../Context/User.Context';
 import { Button, Typography } from '@mui/material';
 import { Done, Send } from '@mui/icons-material';
@@ -34,6 +34,7 @@ const ItemsForm = () => {
     const {userName} = useContext(LoginContext);
     const { allDepartments } = useContext(DataContext);
     const {setSelectedView} = useContext(UserContext);
+    const [isLoading, setIsLoading] = useState(false);
 
     function isNotEmpty(value) {
         if (value === null || value === undefined) {
@@ -71,6 +72,7 @@ const ItemsForm = () => {
 
     const handleSubmit = async() => {
 
+        setIsLoading(true);
         const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
         if (!allFieldsNotEmpty){
             toast.warning('Fill all the Required fields');
@@ -116,6 +118,7 @@ const ItemsForm = () => {
             return;
         }
         setSelectedView('My Bookings');
+        setIsLoading(false);
     };
 
     
@@ -139,7 +142,7 @@ const ItemsForm = () => {
         <TextInput label="Student Observation Book" value={observationBook} setValue={setObservationBook} />
         <DateTimeInput label="Clearance of Bill On or Before *" value={clearanceOfBill} setValue={setClearanceOfBill} />
 
-        <Button variant="contained"  onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{postStatus?"Submitted":"Submit"}</Button>
+        <Button variant="contained" disabled={isLoading} onClick={handleSubmit} color={postStatus?'success':'primary'} endIcon={postStatus?<Done />:<Send />}>{isLoading? <ReactLoading type="spin" width={25} height={25}/> : postStatus?"Submitted":"Submit"}</Button>
     </FormContainer>
   )
 }
