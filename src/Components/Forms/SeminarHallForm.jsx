@@ -67,8 +67,6 @@ const SeminarHallForm = () => {
   const fieldsToCheckForValidation = [
     coordinatorName,
     coordinatorPhoneNumber,
-    speakerName,
-    speakerPhoneNumber,
     organizingDepartment,
     topic,
     startDateTime,
@@ -168,12 +166,12 @@ const SeminarHallForm = () => {
 
 
   return (
-    <FormContainer title="Seminar Hall Form" >
+    <FormContainer title="Hall/Lab Booking Form" >
       <CheckAvailability target={"seminar"} />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-      <TextInput label="Speaker Name *" value={speakerName} setValue={setSpeakerName} />
-      <TextInput label="Speaker Phone Number *" type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber} />
+      <TextInput label="Speaker Name " value={speakerName} setValue={setSpeakerName} />
+      <TextInput label="Speaker Phone Number " type="number" value={speakerPhoneNumber} setValue={setSpeakerPhoneNumber} />
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Topic *" value={topic} setValue={setTopic} />
       <TextInput label="Hall Required *" select={true} value={hallRequired} setValue={setHallRequired} options={allHalls[hallCategory]} disabledOptions={unavailableHalls} disabled={!isAvailabilityChecked} />
