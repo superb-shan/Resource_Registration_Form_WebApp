@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Highcharts from "highcharts";
 import HighchartsReact from "highcharts-react-official";
 
-function DoughnutChart({ data, totalName }) {
+function DoughnutChart({ data, totalName, height='220px', startColor = "#2e8cef", endColor = "#92c7fd" }) {
   const calculateTotal = () => {
     return data.reduce((acc, item) => acc + item.value, 0);
   };
@@ -14,8 +14,6 @@ function DoughnutChart({ data, totalName }) {
     const maxValue = Math.max(...data.map((item) => item.value));
 
     const gradient = 1 - (value - minValue) / (maxValue - minValue);
-    const startColor = "#2e8cef"; // Darkest gradient color
-    const endColor = "#92c7fd"; // Lightest gradient color
 
     const r = Math.floor(
       parseInt(startColor.slice(1, 3), 16) +
@@ -55,7 +53,7 @@ function DoughnutChart({ data, totalName }) {
     chart: {
       type: "pie",
       backgroundColor: "transparent", // Background color of the doughnut chart
-      height: "220px",
+      height,
     },
     title: {
       text: chartTitle,
