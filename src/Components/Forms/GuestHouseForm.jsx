@@ -90,8 +90,6 @@ const GuestHouseForm = () => {
   const fieldsToCheckForValidation = [
     coordinatorName,
     coordinatorPhoneNumber,
-    guestName, 
-    guestPhoneNumber,
     organizingDepartment,
     purposeOfStay,
     foodRequired,
@@ -195,12 +193,12 @@ const GuestHouseForm = () => {
 
   return (
     <>
-    <FormContainer title="Guest House Form">
+    <FormContainer title="GuestHouse Requisition Form">
       <CheckAvailability target={"guesthouse"}  />
       <TextInput label="Coordinator Name *" value={coordinatorName} setValue={setCoordinatorName} />
       <TextInput label="Coordinator Phone Number *" type="number" value={coordinatorPhoneNumber} setValue={setCoordinatorPhoneNumber} />
-      <TextInput label="Guest Name *" value={guestName} setValue={setGuestName} />
-      <TextInput label="Guest Phone Number *" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
+      <TextInput label="Guest Name " value={guestName} setValue={setGuestName} />
+      <TextInput label="Guest Phone Number " type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
       <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
       <TextInput label="Purpose of Stay *" value={purposeOfStay} setValue={setPurposeOfStay} />
       <TextInput label="Room Required *" select={true} value={roomRequired} setValue={setRoomRequired} options={allRooms} disabledOptions={unavailableGuestHouses} disabled={!isAvailabilityChecked} />

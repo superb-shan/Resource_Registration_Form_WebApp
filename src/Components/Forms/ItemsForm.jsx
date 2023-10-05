@@ -121,7 +121,7 @@ const ItemsForm = () => {
     
 
   return (
-    <FormContainer title="Items Form">
+    <FormContainer title="Items Requisition Form">
         <TextInput label="Requestor Name *" value={requestorName} setValue={setRequestorName} />
         <TextInput label="Requestor EMP ID *" value={requestorEmpId} setValue={setRequestorEmpID} />
         <TextInput label="Department *" select={true} value={department} setValue={setDepartment} options={allDepartments} />
