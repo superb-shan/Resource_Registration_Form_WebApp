@@ -29,7 +29,7 @@ const UserPage = () => {
 
   return (
     <Wrapper alignment="start">
-      <NavBar title={'Resource Registration'} />
+      <NavBar title={'Resource Requisition'} />
       {
         selectedView === "My Bookings" ?
           <Bookings />

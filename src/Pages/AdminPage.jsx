@@ -27,7 +27,7 @@ import Analytics from '../Components/Analytics/Analytics';
 
   return (
     <Wrapper alignment="start">
-      <NavBar title={'Resource Registration'} />
+      <NavBar title={'Resource Requisition'} />
       {
         selectedView === "Calendar"?
           <CalendarView />

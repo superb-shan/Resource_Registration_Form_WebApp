@@ -23,27 +23,33 @@ import rejected from '../../Assets/Images/rejected.png'
 import pending  from '../../Assets/Images/pending.png'
 import autoTable from 'jspdf-autotable'
 import { DataContext } from '../../Context/Data.Context';
+import { TextInput } from '../Fields/InteractionFields';
 
 const AdminDataModal = ({...props}) => {
  const selectedRow = props.selectedRow
   const [remarks, setRemarks] = useState('');
   const {terms}=useContext(DataContext)
 
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 500,
-        bgcolor: 'background.paper',
-        border: '2px solid #1976d2',
-        boxShadow: 24,
-        p: "1rem 2rem",
-        borderRadius: 3,
-        overflow:"auto",
-        paddingTop:'5px',
-        height:700
-      };
+  const style = {
+    position: 'absolute',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    top: '48%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 1000,
+    bgcolor: 'background.paper',
+    border: '2px solid #1976d2',
+    boxShadow: 24,
+    p: "1rem 2rem",
+    borderRadius: 3,
+    overflow:"auto",
+    paddingTop:'5px',
+    height:690,
+  };
+
+    const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
 
     // const deleted = async (id) => {
     //     const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })
@@ -194,43 +200,81 @@ const AdminDataModal = ({...props}) => {
         {/* Render the detailed information from props.selectedRow */}
         {props.selectedRow ? (
             <Box sx={style}>
-            <div style={{ textAlign: 'right' }}>
-              <Button onClick={props.handleModalClose}  ><IoCloseCircleOutline /></Button>
-            </div>
             <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
               Details
             </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-              <TableContainer>
-                <Table>
-                  <TableBody>
-                  {Object.keys(props.selectedRow).map((key) => {
-                      // List of keys to exclude
-                      const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
-                      if (excludedKeys.includes(key)) {
-                        return null; // Skip rendering this key
-                      }
-                      return (
-                        <TableRow key={key}>
-                          <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
-                          <TableCell>{props.selectedRow[key]}</TableCell>
-                        </TableRow>
-                      );
-                    })}
-                    {props.selectedRow.isapproved=== null && <TableRow>
-                      <TableCell>Remarks</TableCell>
-                      <TableCell style={{height: "100px"}}>
-                        <Text
-                          value={remarks} 
-                          onChange={(e) => setRemarks(e.target.value)} 
-                        />
-                      </TableCell>
-                    </TableRow>}
-                  </TableBody>
-                </Table>
-              </TableContainer>
-            </Typography>
-            <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
+  
+            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              {/* Left Column */}
+              <div style={{ flex: 1 }}>
+                <TableContainer>
+                  <Table>
+                    <TableBody>
+                      {Object.keys(props.selectedRow).map((key, index) => {
+                        // Skip rendering excluded keys
+                        if (excludedKeys.includes(key)) {
+                          return null;
+                        }
+                        // Split keys and values into two columns
+                        if (index % 2 === 0) {
+                          return (
+                            key === 'remarks' && props.selectedRow.isapproved === null?
+                              <TableRow key={key}>
+                                <TableCell>Remarks</TableCell>
+                                <TableCell>
+                                  <TextInput value={remarks} setValue={setRemarks} />
+                                </TableCell>
+                              </TableRow> 
+                              :
+                              <TableRow key={key}>
+                                <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
+                                <TableCell>{props.selectedRow[key]}</TableCell>
+                              </TableRow>
+                          );
+                        }
+                        return null;
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+  
+              {/* Right Column */}
+              <div style={{ flex: 1, marginLeft: '50px' }}>
+                <TableContainer>
+                  <Table>
+                    <TableBody>
+                      {Object.keys(props.selectedRow).map((key, index) => {
+                        // Skip rendering excluded keys
+                        if (excludedKeys.includes(key)) {
+                          return null;
+                        }
+                        // Split keys and values into two columns
+                        if (index % 2 !== 0) {
+                          return (
+                              key === 'remarks' && props.selectedRow.isapproved === null?
+                              <TableRow key={key}>
+                                <TableCell>Remarks</TableCell>
+                                <TableCell>
+                                  <TextInput value={remarks} setValue={setRemarks} />
+                                </TableCell>
+                              </TableRow> 
+                              :
+                              <TableRow key={key}>
+                                <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
+                                <TableCell>{props.selectedRow[key]}</TableCell>
+                              </TableRow>
+                          );
+                        }
+                        return null;
+                      })}
+                    </TableBody>
+                  </Table>
+                </TableContainer>
+              </div>
+            </div>
+  
+            <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
               <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
                 Accept
               </Button>
@@ -241,6 +285,7 @@ const AdminDataModal = ({...props}) => {
                 Print
               </Button>
             </Stack>
+
           </Box>
         ):
         <div></div>}

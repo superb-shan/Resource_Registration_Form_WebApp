@@ -28,10 +28,13 @@ const UserDataModal = ({...props}) => {
     const selectedRow = props.selectedRow;
     const style = {
         position: 'absolute',
-        top: '50%',
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        top: '48%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 500,
+        width: 1000,
         bgcolor: 'background.paper',
         border: '2px solid #1976d2',
         boxShadow: 24,
@@ -39,8 +42,11 @@ const UserDataModal = ({...props}) => {
         borderRadius: 3,
         overflow:"auto",
         paddingTop:'5px',
-        height:700,
+        height:690,
       };
+
+    const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
+
 
     const deleted = async (id) => {
         const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })
@@ -159,51 +165,77 @@ const UserDataModal = ({...props}) => {
     };
   return (
     <Modal open={props.isModalOpen} onClose={props.handleModalClose}>
-        {/* Render the detailed information from props.selectedRow */}
-        {props.selectedRow ? (
-            <Box sx={style}>
-            <div style={{ textAlign: 'right' }}>
-                <Button onClick={props.handleModalClose}  ><IoCloseCircleOutline /></Button>
-            </div>
-            <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
-                Details
-            </Typography>
-            <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                <TableContainer>
-                <Table>
-                    <TableBody>
-                    {Object.keys(props.selectedRow).map((key) => {
-                        // List of keys to exclude
-                        const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
+      {props.selectedRow ? (
+        <Box sx={style}>
+          <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+            Details
+          </Typography>
 
-                        // const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
-                        if (excludedKeys.includes(key)) {
-                        return null; // Skip rendering this key
-                        }
+          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            {/* Left Column */}
+            <div style={{ flex: 1 }}>
+              <TableContainer>
+                <Table>
+                  <TableBody>
+                    {Object.keys(props.selectedRow).map((key, index) => {
+                      // Skip rendering excluded keys
+                      if (excludedKeys.includes(key)) {
+                        return null;
+                      }
+                      // Split keys and values into two columns
+                      if (index % 2 === 0) {
                         return (
-                        <TableRow key={key}>
+                          <TableRow key={key}>
                             <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
                             <TableCell>{props.selectedRow[key]}</TableCell>
-                        </TableRow>
+                          </TableRow>
                         );
+                      }
+                      return null;
                     })}
-                    </TableBody>
+                  </TableBody>
                 </Table>
-                </TableContainer>
-            </Typography>
-            <Stack direction="row" style={{ display: 'flex', justifyContent: 'space-evenly', marginTop: '30px' }}>
-                <Button variant="contained" color="error" style={{ width: "90px" }} onClick={() => {if(window.confirm("Are you sure want to delete the request?")){ deleted(props.selectedRow.id)} }}>
-                Delete
-                </Button>
-                {/* <Button variant="contained" color="warning" style={{ width: "90px" }}> */}
-                <Button variant="contained" color="warning" style={{ width: "90px" }} onClick={generatePDF}>
-                Print
-                </Button>
-            </Stack>
-            </Box>
-        ):
-        <div></div>}
+              </TableContainer>
+            </div>
 
+            {/* Right Column */}
+            <div style={{ flex: 1, marginLeft: '50px' }}>
+              <TableContainer>
+                <Table>
+                  <TableBody>
+                    {Object.keys(props.selectedRow).map((key, index) => {
+                      // Skip rendering excluded keys
+                      if (excludedKeys.includes(key)) {
+                        return null;
+                      }
+                      // Split keys and values into two columns
+                      if (index % 2 !== 0) {
+                        return (
+                          <TableRow key={key}>
+                            <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
+                            <TableCell>{props.selectedRow[key]}</TableCell>
+                          </TableRow>
+                        );
+                      }
+                      return null;
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            </div>
+          </div>
+
+          <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '10px', gap: '50px' }}>
+            <Button variant="contained" color="error" style={{ width: "90px" }} onClick={() => { if (window.confirm("Are you sure want to delete the request?")) { deleted(props.selectedRow.id) } }}>
+              Delete
+            </Button>
+            <Button variant="contained" color="warning" style={{ width: "90px" }} onClick={generatePDF}>
+              Print
+            </Button>
+          </Stack>
+
+        </Box>
+      ) : <div></div>}
     </Modal>
   )
 }

@@ -84,7 +84,7 @@ const SeminarHallForm = () => {
       setIsLoading(false);
       return;
     }
-    if (coordinatorPhoneNumber.length !== 10 || speakerPhoneNumber.length !== 10) {
+    if (coordinatorPhoneNumber.length !== 10 ) {
       toast.error("Enter 10 digit Phone Number");
       return;
     }

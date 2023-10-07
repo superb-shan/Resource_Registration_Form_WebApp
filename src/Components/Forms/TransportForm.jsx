@@ -61,8 +61,6 @@ const TransportForm = () => {
     const fieldsToCheckForValidation = [
         coordinatorName,
         coordinatorPhoneNumber,
-        guestName,
-        guestPhoneNumber,
         organizingDepartment,
         purposeOfTravel,
         travelDateTime,

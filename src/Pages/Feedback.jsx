@@ -97,19 +97,19 @@ const Feedback = () => {
         <TextInput label="Feedback/Suggestions" placeholder="Any Suggestions to improve...." multiline={true} value={feedback} setValue={setFeedback} />    
         
         <StyledRating
-        name="highlight-selected-only"
-        value={selectedRating}
-        onChange={(event, newValue) => {
-          setSelectedRating(newValue); 
-        }}
-        IconContainerComponent={IconContainer}
-        getLabelText={(value) => customIcons[value].label}
-        highlightSelectedOnly
-        size="small"
-            />
+          name="highlight-selected-only"
+          value={selectedRating}
+          onChange={(event, newValue) => {
+            setSelectedRating(newValue); 
+          }}
+          IconContainerComponent={IconContainer}
+          getLabelText={(value) => customIcons[value].label}
+          highlightSelectedOnly
+          size="small"
+        />
         
         <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isUpdated ? "success" : "primary"}>{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Submit"}</Button>
-        <h3 className='text-orange-600'>Every Feedback and Suggestion Matters !</h3>
+        <p className='text-[#1976D2] text-md'>Every Feedback and Suggestion Matters !</p>
         </AccountManagerContainer>
     </Wrapper>
   )}catch(err){

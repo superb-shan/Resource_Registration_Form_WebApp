@@ -17,7 +17,8 @@ function AreaSplineChart({ data }) {
 
   const [options, setOptions] = useState({
     chart: {
-      type: "spline",
+      // type: 'spline',
+      type: "column",
       backgroundColor: "transparent",
       height: "400px",
     },
@@ -31,9 +32,16 @@ function AreaSplineChart({ data }) {
       enabled: true,
     },
     plotOptions: {
-      areaspline: {
-        fillOpacity: 0.5,
-      },
+      // areaspline: {
+      //   fillOpacity: 0.5,
+      // },
+      column: {
+        stacking: 'normal',
+        dataLabels: {
+            enabled: false
+        },
+        pointWidth: 50,
+    }
     },
     xAxis: {
       title: {
@@ -43,7 +51,7 @@ function AreaSplineChart({ data }) {
     },
     yAxis: {
       title: {
-        text: "Value",
+        text: "Bookings Count",
       },
     },
     tooltip: {
