@@ -77,7 +77,7 @@ function NavBar({ ...props }) {
                 alt="Sri Eshwar Logo"
                 src={sriEshwarLogo}
               />
-              <Typography variant='h6' component='span' fontWeight="600" sx={{ ml: 1, mr: { xs: 0, md: 5 } }} lineHeight={"1.2"} >{props.title}</Typography>
+              <Typography variant='h6' component='span' fontWeight="600" sx={{ ml: 1, mr: { xs: 0, md: 5 } }} lineHeight={"1.2"} >{props.title} WebApp <sup>(BETA)</sup></Typography>
             </Box>
           </Link>
 
