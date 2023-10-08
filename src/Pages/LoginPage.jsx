@@ -12,10 +12,12 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
+import ReCAPTCHA from "react-google-recaptcha";
 
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
+  const [capClicked, setCapClicked] = useState(true)
   const navigate = useNavigate();
   const { user,
           setUser,
@@ -30,13 +32,15 @@ const LoginPage = () => {
   const handleLogin = async (event) => {
 
     setIsLoading(true);
+    setCapClicked(true)
     event.preventDefault();
     const res = await axios.get(`/${user}/Login`, { params: { name: userName, password: password  } });
     const loginStatus = res.data.message;
     if (loginStatus !== true){
-      toast.error("Username/Password is Incorrect");
       setIsLoggedIn(false);
       sessionStorage.setItem("isLoggedIn", false);
+      window. location. reload()
+      toast.error("Username/Password is Incorrect");
     }
     else{
       setIsLoggedIn(true);
@@ -51,6 +55,10 @@ const LoginPage = () => {
     // Empty block to prevent using of previous states, useEffects ensures that the current state is in the var
   },[userName, password]);
 
+  const onChange=()=>{
+    setCapClicked(false)
+  }
+
   try{return (
     <Wrapper alignment="center" >
       <AccountManagerContainer title = "Login" onSubmit = {handleLogin}>
@@ -64,7 +72,11 @@ const LoginPage = () => {
           />
           <TextInput label={"User Name"} value={userName} setValue={setUserName} endAdornment={<AccountCircle/>} />
           <PasswordInput label={"Password"} value={password} setValue={setPassword} />
-          <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={isLoading} color={isLoggedIn ? "success" : "primary"} >{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Login"}</Button>
+          <ReCAPTCHA
+            sitekey="6LfDDYYoAAAAAP6uLy7czFpDKzLJj9QlkcJKuiRF"
+            onChange={onChange}
+          />
+          <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={capClicked} color={isLoggedIn ? "success" : "primary"} >{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Login"}</Button>
       </AccountManagerContainer>
     </Wrapper>
   )}catch(err){

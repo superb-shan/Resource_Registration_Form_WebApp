@@ -59,11 +59,11 @@ const CreateUserPage = () => {
     }
 
     //! Strong Password Check
-    // const passwordRequirements = isValidPassword(newPassword);
-    // if (passwordRequirements.length > 0) {
-    //     toast.info(passwordRequirements.join(" "));
-    //     return;
-    // }
+    const passwordRequirements = isValidPassword(newPassword);
+    if (passwordRequirements.length > 0) {
+        toast.info(passwordRequirements.join(" "));
+        return;
+    }
 
     //! Email Validation
     if (!isValidEmail(newEmail)) {
