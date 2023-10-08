@@ -76,16 +76,34 @@ const ItemsForm = () => {
         const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
         if (!allFieldsNotEmpty){
             toast.warning('Fill all the Required fields');
+            setIsLoading(false);
             return;
         }
         if(requestorName.length <3 || requestorName.length>=50 ){
             toast.error("Name should be greater than three characters")
+            setIsLoading(false);
             return;
         }
         // if(requisitionDateTime.format("DD-MM-YYYY") === moment().format("DD-MM-YYYY")){
         //     toast.error("cannot book item for today");
         //     return;
         // }
+
+        if (
+            printing === 0 &&
+            guestMomento === 0 &&
+            studentMomento === 0 &&
+            printedEnvelopes === 0 &&
+            answerBooklets === 0 &&
+            studentNotebooks === 0 &&
+            recordNoteWithGraph === 0 &&
+            recordNoteWithoutGraph === 0 &&
+            observationBook === 0
+          ) {
+            toast.error("All the required Quantity are zero please check your quantity");
+            setIsLoading(false);
+            return;
+          }
 
         const formattedDateTime = requisitionDateTime.toString();
         const formatted1DateTime = clearanceOfBill.toString();

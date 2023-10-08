@@ -45,19 +45,22 @@ const ChangePasswordPage = () => {
     event.preventDefault();
     if (newPassword !== confirmPassword){
         toast.info('Please enter the same password');
+        setIsLoading(false);
         return;
     }
     if (newPassword === "" || confirmPassword === ""){
         toast.info('Password cannot be empty!');
+        setIsLoading(false);
         return;
     }
 
     //! Strong Password Check
-    // const passwordRequirements = isValidPassword(newPassword);
-    // if (passwordRequirements.length > 0) {
-    //     toast.info(passwordRequirements.join(" "));
-    //     return;
-    // }
+    const passwordRequirements = isValidPassword(newPassword);
+    if (passwordRequirements.length > 0) {
+        toast.info(passwordRequirements.join(" "));
+        setIsLoading(false);
+        return;
+    }
 
     const res = await axios.patch(`/user/update`, { name: userName, password: newPassword  } );
     const loginStatus = res.data.message;
