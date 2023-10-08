@@ -5,7 +5,7 @@ export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
-  const allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MECH', 'PLAC', 'SLC', 'SnH'];
+  const allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MECH', 'PLAC', 'SnH'];
   return (
     <DataContext.Provider
       value={
