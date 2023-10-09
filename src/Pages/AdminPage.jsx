@@ -15,8 +15,11 @@ import Analytics from '../Components/Analytics/Analytics';
 
   const navigate = useNavigate();
   const {user, isLoggedIn} = useContext(LoginContext);
-  const {selectedView} = useContext(UserContext);
+  const {selectedView, setSelectedView} = useContext(UserContext);
 
+  useEffect(()=>{
+    setSelectedView('Calendar');
+  }, []);
   console.log("ad", user);
   useEffect(()=>{
     if (user !== 'admin') {

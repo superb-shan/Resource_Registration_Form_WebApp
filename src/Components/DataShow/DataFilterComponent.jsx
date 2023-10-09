@@ -47,7 +47,7 @@ const DataFilterComponent = ({...props}) => {
                     variant={filterGroup.value === filter ? 'contained' : 'outlined'}
                     sx={{ height: '30px' }}
                     name={filter}
-                    onClick={() => filterGroup.setValue(filter)}
+                    onClick={() => filterGroup.setValue((prevFilter) => filter === prevFilter ? null: filter)}
                   >
                     {filter}
                   </Button>

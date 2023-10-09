@@ -15,9 +15,12 @@ const UserPage = () => {
 
   const navigate = useNavigate();
   const { user, isLoggedIn } = useContext(LoginContext);
-  const { selectedView } = useContext(UserContext);
+  const { selectedView, setSelectedView } = useContext(UserContext);
 
 
+  useEffect(()=>{
+    setSelectedView('My Calendar');
+  }, []);
   console.log("user", user, "res", !user === "user");
   useEffect(() => {
     if (user !== "user") {
@@ -37,7 +40,7 @@ const UserPage = () => {
         selectedView === "Book" ?
           <Forms />
           :
-        selectedView === "Calendar" ?
+        selectedView === "My Calendar" ?
           <CalendarView />
           :
         <CheckAvailabilityView />
