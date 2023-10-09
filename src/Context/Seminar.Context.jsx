@@ -18,7 +18,7 @@ const SeminarProvider = ({ children }) => {
       { name: 'Code Studio', maxCapacity: 166 },
       { name: '3rd Floor Drawing Hall', maxCapacity: 350 },
     ],
-    'Special Labs': [
+    'Special Halls': [
       { name: 'Makerspace', maxCapacity: 100 },
       { name: 'Ignite', maxCapacity: 100 },
       { name: 'Iot laboratory', maxCapacity: 100 },

@@ -25,6 +25,7 @@ const TransportForm = () => {
     const [dropLocation, setDropLocation] = useState('');
     const [noOfPassengers, setNoOfPassengers] = useState(1);
     const [specialRequirements, setSpecialRequirements] = useState('');
+    const [todayDate, setTodayDate] = useState(moment().add(5, 'minutes'));
 
     const [postStatus, setPostStatus] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -137,6 +138,7 @@ const TransportForm = () => {
         <TextInput label="Guest Phone Number(s) " placeholder="Enter all the guests contact numbers" type="number" value={guestPhoneNumber} setValue={setGuestPhoneNumber}/>
         <TextInput label="Organizing Department *" select={true} value={organizingDepartment} setValue={setOrganizingDepartment} options={allDepartments} />
         <TextInput label="Purpose of Travel *" select={true} value={purposeOfTravel} setValue={setPurposeOfTravel} options={['Events', 'Seminar', 'Chief Guest', 'Placement', 'Session/Lectures', 'Others']} />
+        <DateTimeInput label="Booking Date Time" value={todayDate} setValue={setTodayDate} intension="todayField" />
         <DateTimeInput label="Travel Date Time *" value={travelDateTime} setValue={setTravelDateTime} />
         <TextInput label="No. of Passengers *" placeholder="Max passenger count is 6" type="number" value={noOfPassengers} setValue={setNoOfPassengers}/>
         <TextInput label="Pick-up Location *" placeholder="Pick-up Location" value={pickupLocation} setValue={setPickupLocation} />

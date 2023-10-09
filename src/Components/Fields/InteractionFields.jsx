@@ -18,6 +18,7 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useEffect } from 'react';
 import { DateTimePicker, LocalizationProvider, renderTimeViewClock } from '@mui/x-date-pickers';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import moment from 'moment';
 
 
 
@@ -102,6 +103,7 @@ const DateTimeInput = ({...props}) => {
           minutes: renderTimeViewClock,
           seconds: renderTimeViewClock,
         }}
+        disabled={props.intension}
         />
       </LocalizationProvider>
     </FormControlWrapper>
