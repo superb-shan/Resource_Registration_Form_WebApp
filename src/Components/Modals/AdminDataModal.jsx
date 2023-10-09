@@ -8,9 +8,7 @@ import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-import Text from '@mui/material/TextField';
 import Stack from '@mui/material/Stack';
-import { IoCloseCircleOutline } from "react-icons/io5";
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import jsPDF from "jspdf";
@@ -24,9 +22,11 @@ import pending  from '../../Assets/Images/pending.png'
 import autoTable from 'jspdf-autotable'
 import { DataContext } from '../../Context/Data.Context';
 import { TextInput } from '../Fields/InteractionFields';
+import ReactLoading from 'react-loading';
 
 const AdminDataModal = ({...props}) => {
- const selectedRow = props.selectedRow
+  const selectedRow = props.selectedRow
+  const [isLoading, setIsLoading] = useState(false);
   const [remarks, setRemarks] = useState('');
   const {terms}=useContext(DataContext)
 
@@ -276,10 +276,10 @@ const AdminDataModal = ({...props}) => {
   
             <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
               <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
-                Accept
+                {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Accept"}
               </Button>
               <Button variant="contained" color="error" disabled={props.selectedRow.isapproved !== null} onClick={() => { reject(props.selectedRow.id) }}>
-                Reject
+               {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Reject"}
               </Button>
               <Button variant="contained" color="warning" onClick={generatePDF}  >
                 Print

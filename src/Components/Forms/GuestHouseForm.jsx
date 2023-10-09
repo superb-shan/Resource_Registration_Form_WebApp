@@ -13,15 +13,11 @@ import ReactLoading from 'react-loading';
 import { Button } from '@mui/material';
 import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
-
-import Box from '@mui/material/Box';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
 import { DataContext } from '../../Context/Data.Context';
 
-const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks'];
-const allPaymentOptions = ["Paid by institution", "Department", "Guest"];
-const allMenu = ["Elite", "Special", "Normal"];
+const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks','Optional'];
+const allPaymentOptions = ["Paid by institution", "Department", "Guest",'Others'];
+const allMenu = ["Elite", "Special", "Normal",'Optional'];
 
 const style = {
   position: 'absolute',
@@ -106,20 +102,22 @@ const GuestHouseForm = () => {
     const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
     if (!allFieldsNotEmpty){ 
       toast.warning('Fill all the Required fields');
-      console.log(fieldsToCheckForValidation);
+      setIsLoading(false);
       return;
     }
-    if(coordinatorPhoneNumber.length !==10 || guestPhoneNumber.length !==10){
+    if(coordinatorPhoneNumber.length !==10 ){
       toast.error("Enter 10 digit Phone Number");
+      setIsLoading(false);
       return;
     }
     if (!isAvailabilityChecked){
       toast.error(`Please check Availability`);
+      setIsLoading(false);
       return;
     }
 
     setIsLoading(true);
-    console.log({params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
+    // console.log({params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDate: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     //Check for unavailability of hall before sending request
     const response = await axios.get("/guesthouse/checkAvailability", {params: {startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss")}});
     const recentUnavailableRooms = response.data.overlappingSeminars?.map(seminar => seminar.requiredHall) || [];

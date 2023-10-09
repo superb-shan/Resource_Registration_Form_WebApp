@@ -74,22 +74,27 @@ const TransportForm = () => {
         const allFieldsNotEmpty = areAllFieldsNotEmpty(fieldsToCheckForValidation);
         if (!allFieldsNotEmpty){
             toast.warning('Fill all the Required fields');
+            setIsLoading(false);
             return;
         }
-        if(coordinatorPhoneNumber.length!==10 || guestPhoneNumber.length!==10){
+        if(coordinatorPhoneNumber.length!==10 ){
             toast.error("Enter 10 digit Phone Number");
+            setIsLoading(false);
             return;
         }
-        if(coordinatorName.length <3 || coordinatorName.length>=50 || guestName.length <3 || guestName.length>=50){
+        if(coordinatorName.length <3 || coordinatorName.length>=50){
             toast.error("Name should be greater than three characters")
+            setIsLoading(false);
             return;
         }
         if(noOfPassengers<1 || noOfPassengers>6){
             toast.error("Passenger count must between 1 to 6")
+            setIsLoading(false);
             return;
         }
         if(travelDateTime.format("DD-MM-YYYY") === moment().format("DD-MM-YYYY")){
             toast.error("cannot book transport for today");
+            setIsLoading(false);
             return;
         }
 

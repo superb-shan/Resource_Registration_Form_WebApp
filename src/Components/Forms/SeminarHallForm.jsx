@@ -86,10 +86,12 @@ const SeminarHallForm = () => {
     }
     if (coordinatorPhoneNumber.length !== 10 ) {
       toast.error("Enter 10 digit Phone Number");
+      setIsLoading(false);
       return;
     }
     if (noOfAttendees <= 0) {
       toast.error("No of Attendees is not valid");
+      setIsLoading(false);
       return;
     }
     if (!isAvailabilityChecked) {
