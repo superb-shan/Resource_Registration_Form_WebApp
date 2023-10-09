@@ -38,8 +38,9 @@ const LoginPage = () => {
     const loginStatus = res.data.message;
     if (loginStatus !== true){
       setIsLoggedIn(false);
+      setCapClicked(false);
+      window.grecaptcha.reset();
       sessionStorage.setItem("isLoggedIn", false);
-      window. location. reload()
       toast.error("Username/Password is Incorrect");
     }
     else{

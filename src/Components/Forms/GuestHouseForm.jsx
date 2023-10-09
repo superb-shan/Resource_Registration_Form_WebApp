@@ -15,9 +15,9 @@ import CheckAvailability from '../CheckAvailability/CheckAvailability';
 import { GuestHouseContext } from '../../Context/GuestHouse.Context';
 import { DataContext } from '../../Context/Data.Context';
 
-const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks','Optional'];
-const allPaymentOptions = ["Paid by institution", "Department", "Guest",'Others'];
-const allMenu = ["Elite", "Special", "Normal",'Optional'];
+const allFoods = ['Breakfast', 'Lunch', 'Dinner', 'Tea & Snacks','None'];
+const allPaymentOptions = ["Paid by institution", "Department", "Guest",'None'];
+const allMenu = ["Elite", "Special", "Normal",'None'];
 
 const style = {
   position: 'absolute',

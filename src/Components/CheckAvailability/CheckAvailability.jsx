@@ -18,7 +18,7 @@ const CheckAvailability = ({ ...props }) => {
   const { terms, isAvailabilityLoading, setIsAvailabilityLoading } = useContext(DataContext);
   const target = props.target
   const [unavailableHallsObject, setUnavailableHallsObject] = useState([]);
-  const [formType, setFormType] = useState('Seminar Hall');
+  const [formType, setFormType] = useState('Hall/Lab');
 
   let {
     isAvailabilityChecked,
@@ -35,7 +35,7 @@ const CheckAvailability = ({ ...props }) => {
   allHalls = hallCategory === "Guest House"? [] : allHalls[hallCategory].map(hall => hall.name);
   
   useEffect(()=> {
-    setFormType(hallCategory === "Guest House" ? "Guest House": "Seminar Hall");
+    setFormType(hallCategory === "Guest House" ? "Guest House": "Hall/Lab");
   }, [hallCategory]);
 
 

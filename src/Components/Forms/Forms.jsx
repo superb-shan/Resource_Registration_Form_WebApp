@@ -16,7 +16,7 @@ const Forms = () => {
     <>
       {
         selectedForm === "Transport"? <TransportForm /> :
-        selectedForm === "Seminar Hall"? <SeminarHallForm /> : 
+        selectedForm === "Hall/Lab"? <SeminarHallForm /> : 
         selectedForm === "Guest House"? <GuestHouseForm /> :
         selectedForm === "Items"? <ItemsForm /> : null 
       }
