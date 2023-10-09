@@ -23,8 +23,8 @@ import { useState, useEffect, useContext } from 'react';
 
 
 
-const views = [{ name: 'Calendar' }, { name: 'Check Availability' }, { name: 'Book' }, { name: 'My Bookings' }];
-const forms = ['Hall/Lab', 'Guest House', 'Transport', 'Items',];
+const views = [{ name: 'My Calendar' }, { name: 'Check Availability' }, { name: 'Book' }, { name: 'My Bookings' }];
+const forms = ['Seminar Hall', 'Guest House', 'Transport', 'Items',];
 // const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
 function NavBar({ ...props }) {

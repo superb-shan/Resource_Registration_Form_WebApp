@@ -98,7 +98,7 @@ function DoughnutChart({ data, totalName, height='220px', startColor = "#2e8cef"
         data: sortedData.map((item) => ({
           name: item.name,
           y: item.value,
-          color: getColor(item.value),
+          // color: getColor(item.value),
           showInLegend: false,
         })),
       },
@@ -148,7 +148,7 @@ function DoughnutChart({ data, totalName, height='220px', startColor = "#2e8cef"
           data: sortedData.map((item) => ({
             name: item.name,
             y: item.value,
-            color: getColor(item.value),
+            // color: getColor(item.value),
             showInLegend: false,
           })),
         },

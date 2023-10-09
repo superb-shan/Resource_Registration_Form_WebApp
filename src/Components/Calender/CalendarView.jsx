@@ -144,6 +144,7 @@ const CalendarView = (props) => {
             const color = myEvent.color ? myEvent.color : 'blue';
             return { style: { backgroundColor, color } };
             }}
+            messages = {{agenda: 'Schedule'}}
         />
         <NoPrint>
           {user === "user" ? 

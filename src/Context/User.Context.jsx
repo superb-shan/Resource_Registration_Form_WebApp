@@ -1,10 +1,13 @@
-import React, { useState, createContext } from "react";
+import React, { useState, createContext, useContext } from "react";
+import { LoginContext } from "./Login.Context";
 
 export const UserContext = createContext();
 
 const UserProvider = ({ children }) => {
   
-  const [selectedView, setSelectedView] = useState('Calendar');
+  const {user} = useContext(LoginContext);
+
+  const [selectedView, setSelectedView] = useState(user==='user'?'My Calendar':'Calendar');
   const [selectedForm, setSelectedForm] = useState('Transport');
   const [selectedDate, setSelectedDate] = useState(null)
 
