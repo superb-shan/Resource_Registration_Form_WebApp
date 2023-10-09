@@ -7,10 +7,6 @@ import { useState } from 'react';
 const CustomCollapsible = ({ title, children, isOpen: incomingIsOpen, isCalendar, isAvailability = false }) => {
     const [isOpen, setIsOpen] = useState(incomingIsOpen);
 
-    console.log("isOpen at start", isOpen);
-    useEffect(()=>{
-        console.log("trigger", isOpen);
-    }, [isOpen]);
     return (
         <Collapsible
             trigger={

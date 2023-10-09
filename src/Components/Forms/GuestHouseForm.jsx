@@ -129,23 +129,7 @@ const GuestHouseForm = () => {
     }
 
     //Create booking
-    console.log({
-      userName,
-      coordinatorName,
-      coordinatorPhoneNumber,
-      guestName, 
-      guestPhoneNumber,
-      organizingDepartment,
-      purposeOfStay,
-      foodRequired: foodRequired.toString(),
-      menuRequired,
-      paymentDoneBy,
-      startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
-      endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
-      noOfGuests,
-      roomRequired,
-      specialRequirements,
-    })
+
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post("/guesthouse/create",
       {
@@ -167,13 +151,11 @@ const GuestHouseForm = () => {
       }
     );
 
-    console.log("Response:", res);
     setPostStatus(res.data.message);
     setIsLoading(false);
     if (res.data.message === 'GuestHouse created successfully') {
       toast.success("Submitted");
     } else {
-      console.log("not created guest house", postStatus)
       toast.error(postStatus);
       return;
     }

@@ -101,8 +101,6 @@ const CheckAvailability = ({ ...props }) => {
     const res = await axios.get((target === "guesthouse" || formType === "Guest House" ? "/guesthouse/checkAvailability" : "/seminar/checkAvailability") + "", { params: { startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"), endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss") } });
     setIsAvailabilityLoading(false);
     setIsAvailabilityChecked(true);
-    console.log("date time", startDateTime, endDateTime);
-    console.log("res", res.data)
     setUnavailableHalls(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses?.map(gh => gh.roomRequired) : res.data?.overlappingSeminarHalls?.filter(hall => hall.category === hallCategory).map(seminar => seminar.hallRequired));
     setUnavailableHallsObject(target === "guesthouse" || formType === "Guest House" ? res.data?.overlappingGuestHouses : res.data?.overlappingSeminarHalls?.filter(hall => hall.category === hallCategory));
   }
@@ -115,7 +113,6 @@ const CheckAvailability = ({ ...props }) => {
 
   return (
     <>
-    {console.log('allHalls', hallKeys)}
       {!target &&
         <Box marginX={"100px"}>
           <Selector

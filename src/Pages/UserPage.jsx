@@ -21,10 +21,8 @@ const UserPage = () => {
   useEffect(()=>{
     setSelectedView('My Calendar');
   }, []);
-  console.log("user", user, "res", !user === "user");
   useEffect(() => {
     if (user !== "user") {
-      console.log("inside");
       toast.warn("Your are not logged in as a user");
       navigate("/");
     }
@@ -32,7 +30,7 @@ const UserPage = () => {
 
   return (
     <Wrapper alignment="start">
-      <NavBar title={'Resource Requisition'} />
+      <NavBar title={'S-Easy Bookings'} />
       {
         selectedView === "My Bookings" ?
           <Bookings />

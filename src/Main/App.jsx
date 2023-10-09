@@ -25,7 +25,7 @@ export default function App() {
         <LayoutProvider>
           {isMobile ? (
             <div className='h-[89vh] bg-[#dbecfe] flex flex-col justify-center items-center'>
-              <p>Sri Eshwar's Resource Requisition</p>
+              <p>Sri Eshwar's S-Easy Bookings</p>
               <img src={underConstruction} alt='Under Construction for mobile version.'/>
               <p>We are sorry for the inconvenience happened!</p>
               <p>Currently, the app is in Beta version.</p>

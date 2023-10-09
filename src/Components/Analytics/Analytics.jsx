@@ -18,7 +18,6 @@ const Analytics = () => {
         try {
             const response = await axios.get('/analytics');
             const data = response?.data;
-            console.log(data)
             setAnalyticsData(data);
             const splineData = Object.keys(data.AllBooking)?.map(name => ({
                 name: name,
@@ -108,7 +107,6 @@ const Analytics = () => {
                         </div>
                     </div>
                     <div className='w-[500px]'>
-                        {console.log("Doughnut", departmentsData, departmentsData[5], departmentsData[6], departmentsData[7])}
                         <DoughnutChart
                             totalName="Departments"
                             data={

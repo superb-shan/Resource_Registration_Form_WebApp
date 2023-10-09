@@ -117,7 +117,6 @@ const TransportForm = () => {
         }
         );
         setPostStatus(res.data.message);
-        console.log(res.data);
         setIsLoading(false);
         if(res.data.message==="Transport created successfully"){
             toast.success("Submitted");

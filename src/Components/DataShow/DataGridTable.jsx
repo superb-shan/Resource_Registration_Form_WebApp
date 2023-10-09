@@ -69,7 +69,6 @@ const DataGridTable = ({...props}) => {
     };
   });
 
-  console.log(props.gridData.filter((a) => a.type==="Item"))
   return (
     <>
       <DataGrid

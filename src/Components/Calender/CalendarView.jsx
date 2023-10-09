@@ -40,8 +40,6 @@ const CalendarView = (props) => {
 
   const fetchData = async (user, userName, formType) => {
     setIsLoading(true)
-    console.log("formtype", formType)
-
     const param = {};
 
     param["isapproved"] = true
@@ -55,9 +53,6 @@ const CalendarView = (props) => {
       let Data = [];
       let seminarResponse = await axios.get(`/${formType === 'Guest House' ? "guesthouse": "seminar"}/get`, { params: param });
       seminarResponse = seminarResponse.data.data;
-      console.log(seminarResponse);
-      console.log("events", events);
-
       if (seminarResponse.length > 0) {
         Data = seminarResponse.map((event) => {
           let color = generateRandomColors()
@@ -71,8 +66,7 @@ const CalendarView = (props) => {
           };
         });
       }
-      console.log(Data, 'data');
-      setIsLoading(false);
+            setIsLoading(false);
       return Data;
     } catch (error) {
       console.log("Error", error);
@@ -93,9 +87,7 @@ const CalendarView = (props) => {
   }
 
   useEffect(() => {
-    console.log(formType)
     fetchData(user, userName, formType).then((data) => {
-      console.log(data);
       setEvent(data);
     });
   }, [formType, requiredHallRoom]);

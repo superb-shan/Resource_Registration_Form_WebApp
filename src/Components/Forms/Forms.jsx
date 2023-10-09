@@ -10,7 +10,6 @@ import ItemsForm from './ItemsForm';
 const Forms = () => {
 
     const {selectedForm} = useContext(UserContext);
-    console.log(selectedForm);
 
   return (
     <>

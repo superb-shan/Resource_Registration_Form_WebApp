@@ -50,7 +50,6 @@ const UserDataModal = ({...props}) => {
 
     const deleted = async (id) => {
         const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })
-        console.log(res)
         props.fetchData()
         props.handleModalClose()
         if(res.data.message){

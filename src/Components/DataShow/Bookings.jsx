@@ -35,11 +35,9 @@ const Bookings = () => {
       param["name"] = userName;
     if (selectedDate) {
       param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
-      console.log(param)
     }
     try {
       const transportResponse = await axios.get('/transport/get', { params: param })
-      console.log(transportResponse);
       const seminarResponse = await axios.get('/seminar/get', { params: param })
       const guestHouseResponse = await axios.get('/guesthouse/get', { params: param })
       const itemResponse = await axios.get('/Items/get', { params: param })

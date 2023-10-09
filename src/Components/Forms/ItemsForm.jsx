@@ -128,7 +128,6 @@ const ItemsForm = () => {
         }
         );
         setPostStatus(res.data.message);
-        console.log(res);
         if(res.data.message===true){
             toast.success("Submitted");
         }else{

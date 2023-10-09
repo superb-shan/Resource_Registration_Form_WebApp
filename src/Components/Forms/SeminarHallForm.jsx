@@ -158,7 +158,6 @@ const SeminarHallForm = () => {
     if (res.data.message === "true") {
       toast.success("Submitted");
     } else {
-      console.log("not created seminar", res)
       toast.error(postStatus);
       return;
     }

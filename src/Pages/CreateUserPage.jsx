@@ -22,8 +22,6 @@ const CreateUserPage = () => {
 
   const { user, isLoggedIn } = useContext(LoginContext);
 
-  console.log(user, isLoggedIn);
-
   if (!isLoggedIn && user !== 'admin') {
     toast.info("You are not logged in as an Admin");
     navigate("/");
