@@ -73,7 +73,8 @@ const Bookings = () => {
 
   return (
     <DataViewContainer>
-      {isLoading ? <div className='w-[1125px] h-[720px] flex justify-center items-center'><ReactLoading type={"bars"} color={"#1976D2"} height={"20%"} width={"7%"} /></div> : (<DataGridTable
+      {isLoading ? <div className='w-[1125px] h-[720px] flex justify-center items-center'><ReactLoading type={"bars"} color={"#1976D2"} height={"20%"} width={"7%"} /></div> : 
+      (<DataGridTable
         gridData={gridData}
         VISIBLE_FIELDS={VISIBLE_FIELDS}
         setSelectedRow={setSelectedRow}
