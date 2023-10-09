@@ -30,7 +30,7 @@ const UserPage = () => {
 
   return (
     <Wrapper alignment="start">
-      <NavBar title={'S-Easy Bookings'} />
+      <NavBar title={'Easy Bookings'} />
       {
         selectedView === "My Bookings" ?
           <Bookings />

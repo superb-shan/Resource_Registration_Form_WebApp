@@ -30,7 +30,7 @@ import Analytics from '../Components/Analytics/Analytics';
 
   return (
     <Wrapper alignment="start">
-      <NavBar title={'S-Easy Bookings'} />
+      <NavBar title={'Easy Bookings'} />
       {
         selectedView === "Calendar"?
           <CalendarView />
