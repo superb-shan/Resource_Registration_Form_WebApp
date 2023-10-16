@@ -17,7 +17,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 const LoginPage = () => {
 
   const [isLoading, setIsLoading] = useState(false);
-  const [capClicked, setCapClicked] = useState(true)
+  const [capClicked, setCapClicked] = useState(false)
   const navigate = useNavigate();
   const { user,
           setUser,
@@ -39,7 +39,7 @@ const LoginPage = () => {
     if (loginStatus !== true){
       setIsLoggedIn(false);
       setCapClicked(false);
-      window.grecaptcha.reset();
+       window.grecaptcha.reset();
       sessionStorage.setItem("isLoggedIn", false);
       toast.error("Username/Password is Incorrect");
     }

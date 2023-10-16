@@ -57,9 +57,9 @@ const CalendarView = (props) => {
         Data = seminarResponse.map((event) => {
           let color = generateRandomColors()
           return {
-            title: formType === 'Guest House' ?`${event.roomRequired} (${formatTime(event.startDateTime,"DD-MM-YYYY HH:mm:ss")} - ${formatTime(event.endDateTime,"DD-MM-YYYY HH:mm:ss")})`: `${event.hallRequired} (${moment(event.startDateTime).format('hh:mm A')} - ${moment(event.endDateTime).format('hh:mm A')})`,
-            start: new Date(formType === 'Guest House' ?  moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD hh:mm:ss"): Date.parse(event.startDateTime)),
-            end: new Date(formType === 'Guest House' ?  moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").format("YYYY MM DD hh:mm:ss"):Date.parse(event.endDateTime)),
+            title: formType === 'Guest House' ?`${event.roomRequired} (${moment(event.startDateTime,"DD-MM-YYYY HH:mm:ss").add(5,"hours").add(30,"minutes").format('hh:mm A')} - ${moment(event.endDateTime,"DD-MM-YYYY HH:mm:ss").add(5,"hours").add(30,"minutes").format('hh:mm A')})`: `${event.hallRequired} (${moment(event.startDateTime).add(5,"hours").add(30,"minutes").format('hh:mm A')} - ${moment(event.endDateTime).add(5,"hours").add(30,"minutes").format('hh:mm A')})`,
+            start: new Date(formType === 'Guest House' ?  moment(event.startDateTime, "DD-MM-YYYY HH:mm:ss").add(5,"hours").add(30,"minutes").format("YYYY MM DD hh:mm:ss"): moment(event.startDateTime, "YYYY-MM-DD HH:mm:ss").add(5,"hours").add(30,"minutes").format("YYYY MM DD hh:mm:ss")),
+            end: new Date(formType === 'Guest House' ?  moment(event.endDateTime, "DD-MM-YYYY HH:mm:ss").add(5,"hours").add(30,"minutes").format("YYYY MM DD hh:mm:ss"):moment(event.endDateTime, "YYYY-MM-DD HH:mm:ss").add(5,"hours").add(30,"minutes").format("YYYY MM DD hh:mm:ss")),
             colorEvento: color.backgroundColor,
             val: event,
             color: color.textColor,

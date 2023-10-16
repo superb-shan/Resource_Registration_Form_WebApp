@@ -49,7 +49,7 @@ const AdminDataModal = ({...props}) => {
     height:690,
   };
 
-    const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime'];
+    const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
 
     // const deleted = async (id) => {
     //     const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })
@@ -92,7 +92,7 @@ const AdminDataModal = ({...props}) => {
     
         for (const key of Object.keys(selectedRow)) {
          
-          if (key === 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type') {
+          if (key === 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime'||key==='startDateTime'||key==='endDateTime') {
             continue;
           }
     

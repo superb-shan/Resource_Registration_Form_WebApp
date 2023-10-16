@@ -77,19 +77,19 @@ const DataGridTable = ({...props}) => {
             (obj) => 
             obj.type === "Transport" 
             ? 
-            {name: obj.coordinatorName, date: moment(obj.travelDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').format("hh:mm A"), ...obj} 
+            {name: obj.coordinatorName, date: moment(obj.travelDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time:moment(obj.travelDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A"), ...obj} 
             : 
             obj.type === "Seminar" 
             ? 
-            {name:obj.hallRequired, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'YYYY-MM-DD HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("hh:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("hh:mm A"), ...obj} 
+            {name:obj.hallRequired, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A"), ...obj} 
             : 
             obj.type === "GuestHouse" 
             ? 
-            {name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MMM-YYYY HH:mm:ss').format("hh:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').format("hh:mm A"), ...obj}
+            {name: obj.coordinatorName, date: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MMM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A"), ...obj}
             :
             obj.type==="Items" 
             ?
-            {name: obj.requestorName, date: moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("DD MMM YYYY"), time:moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').format("hh:mm A"), ...obj} 
+            {name: obj.requestorName, date: moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time: "-", ...obj} 
             :obj
             )
             .filter(

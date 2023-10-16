@@ -129,7 +129,8 @@ const GuestHouseForm = () => {
     }
 
     //Create booking
-
+    console.log("Bookings test", startDateTime, endDateTime,  moment(startDateTime).format("YYYY-MM-DD HH:mm:ss")
+        ,moment(endDateTime).format("YYYY-MM-DD HH:mm:ss"));
     // const formattedDateTime = moment(startDate).format("YYYY-MM-DD") + "T" + moment(startTime.toString()).format("HH:mm:ss");
     const res = await axios.post("/guesthouse/create",
       {
@@ -143,8 +144,10 @@ const GuestHouseForm = () => {
         foodRequired: foodRequired.toString(),
         menuRequired,
         paymentDoneBy,
-        startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
-        endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+        // startDateTime: moment(startDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+        // endDateTime: moment(endDateTime.toString()).format("YYYY-MM-DD HH:mm:ss"),
+        startDateTime,
+        endDateTime,
         noOfGuests,
         roomRequired,
         specialRequirements,
