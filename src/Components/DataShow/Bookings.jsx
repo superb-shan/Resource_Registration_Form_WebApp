@@ -31,20 +31,43 @@ const Bookings = () => {
   const fetchData = async () => {
     setIsLoading(true)
     const param = {}
-    if (user === "user")
+    if (user === "user"){
       param["name"] = userName;
+    }
+
     if (selectedDate) {
       param.date = moment(selectedDate.toString()).format('YYYY-MM-DD')
     }
     try {
-      const transportResponse = await axios.get('/transport/get', { params: param })
+      if(userName==="Admin")
+      {
       const seminarResponse = await axios.get('/seminar/get', { params: param })
       const guestHouseResponse = await axios.get('/guesthouse/get', { params: param })
-      const itemResponse = await axios.get('/Items/get', { params: param })
-      const fullData = [...transportResponse?.data?.data, ...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data, ...itemResponse?.data?.data];
-      // const fullData=[...transportResponse?.data?.data,...seminarResponse?.data?.data,...itemResponse?.data?.data];
+      const fullData = [...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data];
       setGridData(fullData)
       setIsLoading(false)
+     } else if(userName==="AdminTransport")
+     {
+     const transportResponse = await axios.get('/transport/get', { params: param })
+     const fullData = [...transportResponse?.data?.data];
+     setGridData(fullData)
+     setIsLoading(false)
+    }else if(userName==="AdminItems")
+    {
+    const itemResponse = await axios.get('/Items/get', { params: param })
+    const fullData = [...itemResponse?.data?.data];
+    setGridData(fullData)
+    setIsLoading(false)
+   }else 
+   {
+   const transportResponse = await axios.get('/transport/get', { params: param })
+   const seminarResponse = await axios.get('/seminar/get', { params: param })
+   const guestHouseResponse = await axios.get('/guesthouse/get', { params: param })
+   const itemResponse = await axios.get('/Items/get', { params: param })
+   const fullData = [...transportResponse?.data?.data, ...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data, ...itemResponse?.data?.data];
+   setGridData(fullData)
+   setIsLoading(false)
+  }
     }
     catch (error) {
       console.log("Error", error)
