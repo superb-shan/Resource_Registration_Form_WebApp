@@ -47,6 +47,15 @@ const UserDataModal = ({...props}) => {
 
     const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
 
+    if (props?.selectedRow){
+      const newSR = {}
+    Object.keys(props?.selectedRow)?.forEach((item)=>{
+        if(!excludedKeys.includes(item)){
+          newSR[item]=props.selectedRow[item]
+        }
+    })
+    props.selectedRow = newSR
+  }
 
     const deleted = async (id) => {
         const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })

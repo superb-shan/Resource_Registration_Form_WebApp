@@ -23,13 +23,16 @@ import autoTable from 'jspdf-autotable'
 import { DataContext } from '../../Context/Data.Context';
 import { TextInput } from '../Fields/InteractionFields';
 import ReactLoading from 'react-loading';
+import { LoginContext } from '../../Context/Login.Context';
 
 const AdminDataModal = ({...props}) => {
   const selectedRow = props.selectedRow
   const [isLoading, setIsLoading] = useState(false);
   const [remarks, setRemarks] = useState('');
-  const {terms}=useContext(DataContext)
+  const {terms}=useContext(DataContext);
+  const {userName}=useContext(LoginContext);
 
+console.log("inside modal")
   const style = {
     position: 'absolute',
     display: 'flex',
@@ -49,7 +52,7 @@ const AdminDataModal = ({...props}) => {
     height:690,
   };
 
-    const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
+    const excludedKeys = ['id', 'UserId', 'isapproved', 'updatedAt', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
 
     // const deleted = async (id) => {
     //     const res = await axios.delete(`/${props.selectedRow.type.toLowerCase()}/delete`, { params: { id } })
@@ -62,6 +65,17 @@ const AdminDataModal = ({...props}) => {
     //     toast.error(res.data.message)
     //     }
     // }
+
+    if (props?.selectedRow){
+        const newSR = {}
+      Object.keys(props?.selectedRow)?.forEach((item)=>{
+          if(!excludedKeys.includes(item)){
+            newSR[item]=props.selectedRow[item]
+          }
+      })
+      props.selectedRow = newSR
+    }
+    
 
     const generatePDF = () => {
 
@@ -92,21 +106,21 @@ const AdminDataModal = ({...props}) => {
     
         for (const key of Object.keys(selectedRow)) {
          
-          if (key === 'id'||  key === "createdAt" || key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime'||key==='startDateTime'||key==='endDateTime') {
+          if (key === 'id'|| key === "UserId" || key === "isapproved" || key === "updatedAt"||key==='type' || key === 'name' || key==='travelDateTime'||key==='startDateTime'||key==='endDateTime') {
             continue;
           }
     
           const formattedKey = key[0].toUpperCase() + key.slice(1);
           let formattedValue = ""; // Initialize formattedValue as an empty string
+          console.log(key, selectedRow[key]);
           if(selectedRow[key] === null){
             continue ;
           }
          if(selectedRow[key] === ""){
           printData.push([formattedKey,"Nil"]) ;
           continue;
-  }
-          if (typeof selectedRow[key] === "object") {
-            
+          }
+          if (moment(selectedRow[key]).isValid()) {
             formattedValue = moment(selectedRow[key]).format("YYYY-MM-DD HH:mm:ss");
             printData.push([formattedKey,formattedValue])
           } else {
@@ -228,7 +242,7 @@ const AdminDataModal = ({...props}) => {
                               :
                               <TableRow key={key}>
                                 <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
-                                <TableCell>{props.selectedRow[key]}</TableCell>
+                                <TableCell>{moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
                               </TableRow>
                           );
                         }
@@ -262,7 +276,7 @@ const AdminDataModal = ({...props}) => {
                               :
                               <TableRow key={key}>
                                 <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
-                                <TableCell>{props.selectedRow[key]}</TableCell>
+                                <TableCell>{moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
                               </TableRow>
                           );
                         }
@@ -273,18 +287,24 @@ const AdminDataModal = ({...props}) => {
                 </TableContainer>
               </div>
             </div>
+
+
+             {  
+              ((props.selectedRow.type === 'Transport' && userName === 'AdminTransport') || (props.selectedRow.type === 'Items' && userName === 'AdminItems') || (userName === 'Admin')) &&
   
-            <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
-              <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
-                {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Accept"}
-              </Button>
-              <Button variant="contained" color="error" disabled={props.selectedRow.isapproved !== null} onClick={() => { reject(props.selectedRow.id) }}>
-               {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Reject"}
-              </Button>
-              <Button variant="contained" color="warning" onClick={generatePDF}  >
-                Print
-              </Button>
-            </Stack>
+              <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
+                <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
+                  {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Accept"}
+                </Button>
+                <Button variant="contained" color="error" disabled={props.selectedRow.isapproved !== null} onClick={() => { reject(props.selectedRow.id) }}>
+                {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Reject"}
+                </Button>
+                <Button variant="contained" color="warning" onClick={generatePDF}  >
+                  Print
+                </Button>
+              </Stack>
+            
+            }
 
           </Box>
         ):

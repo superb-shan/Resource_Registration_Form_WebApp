@@ -73,10 +73,10 @@ const LoginPage = () => {
           />
           <TextInput label={"User Name"} value={userName} setValue={setUserName} endAdornment={<AccountCircle/>} />
           <PasswordInput label={"Password"} value={password} setValue={setPassword} />
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             sitekey="6LfI-4koAAAAABblfZ43je6zpKrjIzo7g-xEfEuW"
             onChange={onChange}
-          />
+          /> */}
           <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={capClicked} color={isLoggedIn ? "success" : "primary"} >{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Login"}</Button>
       </AccountManagerContainer>
     </Wrapper>
