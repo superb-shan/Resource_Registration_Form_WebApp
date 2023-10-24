@@ -69,7 +69,20 @@ const DataProvider = ({ children }) => {
             category: 'Category',
             Category: 'Category',
             createdAt: 'Created At',
-            CreatedAt: 'Created At'
+            CreatedAt: 'Created At',
+            requestorEmpId :"Coordinator EmpID",
+            nameOfRequisition :"Name of the Event",
+            Events :"Type of the Event",
+            Menu :"Menu Type",
+            person :"No of Persons",
+            BreakfastVeg : "Breakfast - VEG",
+            BreakfastNonVeg : "Breakfast - NON VEG",
+            LunchVeg : "Lunch-VEG",
+            LunchNonVeg : "Lunch - NON VEG",
+            DinnerVeg :  "Dinner - VEG",
+            DinnerNonVeg : "Dinner - NON VEG",
+            MorningRefreshment :"Morning Refreshment",
+            EveningRefreshment :"Evening Refreshment",
           }
         }}
 
