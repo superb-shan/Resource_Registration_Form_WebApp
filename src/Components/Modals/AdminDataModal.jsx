@@ -66,15 +66,15 @@ console.log("inside modal")
     //     }
     // }
 
-    if (props?.selectedRow){
-        const newSR = {}
-      Object.keys(props?.selectedRow)?.forEach((item)=>{
-          if(!excludedKeys.includes(item)){
-            newSR[item]=props.selectedRow[item]
-          }
-      })
-      props.selectedRow = newSR
-    }
+    // if (props?.selectedRow){
+    //     const newSR = {}
+    //   Object.keys(props?.selectedRow)?.forEach((item)=>{
+    //       if(!excludedKeys.includes(item)){
+    //         newSR[item]=props.selectedRow[item]
+    //       }
+    //   })
+    //   props.selectedRow = newSR
+    // }
     
 
     const generatePDF = () => {

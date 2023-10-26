@@ -24,7 +24,7 @@ import { useState, useEffect, useContext } from 'react';
 
 
 const views = [{ name: 'My Calendar' }, { name: 'Check Availability' }, { name: 'Book' }, { name: 'My Bookings' }];
-const forms = ['Hall/Lab', 'Guest House', 'Transport', 'Items','Food/Refreshment'];
+const forms = ['Hall/Lab', 'Guest House', 'Transport', 'Items'];
 // const forms = ['Seminar Hall', 'Guest House', 'Transport','Events/poster','Items','Food & Beverages'];
 
 function NavBar({ ...props }) {
@@ -93,7 +93,9 @@ function NavBar({ ...props }) {
               />
                 :
               <Selector
-                list={[{name: "Calendar"}, {name: "Bookings"}, {name: "Analytics"}]}
+                // list={[{name: "Calendar"}, {name: "Bookings"}, {name: "Analytics"}]}
+                list={[{name: "Calendar"}, {name: "Bookings"}]}
+
                 value={selectedView}
                 setValue={setSelectedView}
                 color="secondary"
