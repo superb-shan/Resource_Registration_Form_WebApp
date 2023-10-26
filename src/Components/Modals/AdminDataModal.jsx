@@ -289,8 +289,8 @@ console.log("inside modal")
             </div>
 
 
-             {  
-              ((props.selectedRow.type === 'Transport' && userName === 'AdminTransport') || (props.selectedRow.type === 'Items' && userName === 'AdminItems') || (userName === 'Admin')) &&
+              
+              {/* ((props.selectedRow.type === 'Transport' && userName === 'AdminTransport') || (props.selectedRow.type === 'Items' && userName === 'AdminItems') || (userName === 'Admin')) && */}
   
               <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
                 <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
@@ -304,7 +304,7 @@ console.log("inside modal")
                 </Button>
               </Stack>
             
-            }
+            
 
           </Box>
         ):

@@ -26,6 +26,7 @@ const UserDataModal = ({...props}) => {
 
     const { terms } = useContext(DataContext);
     const selectedRow = props.selectedRow;
+    console.log(selectedRow);
     const style = {
         position: 'absolute',
         display: 'flex',
