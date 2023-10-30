@@ -68,8 +68,8 @@ const DataProvider = ({ children }) => {
             ClearanceOfBill: 'Clearance Of Bill',
             category: 'Category',
             Category: 'Category',
-            createdAt: 'Created At',
-            CreatedAt: 'Created At',
+            createdAt: 'Booked On',
+            CreatedAt: 'Booked On',
             requestorEmpId :"Coordinator EmpID",
             nameOfRequisition :"Name of the Event",
             typeOfEvent: "Type Of Event",
@@ -89,6 +89,9 @@ const DataProvider = ({ children }) => {
             DinnerNonVeg : "Dinner - NON VEG",
             MorningRefreshment :"Morning Refreshment",
             EveningRefreshment :"Evening Refreshment",
+            type:'Category',
+            Type:'Category',
+
           }
         }}
 
