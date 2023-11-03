@@ -12,7 +12,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import ReactLoading from 'react-loading';
-import ReCAPTCHA from "react-google-recaptcha";
+// import ReCAPTCHA from "react-google-recaptcha";
 
 const LoginPage = () => {
 
@@ -39,7 +39,7 @@ const LoginPage = () => {
     if (loginStatus !== true){
       setIsLoggedIn(false);
       setCapClicked(false);
-      window.grecaptcha.reset();
+      // window.grecaptcha.reset();
       sessionStorage.setItem("isLoggedIn", false);
       toast.error("Username/Password is Incorrect");
     }
@@ -73,10 +73,10 @@ const LoginPage = () => {
           />
           <TextInput label={"User Name"} value={userName} setValue={setUserName} endAdornment={<AccountCircle/>} />
           <PasswordInput label={"Password"} value={password} setValue={setPassword} />
-          <ReCAPTCHA
+          {/* <ReCAPTCHA
             sitekey="6LfI-4koAAAAABblfZ43je6zpKrjIzo7g-xEfEuW"
             onChange={onChange}
-          />
+          /> */}
           <Button variant="contained" sx={{ width: "100px" }} type="submit" disabled={capClicked} color={isLoggedIn ? "success" : "primary"} >{isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Login"}</Button>
       </AccountManagerContainer>
     </Wrapper>

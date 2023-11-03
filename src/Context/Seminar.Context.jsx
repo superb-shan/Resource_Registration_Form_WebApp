@@ -1,4 +1,5 @@
-import React, { useState, createContext } from "react";
+import axios from "axios";
+import React, { useState, createContext, useEffect } from "react";
 
 export const SeminarContext = createContext();
 
@@ -10,42 +11,62 @@ const SeminarProvider = ({ children }) => {
   const [unavailableHalls, setUnavailableHalls] = useState([]);
   const [hallCategory, setHallCategory] = useState('Auditorium/Training Halls');
 
-  const allHalls = {
-    'Auditorium/Training Halls': [
-      { name: '1st floor Auditorium', maxCapacity: 400 },
-      { name: '2nd floor Auditorium', maxCapacity: 400 },
-      { name: 'IT Auditorium', maxCapacity: 120 },
-      { name: 'Code Studio', maxCapacity: 166 },
-      { name: '3rd Floor Drawing Hall', maxCapacity: 350 },
-    ],
-    'Special Halls': [
-      // { name: 'Makerspace', maxCapacity: 100 },
-      { name: 'Ignite', maxCapacity: 100 },
-      { name: 'Iot laboratory', maxCapacity: 100 },
-      { name: 'GF-07', maxCapacity: 40 },
-      { name: 'Cyber Security & Hypernet', maxCapacity: 75 },
-      { name: 'AI Robo Space', maxCapacity: 75 },
-    ],
-    'Academic Labs': [
-      { name: 'Bytes laboratory', maxCapacity: 64 },
-      { name: 'IP laboratory', maxCapacity: 67 },
-      { name: 'Fullstack laboratory', maxCapacity: 70 },
-      { name: 'Project laboratory', maxCapacity: 72 },
-      { name: 'CAD laboratory', maxCapacity: 72 },
-      { name: 'Simulation laboratory', maxCapacity: 70 },
-      { name: 'VLSI laboratory', maxCapacity: 44 },
-      { name: 'ML laboratory', maxCapacity: 70 },
-      { name: 'DS laboratory', maxCapacity: 70 },
-      { name: 'AI laboratory', maxCapacity: 67 },
-      { name: 'Business Analytics laboratory', maxCapacity: 74 },
-      { name: 'PLC Automation laboratory', maxCapacity: 44 },
-    ],
-    'Board Rooms': [
-      { name: 'Ignite Board Room', maxCapacity: 10 },
-      { name: 'IQAC Board Room', maxCapacity: 10 },
-      { name: 'Office Board Room', maxCapacity: 10 },
-    ],
-  };
+  const [allHalls, setAllHalls] = useState([]);
+
+  const hallCall = async () => {
+    try {
+      const response = await axios.get('/Resource/getSeminar');
+      return response.data.data;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    hallCall()
+      .then(halls => {
+        setAllHalls(halls);
+        console.log(halls);
+      });
+  }, []);
+
+  // const allHalls = {
+  //   'Auditorium/Training Halls': [
+  //     { name: '1st floor Auditorium', maxCapacity: 400 },
+  //     { name: '2nd floor Auditorium', maxCapacity: 400 },
+  //     { name: 'IT Auditorium', maxCapacity: 120 },
+  //     { name: 'Code Studio', maxCapacity: 166 },
+  //     { name: '3rd Floor Drawing Hall', maxCapacity: 350 },
+  //   ],
+  //   'Special Halls': [
+  //     // { name: 'Makerspace', maxCapacity: 100 },
+  //     { name: 'Ignite', maxCapacity: 100 },
+  //     { name: 'Iot laboratory', maxCapacity: 100 },
+  //     { name: 'GF-(07)', maxCapacity: 40 },
+  //     { name: 'Cyber Security & Hypernet', maxCapacity: 75 },
+  //     { name: 'AI Robo Space', maxCapacity: 75 },
+  //   ],
+  //   'Academic Labs': [
+  //     { name: 'Bytes laboratory', maxCapacity: 64 },
+  //     { name: 'IP laboratory', maxCapacity: 67 },
+  //     { name: 'Fullstack laboratory', maxCapacity: 70 },
+  //     { name: 'Project laboratory', maxCapacity: 72 },
+  //     { name: 'CAD laboratory', maxCapacity: 72 },
+  //     { name: 'Simulation laboratory', maxCapacity: 70 },
+  //     { name: 'VLSI laboratory', maxCapacity: 44 },
+  //     { name: 'ML laboratory', maxCapacity: 70 },
+  //     { name: 'DS laboratory', maxCapacity: 70 },
+  //     { name: 'AI laboratory', maxCapacity: 67 },
+  //     { name: 'Business Analytics laboratory', maxCapacity: 74 },
+  //     { name: 'PLC Automation laboratory', maxCapacity: 44 },
+  //   ],
+  //   'Board Rooms': [
+  //     { name: 'Ignite Board Room', maxCapacity: 10 },
+  //     { name: 'IQAC Board Room', maxCapacity: 10 },
+  //     { name: 'Office Board Room', maxCapacity: 10 },
+  //   ],
+  // };
 
   return (
     <SeminarContext.Provider

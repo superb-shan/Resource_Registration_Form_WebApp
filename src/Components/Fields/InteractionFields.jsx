@@ -85,7 +85,7 @@ const TextInput = ({...props}) => {
 const DateTimeInput = ({...props}) => {
 
   const handleValueChange = (dateTime) => {
-    console.log(dateTime,"vsvghdsh")
+    // console.log(dateTime,"vsvghdsh")
     props.setValue(dateTime);
     typeof props.unCheck === 'function' && props.unCheck(false);
   };

@@ -104,7 +104,7 @@ const CalendarView = (props) => {
         <DropDownSelector buttonSide='right' value={formType} setValue={setFormType} setSubListAll={setRequiredHallRoom}
           list={[ 
             ...Object.keys(allHalls), "Guest House"
-            ]} 
+            ].sort()} 
         />
         {
           true &&

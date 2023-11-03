@@ -117,7 +117,7 @@ const CheckAvailability = ({ ...props }) => {
         <Box marginX={"100px"}>
           <Selector
             list={[
-              ...hallKeys.map((hall) => ({ name: hall })),
+              ...hallKeys.map((hall) => ({ name: hall })).sort((hall1, hall2) => hall1.name - hall2.name),
               { name: "Guest House" },
             ]}
             value={hallCategory}

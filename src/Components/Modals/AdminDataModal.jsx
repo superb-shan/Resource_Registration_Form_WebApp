@@ -24,6 +24,9 @@ import { DataContext } from '../../Context/Data.Context';
 import { TextInput } from '../Fields/InteractionFields';
 import ReactLoading from 'react-loading';
 import { LoginContext } from '../../Context/Login.Context';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import PendingOutlinedIcon from '@mui/icons-material/PendingOutlined';
 
 const AdminDataModal = ({...props}) => {
   const selectedRow = props.selectedRow
@@ -41,15 +44,16 @@ console.log("inside modal")
     top: '48%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 1000,
+    width: 1300,
     bgcolor: 'background.paper',
     border: '2px solid #1976d2',
     boxShadow: 24,
-    p: "1rem 2rem",
     borderRadius: 3,
-    overflow:"auto",
-    paddingTop:'5px',
-    height:690,
+    PaddingTop:'20px',
+    paddingRight:'20px',
+    paddingLeft:'20px',
+    paddingBottom:'20px',
+    height:670,
   };
 
     const excludedKeys = ['id', 'UserId', 'isapproved', 'updatedAt', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
@@ -66,16 +70,8 @@ console.log("inside modal")
     //     }
     // }
 
-    // if (props?.selectedRow){
-    //     const newSR = {}
-    //   Object.keys(props?.selectedRow)?.forEach((item)=>{
-    //       if(!excludedKeys.includes(item)){
-    //         newSR[item]=props.selectedRow[item]
-    //       }
-    //   })
-    //   props.selectedRow = newSR
-    // }
-    
+   const isApproved = props?.selectedRow?.isapproved;
+   const selectedId = props?.selectedRow?.id;
 
     const generatePDF = () => {
 
@@ -120,6 +116,7 @@ console.log("inside modal")
           printData.push([formattedKey,"Nil"]) ;
           continue;
           }
+          
           if (moment(selectedRow[key]).isValid()) {
             formattedValue = moment(selectedRow[key]).format("YYYY-MM-DD HH:mm:ss");
             printData.push([formattedKey,formattedValue])
@@ -209,16 +206,35 @@ console.log("inside modal")
         }
       };
 
-  return (
+      if (props?.selectedRow){
+        const newSR = {}
+      Object.keys(props?.selectedRow)?.forEach((item)=>{
+          if(!excludedKeys.includes(item)){
+            newSR[item]=props.selectedRow[item]
+          }
+      })
+      props.selectedRow = newSR
+    }
+
+    const [printHover, setPrintHover] = useState(false);
+    
+
+  return (  
     <Modal open={props.isModalOpen} onClose={props.handleModalClose}>
         {/* Render the detailed information from props.selectedRow */}
         {props.selectedRow ? (
             <Box sx={style}>
-            <Typography id="modal-modal-title" variant="h6" component="h2" style={{ textAlign: 'center' }}>
+            <div className='flex justify-center'>
+            <Typography id="modal-modal-title" variant="h6" component="h2" sx={{ml:"auto"}} style={{ textAlign: 'center' }}>
               Details
             </Typography>
+            <Button sx={{ml:"auto"}} variant={printHover ? "contained" : "outlined" } onMouseEnter={()=>setPrintHover(true)} onMouseLeave={()=>setPrintHover(false)} color="warning" onClick={generatePDF}  >
+              Print
+            </Button>
+           
+            </div>
   
-            <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+            <div className='flex justify-between max-h-[75%] overflow-scroll'>
               {/* Left Column */}
               <div style={{ flex: 1 }}>
                 <TableContainer>
@@ -232,7 +248,7 @@ console.log("inside modal")
                         // Split keys and values into two columns
                         if (index % 2 === 0) {
                           return (
-                            key === 'remarks' && props.selectedRow.isapproved === null?
+                            key === 'remarks' && isApproved === null?
                               <TableRow key={key}>
                                 <TableCell>Remarks</TableCell>
                                 <TableCell>
@@ -242,7 +258,7 @@ console.log("inside modal")
                               :
                               <TableRow key={key}>
                                 <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
-                                <TableCell>{moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
+                                <TableCell>{typeof props.selectedRow[key]=== "number" ? props.selectedRow[key] : moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
                               </TableRow>
                           );
                         }
@@ -266,7 +282,7 @@ console.log("inside modal")
                         // Split keys and values into two columns
                         if (index % 2 !== 0) {
                           return (
-                              key === 'remarks' && props.selectedRow.isapproved === null?
+                              key === 'remarks' && isApproved === null?
                               <TableRow key={key}>
                                 <TableCell>Remarks</TableCell>
                                 <TableCell>
@@ -276,7 +292,7 @@ console.log("inside modal")
                               :
                               <TableRow key={key}>
                                 <TableCell>{terms[key[0].toUpperCase() + key.slice(1)]}</TableCell>
-                                <TableCell>{moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
+                                <TableCell>{typeof props.selectedRow[key]=== "number" ? props.selectedRow[key] :moment(props.selectedRow[key]).isValid()?moment(props.selectedRow[key]).format("DD MMM YYYY hh:mm"): props.selectedRow[key]}</TableCell>
                               </TableRow>
                           );
                         }
@@ -289,19 +305,49 @@ console.log("inside modal")
             </div>
 
 
+
               
               {/* ((props.selectedRow.type === 'Transport' && userName === 'AdminTransport') || (props.selectedRow.type === 'Items' && userName === 'AdminItems') || (userName === 'Admin')) && */}
   
-              <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '30px', gap: '50px' }}>
-                <Button variant="contained" color="success" disabled={props.selectedRow.isapproved !== null} onClick={() => { accept(props.selectedRow.id) }}>
-                  {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Accept"}
-                </Button>
-                <Button variant="contained" color="error" disabled={props.selectedRow.isapproved !== null} onClick={() => { reject(props.selectedRow.id) }}>
-                {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Reject"}
-                </Button>
-                <Button variant="contained" color="warning" onClick={generatePDF}  >
-                  Print
-                </Button>
+              <Stack direction="row" style={{ display: 'flex', justifyContent: 'center', marginTop: '0', gap: '50px' }}>
+                { 
+                  (isApproved === null) ?
+                  <>
+                    <Button variant="contained" color="success" disabled={isApproved !== null} onClick={() => { accept(selectedId) }}>
+                      {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Accept"}
+                    </Button>
+                    <Button variant="contained" color="error" disabled={isApproved !== null} onClick={() => { reject(selectedId) }}>
+                      {isLoading? <ReactLoading type="spin" width={25} height={25}/> : "Reject"}
+                    </Button> 
+                  </>
+                  : 
+                  <div style={{ display: 'flex', alignItems: 'center', fontSize:'60px' }}>
+                    {isApproved === null && (
+                      <>
+                        <PendingOutlinedIcon sx={{fontSize:'30px'}} style={{ marginRight: 4, color: 'orange' }} />
+                        <Typography variant="body1" sx={{fontSize:'30px'}} style={{ color: 'orange' }}>
+                          Pending
+                        </Typography>
+                      </>
+                    )}
+                    {isApproved === true && (
+                      <>
+                        <CheckCircleOutlineIcon sx={{fontSize:'30px'}} style={{ color: 'green', marginRight: 4 }} />
+                        <Typography variant="body1" sx={{fontSize:'30px'}} style={{ color: 'green' }}>
+                          Accepted
+                        </Typography>
+                      </>
+                    )}
+                    {isApproved === false && (
+                      <>
+                        <HighlightOffIcon sx={{fontSize:'30px'}} style={{ color: 'red', marginRight: 4 }} />
+                        <Typography variant="body1" sx={{fontSize:'30px'}} style={{ color: 'red' }}>
+                          Rejected
+                        </Typography>
+                      </>
+                    )}
+                  </div>
+                }
               </Stack>
             
             

@@ -1,11 +1,32 @@
-import React, { createContext } from "react";
-import { useState } from "react";
+import axios from "axios";
+import React, { createContext, useState, useEffect } from "react";
 
 export const DataContext = createContext();
 
 const DataProvider = ({ children }) => {
   const [isAvailabilityLoading, setIsAvailabilityLoading] = useState(false);
-  const allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MATH', 'MECH', 'PLAC', 'SLC', 'SnH'];
+  const [allDepartments, setAllDepartments] = useState([]);
+
+  const deptCall = async () => {
+    try {
+      const response = await axios.get('/Resource/getDepartments');
+      const departments = response.data.message.map(obj => obj.name).sort();
+      return departments;
+    } catch (e) {
+      console.error(e);
+      return [];
+    }
+  }
+
+  useEffect(() => {
+    deptCall()
+      .then(departments => {
+        setAllDepartments(departments);
+        console.log(departments);
+      });
+  }, []);
+
+  // allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MATH', 'MECH', 'PLAC', 'SLC', 'SnH'];
   return (
     <DataContext.Provider
       value={

@@ -28,23 +28,25 @@ const UserDataModal = ({...props}) => {
     const selectedRow = props.selectedRow;
     console.log(selectedRow);
     const style = {
-        position: 'absolute',
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'space-around',
-        top: '48%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 1000,
-        bgcolor: 'background.paper',
-        border: '2px solid #1976d2',
-        boxShadow: 24,
-        p: "1rem 2rem",
-        borderRadius: 3,
-        overflow:"auto",
-        paddingTop:'5px',
-        height:690,
-      };
+      position: 'absolute',
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-around',
+      top: '48%',
+      left: '50%',
+      transform: 'translate(-50%, -50%)',
+      width: 1300,
+      bgcolor: 'background.paper',
+      border: '2px solid #1976d2',
+      boxShadow: 24,
+      borderRadius: 3,
+      PaddingTop:'20px',
+      paddingRight:'20px',
+      paddingLeft:'20px',
+      paddingBottom:'20px',
+      height:670,
+    };
+  
 
     const excludedKeys = ['id', 'createdAt', 'UserId', 'isapproved', 'updatedAt', 'type', 'name', 'travelDateTime', 'startDateTime', 'endDateTime', 'clearanceOfBill'];
 
@@ -180,7 +182,7 @@ const UserDataModal = ({...props}) => {
             Details
           </Typography>
 
-          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+          <div className='flex justify-between max-h-[75%] overflow-scroll'>
             {/* Left Column */}
             <div style={{ flex: 1 }}>
               <TableContainer>

@@ -93,7 +93,7 @@ const DataGridTable = ({...props}) => {
             :
             obj.type==="Food" 
             ?
-            {name: obj.coordinatorName, date: moment(obj.requisitionDateTime, 'DD MMM YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time: "-", ...obj} 
+            {name: obj.coordinatorName, date: moment(obj.startDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY") + " to " + moment(obj.endDateTime, 'YYYY-MM-DD HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("DD MMM YYYY"), time: moment(obj.startDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A") + " to " + moment(obj.endDateTime, 'DD-MM-YYYY HH:mm:ss').add(5, 'hours').add(30, 'minutes').format("hh:mm A"), ...obj} 
             :obj
             )
             .filter(

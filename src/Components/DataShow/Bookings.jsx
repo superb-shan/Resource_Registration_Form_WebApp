@@ -43,8 +43,8 @@ const Bookings = () => {
       {
       const seminarResponse = await axios.get('/seminar/get', { params: param })
       const guestHouseResponse = await axios.get('/guesthouse/get', { params: param })
-      // const foodResponse = await axios.get('/Food/get', { params: param })
-      const fullData = [...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data];
+       const foodResponse = await axios.get('/Food/get', { params: param })
+      const fullData = [...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data, ...foodResponse?.data?.data];
       setGridData(fullData)
       setIsLoading(false)
      } else if(userName==="AdminTransport")
@@ -65,8 +65,8 @@ const Bookings = () => {
    const seminarResponse = await axios.get('/seminar/get', { params: param })
    const guestHouseResponse = await axios.get('/guesthouse/get', { params: param })
    const itemResponse = await axios.get('/Items/get', { params: param })
-  //  const foodResponse = await axios.get('/Food/get', { params: param })
-   const fullData = [...transportResponse?.data?.data, ...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data, ...itemResponse?.data?.data];
+   const foodResponse = await axios.get('/Food/get', { params: param })
+   const fullData = [...transportResponse?.data?.data, ...seminarResponse?.data?.data, ...guestHouseResponse?.data?.data, ...itemResponse?.data?.data, ...foodResponse?.data?.data];
    setGridData(fullData)
    setIsLoading(false)
   }
@@ -132,8 +132,8 @@ const Bookings = () => {
         filterData={[
           {
             title: "Resource Filters",
-            filters: ["Transport", "Seminar", "GuestHouse", "Items"],
-            // filters: ["Transport", "Seminar", "GuestHouse", "Items", "Event/poster", "Food"],
+           // filters: ["Transport", "Seminar", "GuestHouse", "Items"],
+            filters: ["Transport", "Seminar", "GuestHouse", "Items", "Food"],
             value: customActiveTypeFilter,
             setValue: setCustomActiveTypeFilter,
             isOpen: false,

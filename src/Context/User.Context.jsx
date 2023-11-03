@@ -8,7 +8,7 @@ const UserProvider = ({ children }) => {
   const {user} = useContext(LoginContext);
 
   const [selectedView, setSelectedView] = useState(user==='user'?'My Calendar':'Calendar');
-  const [selectedForm, setSelectedForm] = useState('Transport');
+  const [selectedForm, setSelectedForm] = useState('Hall/Lab');
   const [selectedDate, setSelectedDate] = useState(null)
 
     return (
