@@ -25,6 +25,7 @@ const DataProvider = ({ children }) => {
         console.log(departments);
       });
   }, []);
+  
 
   // allDepartments = ['AI&DS/ML', 'CCE', 'CSE', 'CSBS', 'ECE', 'EEE', 'HEC', 'IT', 'MATH', 'MECH', 'PLAC', 'SLC', 'SnH'];
   return (
